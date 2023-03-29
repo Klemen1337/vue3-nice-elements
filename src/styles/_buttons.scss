@@ -1,0 +1,201 @@
+$types: "primary", "default", "success", "warning", "danger", "info", "dark",
+  "white";
+
+.btn {
+  background: var(--primary-color);
+  color: white;
+  font-size: 1em;
+  padding: 8px 20px;
+  border: 1px solid var(--primary-color);
+  border-radius: 6px;
+  user-select: none;
+  font-weight: 500;
+  cursor: pointer;
+  height: var(--nice-height);
+  text-transform: none;
+  text-decoration: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.1s ease;
+  white-space: nowrap;
+  list-style: 1;
+
+  span {
+    text-transform: none;
+    text-decoration: none;
+  }
+
+  svg {
+    height: 18px;
+    width: 18px;
+    fill: currentColor;
+  }
+
+  // Icon left
+  .nice-icon + span {
+    margin-left: 0.5rem;
+  }
+
+  // Icon right
+  span + .nice-icon {
+    margin-left: 0.5rem;
+  }
+
+  // Button next to button
+  & + .btn {
+    margin-left: 0.3rem;
+  }
+
+  // Icon only
+  &.btn-icon {
+    padding: 9px;
+  }
+
+  // Rounded
+  &.btn-rounded {
+    border-radius: 100px;
+  }
+
+  --button-shadow: var(--primary-color-shadow);
+  box-shadow: 0 2px 3px var(--button-shadow);
+  &:hover {
+    box-shadow: 0 0 15px var(--button-shadow);
+  }
+
+  &:focus {
+    @extend .nice-focus;
+  }
+
+  &.active,
+  &:active {
+    transform: scale(0.9);
+    transform-origin: center center;
+  }
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    background: var(--secondary-color-darker);
+    color: white;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+
+    &.active,
+    &:active {
+      transform: scale(1);
+    }
+  }
+}
+
+.btn-white {
+  color: var(--font-color) !important;
+}
+
+@mixin button-hover($property) {
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    color: white;
+    background: var($property);
+  }
+}
+
+// --------------------------------------- Types ---------------------------------------
+@each $type in $types {
+  .btn-#{$type} {
+    color: var(--#{$type}-font);
+    background: var(--#{$type}-color);
+    border-color: var(--#{$type}-color);
+    --button-shadow: var(--#{$type}-color-shadow);
+    @include button-hover(--#{$type}-color-darker);
+  }
+}
+
+// --------------------------------------- Plain ---------------------------------------
+.btn-plain {
+  box-shadow: 0 0 0;
+
+  @each $type in $types {
+    &.btn-#{$type} {
+      color: var(--#{$type}-color);
+      background: var(--#{$type}-color-lighter);
+      border-color: var(--#{$type}-color-lighter);
+      @include button-hover(--#{$type}-color);
+    }
+  }
+}
+
+// --------------------------------------- Outline ---------------------------------------
+.btn-outline {
+  box-shadow: 0 0 0;
+
+  @each $type in $types {
+    &.btn-#{$type} {
+      color: var(--#{$type}-color);
+      background: transparent;
+      @include button-hover(--#{$type}-color);
+    }
+  }
+}
+
+// --------------------------------------- Naked ---------------------------------------
+.btn-naked {
+  box-shadow: 0 0 0;
+
+  @each $type in $types {
+    &.btn-#{$type} {
+      border-color: transparent;
+      background: transparent;
+      color: var(--#{$type}-color);
+      @include button-hover(--#{$type}-color);
+    }
+  }
+}
+
+// ------------------------------ Size ------------------------------------------
+.btn-block {
+  width: 100%;
+}
+
+.btn-large {
+  padding: 1rem 2rem;
+  font-size: 1.2em;
+  border-radius: var(--border-radius);
+
+  svg {
+    height: 20px;
+    width: 20px;
+  }
+
+  &.btn-icon {
+    padding: 1rem;
+  }
+}
+
+.btn-small {
+  font-size: 0.9em;
+  min-height: unset;
+  border-radius: 5px;
+  padding: 0.5rem 0.8rem;
+  height: unset;
+
+  svg {
+    height: 14px;
+    width: 14px;
+  }
+
+  box-shadow: 0 1px 2px var(--button-shadow);
+  &:hover {
+    box-shadow: 0 0 3px var(--button-shadow);
+  }
+
+  &.btn-icon {
+    padding: 0.5rem;
+  }
+}
