@@ -415,7 +415,7 @@ export default {
       transform: translateY(-50%);
       height: 18px;
       width: 18px;
-      fill: var(--font-color);
+      fill: var(--nice-font-color);
 
       &.clear {
         cursor: pointer;
@@ -430,10 +430,10 @@ export default {
 
   .nice-dropdown {
     width: 250px;
-    background: var(--card-bg);
+    background: var(--nice-card-bg);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     padding: 0.5rem;
-    border-radius: var(--border-radius);
+    border-radius: var(--nice-border-radius);
     border: var(--nice-border);
 
     .year-wrapper,
@@ -451,7 +451,7 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: var(--border-radius);
+        border-radius: var(--nice-border-radius);
 
         svg {
           height: 15px;
@@ -497,8 +497,8 @@ export default {
         font-size: 0.9em;
 
         &:hover {
-          background: var(--primary-color-lighter);
-          color: var(--primary-color);
+          background: var(--nice-primary-color-lighter);
+          color: var(--nice-primary-color);
         }
 
         &.previous-month {
@@ -506,12 +506,12 @@ export default {
         }
 
         &.selected {
-          background: var(--primary-color);
+          background: var(--nice-primary-color);
           color: white !important;
         }
 
         &.today {
-          color: var(--primary-color);
+          color: var(--nice-primary-color);
         }
       }
 
@@ -528,7 +528,7 @@ export default {
       padding-top: 0.5rem;
       display: flex;
       align-items: center;
-      border-top: 1px solid var(--border-color);
+      border-top: 1px solid var(--nice-border-color);
 
       .time-icon {
         width: 18px;

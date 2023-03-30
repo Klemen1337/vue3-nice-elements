@@ -2,11 +2,11 @@ $types: "primary", "default", "success", "warning", "danger", "info", "dark",
   "white";
 
 .btn {
-  background: var(--primary-color);
+  background: var(--nice-primary-color);
   color: white;
   font-size: 1em;
   padding: 8px 20px;
-  border: 1px solid var(--primary-color);
+  border: 1px solid var(--nice-primary-color);
   border-radius: 6px;
   user-select: none;
   font-weight: 500;
@@ -57,7 +57,7 @@ $types: "primary", "default", "success", "warning", "danger", "info", "dark",
     border-radius: 100px;
   }
 
-  --button-shadow: var(--primary-color-shadow);
+  --button-shadow: var(--nice-primary-color-shadow);
   box-shadow: 0 2px 3px var(--button-shadow);
   &:hover {
     box-shadow: 0 0 15px var(--button-shadow);
@@ -77,7 +77,7 @@ $types: "primary", "default", "success", "warning", "danger", "info", "dark",
   &:focus,
   &:active,
   &.active {
-    background: var(--secondary-color-darker);
+    background: var(--nice-secondary-color-darker);
     color: white;
   }
 
@@ -93,7 +93,7 @@ $types: "primary", "default", "success", "warning", "danger", "info", "dark",
 }
 
 .btn-white {
-  color: var(--font-color) !important;
+  color: var(--nice-font-color) !important;
 }
 
 @mixin button-hover($property) {
@@ -109,11 +109,11 @@ $types: "primary", "default", "success", "warning", "danger", "info", "dark",
 // --------------------------------------- Types ---------------------------------------
 @each $type in $types {
   .btn-#{$type} {
-    color: var(--#{$type}-font);
-    background: var(--#{$type}-color);
-    border-color: var(--#{$type}-color);
-    --button-shadow: var(--#{$type}-color-shadow);
-    @include button-hover(--#{$type}-color-darker);
+    color: var(--nice-#{$type}-font);
+    background: var(--nice-#{$type}-color);
+    border-color: var(--nice-#{$type}-color);
+    --button-shadow: var(--nice-#{$type}-color-shadow);
+    @include button-hover(--nice-#{$type}-color-darker);
   }
 }
 
@@ -123,10 +123,10 @@ $types: "primary", "default", "success", "warning", "danger", "info", "dark",
 
   @each $type in $types {
     &.btn-#{$type} {
-      color: var(--#{$type}-color);
-      background: var(--#{$type}-color-lighter);
-      border-color: var(--#{$type}-color-lighter);
-      @include button-hover(--#{$type}-color);
+      color: var(--nice-#{$type}-color);
+      background: var(--nice-#{$type}-color-lighter);
+      border-color: var(--nice-#{$type}-color-lighter);
+      @include button-hover(--nice-#{$type}-color);
     }
   }
 }
@@ -137,9 +137,9 @@ $types: "primary", "default", "success", "warning", "danger", "info", "dark",
 
   @each $type in $types {
     &.btn-#{$type} {
-      color: var(--#{$type}-color);
+      color: var(--nice-#{$type}-color);
       background: transparent;
-      @include button-hover(--#{$type}-color);
+      @include button-hover(--nice-#{$type}-color);
     }
   }
 }
@@ -152,8 +152,8 @@ $types: "primary", "default", "success", "warning", "danger", "info", "dark",
     &.btn-#{$type} {
       border-color: transparent;
       background: transparent;
-      color: var(--#{$type}-color);
-      @include button-hover(--#{$type}-color);
+      color: var(--nice-#{$type}-color);
+      @include button-hover(--nice-#{$type}-color);
     }
   }
 }
@@ -166,7 +166,7 @@ $types: "primary", "default", "success", "warning", "danger", "info", "dark",
 .btn-large {
   padding: 1rem 2rem;
   font-size: 1.2em;
-  border-radius: var(--border-radius);
+  border-radius: var(--nice-border-radius);
 
   svg {
     height: 20px;

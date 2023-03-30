@@ -148,13 +148,13 @@ export default {
   .input-group {
     height: var(--nice-height);
     display: flex;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    background: var(--card-bg);
+    border: 1px solid var(--nice-border-color);
+    border-radius: var(--nice-border-radius);
+    background: var(--nice-card-bg);
 
     &:focus-within {
       outline-offset: 2px;
-      outline: 2px solid var(--primary-color);
+      outline: 2px solid var(--nice-primary-color);
 
       input {
         outline: 0 none;
@@ -181,7 +181,7 @@ export default {
     }
 
     .input-group-suffix + input {
-      // border-left: 1px solid var(--border-color);
+      // border-left: 1px solid var(--nice-border-color);
       .nice-button {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
@@ -189,7 +189,7 @@ export default {
     }
 
     input + .input-group-append {
-      // border-left: 1px solid var(--border-color);
+      // border-left: 1px solid var(--nice-border-color);
       .nice-button {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
@@ -205,7 +205,7 @@ export default {
       // background: transparent;
 
       &::placeholder {
-        color: var(--border-color);
+        color: var(--nice-border-color);
       }
     }
   }

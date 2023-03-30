@@ -418,9 +418,9 @@ export default {
 
 <style lang="scss" scoped>
 .nice-table {
-  background: var(--card-bg);
-  border-radius: var(--border-radius);
-  border: 1px solid var(--border-color);
+  background: var(--nice-card-bg);
+  border-radius: var(--nice-border-radius);
+  border: 1px solid var(--nice-border-color);
   overflow: auto;
   position: relative;
 
@@ -437,26 +437,26 @@ export default {
       height: 4px;
     }
     &::-webkit-scrollbar-track {
-      background: var(--card-bg);
+      background: var(--nice-card-bg);
     }
     &::-webkit-scrollbar-thumb {
-      background: var(--primary-color);
+      background: var(--nice-primary-color);
       border-radius: 4px;
     }
     &::-webkit-scrollbar-thumb:hover {
-      background: var(--primary-color-darker);
+      background: var(--nice-primary-color-darker);
     }
   }
 
   .nice-indicator {
     display: block;
-    border-radius: var(--border-radius);
+    border-radius: var(--nice-border-radius);
     height: 10px;
     width: 10px;
-    background: var(--danger-color);
+    background: var(--nice-danger-color);
 
     &.active {
-      background: var(--success-color);
+      background: var(--nice-success-color);
     }
   }
 
@@ -478,7 +478,7 @@ export default {
         content: "";
         height: 1px;
         width: 100%;
-        background: var(--border-color);
+        background: var(--nice-border-color);
       }
 
       tr {
@@ -488,18 +488,18 @@ export default {
           font-size: 0.8em;
           font-weight: 600;
           padding: 12px 10px;
-          background: var(--card-bg);
+          background: var(--nice-card-bg);
 
           .table-th {
             position: relative;
             cursor: pointer;
 
             &:hover {
-              color: var(--primary-color);
+              color: var(--nice-primary-color);
             }
 
             &.active {
-              color: var(--primary-color);
+              color: var(--nice-primary-color);
               .table-order {
                 display: inline-block;
               }
@@ -528,14 +528,14 @@ export default {
     tbody {
       tr {
         td {
-          border-top: 1px solid var(--border-color);
+          border-top: 1px solid var(--nice-border-color);
           padding: 12px 10px;
-          background: var(--card-bg);
+          background: var(--nice-card-bg);
         }
 
         &:hover {
           td {
-            background: var(--hover-color);
+            background: var(--nice-hover-color);
           }
         }
 
@@ -583,7 +583,7 @@ export default {
 
   .actions-columns {
     .nice-icon {
-      color: var(--primary-color);
+      color: var(--nice-primary-color);
       height: 20px;
       width: 20px;
     }
@@ -591,18 +591,18 @@ export default {
 
   .no-data,
   .nice-loading {
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid var(--nice-border-color);
     padding: 2rem;
     text-align: center;
   }
 
   .no-data {
-    color: var(--border-color);
+    color: var(--nice-border-color);
     font-size: 0.8em;
   }
 
   .nice-table-footer {
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid var(--nice-border-color);
     padding: 1rem 1.5rem;
     display: flex;
     align-items: center;

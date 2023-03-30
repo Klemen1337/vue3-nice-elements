@@ -271,7 +271,7 @@ export default {
 
 <style lang="scss" scoped>
 .nice-filters-btn {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--nice-border-color);
 }
 .nice-filters-filters {
   width: 250px;
@@ -300,8 +300,8 @@ export default {
     }
 
     // &:has(.btn:hover) {
-    //   background-color: var(--danger-color-lighter);
-    //   color: var(--danger-color);
+    //   background-color: var(--nice-danger-color-lighter);
+    //   color: var(--nice-danger-color);
     // }
 
     .btn .nice-icon {

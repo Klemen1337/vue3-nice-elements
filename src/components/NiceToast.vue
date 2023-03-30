@@ -76,8 +76,8 @@ export default {
   align-items: center;
 
   .nice-toast {
-    background: var(--primary-color);
-    color: var(--primary-color-lighter);
+    background: var(--nice-primary-color);
+    color: var(--nice-primary-color-lighter);
     padding: 5px 1rem;
     border-radius: 30px;
     // font-size: 0.8em;

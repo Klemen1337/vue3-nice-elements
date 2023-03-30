@@ -48,7 +48,7 @@ export default {
     width: 25px;
     max-height: 100%;
     max-width: 100%;
-    // fill: var(--primary-color);
+    // fill: var(--nice-primary-color);
     z-index: 2;
   }
 
@@ -85,7 +85,7 @@ export default {
     align-items: center;
     justify-content: center;
     background: rgba(0, 0, 0, 0.02);
-    border-radius: var(--border-radius);
+    border-radius: var(--nice-border-radius);
     z-index: 1;
   }
 }

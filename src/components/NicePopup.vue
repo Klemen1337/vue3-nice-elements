@@ -195,7 +195,7 @@ export default {
         visibility: visible;
         content: "";
         transform: rotate(45deg);
-        background: var(--card-bg);
+        background: var(--nice-card-bg);
       }
     }
 
@@ -217,9 +217,9 @@ export default {
 
     .nice-popup-content {
       padding: 1rem;
-      border-radius: var(--border-radius);
-      color: var(--font-color);
-      background: var(--card-bg);
+      border-radius: var(--nice-border-radius);
+      color: var(--nice-font-color);
+      background: var(--nice-card-bg);
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
       overflow: hidden;
 

@@ -88,12 +88,12 @@ export default {
 <style lang="scss" scoped>
 .nice-wrapper {
   --padding: 2rem;
-  border-radius: var(--border-radius-large);
-  background: var(--card-bg);
+  border-radius: var(--nice-border-radius-large);
+  background: var(--nice-card-bg);
   display: block;
   margin-bottom: 2rem;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--nice-border-color);
 
   .wrapper-header {
     padding: var(--padding);
@@ -107,7 +107,7 @@ export default {
       left: 0;
       width: 100%;
       height: 100%;
-      // background: var(--danger-color);
+      // background: var(--nice-danger-color);
       z-index: 1;
       cursor: pointer;
     }

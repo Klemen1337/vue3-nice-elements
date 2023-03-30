@@ -31,7 +31,7 @@ export default {
     font-size: 0.8em;
 
     .nice-component-requried {
-      color: var(--danger-color);
+      color: var(--nice-danger-color);
     }
   }
 

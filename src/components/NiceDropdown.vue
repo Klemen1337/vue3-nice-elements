@@ -412,7 +412,7 @@ export default {
       &:focus-within {
         .selected-value {
           outline-offset: 2px;
-          outline: 2px solid var(--primary-color);
+          outline: 2px solid var(--nice-primary-color);
         }
       }
     }
@@ -458,11 +458,11 @@ export default {
     .selected-value {
       position: relative;
       font-size: 1em;
-      background: var(--card-bg);
+      background: var(--nice-card-bg);
       padding: 4px 2.5rem 5px 12px;
       min-height: 34px !important;
-      border-radius: var(--border-radius);
-      border: 1px solid var(--border-color);
+      border-radius: var(--nice-border-radius);
+      border: 1px solid var(--nice-border-color);
       min-height: var(--nice-height);
       cursor: pointer;
       display: flex;
@@ -471,7 +471,7 @@ export default {
       &:focus,
       &.focus {
         background: var(--nice-bg-focus);
-        // border-color: var(--primary-color);
+        // border-color: var(--nice-primary-color);
       }
 
       &:hover {
@@ -486,10 +486,10 @@ export default {
   }
 
   .nice-dropdown-popup {
-    background: var(--card-bg);
+    background: var(--nice-card-bg);
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
-    border-radius: var(--border-radius);
-    border: 1px solid var(--border-color);
+    border-radius: var(--nice-border-radius);
+    border: 1px solid var(--nice-border-color);
     overflow: hidden;
 
     .input-group {
@@ -498,8 +498,8 @@ export default {
 
       input {
         border: 0 none;
-        border-bottom: 1px solid var(--border-color);
-        background: var(--card-bg);
+        border-bottom: 1px solid var(--nice-border-color);
+        background: var(--nice-card-bg);
         border-radius: 0;
 
         &:focus {
@@ -523,14 +523,14 @@ export default {
 //   width: 250px;
 
 //   .divider {
-//     border-bottom: 1px solid var(--border-color);
+//     border-bottom: 1px solid var(--nice-border-color);
 //   }
 
 //   .element {
 //     display: flex;
 //     align-items: center;
 //     padding: 0.8rem 1rem;
-//     color: var(--font-color);
+//     color: var(--nice-font-color);
 
 //     .nice-icon {
 //       height: 18px;
@@ -539,7 +539,7 @@ export default {
 //     }
 
 //     &:hover {
-//       background: var(--hover-color);
+//       background: var(--nice-hover-color);
 //     }
 
 //     &:last-child {
@@ -555,7 +555,7 @@ export default {
         display: flex;
         align-items: center;
         padding: 0.8rem 1rem;
-        color: var(--font-color);
+        color: var(--nice-font-color);
 
         &.no-options {
           text-align: center;
@@ -571,11 +571,11 @@ export default {
 
         &:hover,
         &.hover {
-          background: var(--hover-color);
+          background: var(--nice-hover-color);
         }
 
         &.selected {
-          background: var(--primary-color);
+          background: var(--nice-primary-color);
           color: white;
         }
       }

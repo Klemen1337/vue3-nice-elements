@@ -126,7 +126,7 @@ export default {
 
     &:hover,
     &.active {
-      background: var(--primary-color);
+      background: var(--nice-primary-color);
     }
   }
 
@@ -137,7 +137,7 @@ export default {
     width: var(--side-view-width);
     max-width: 90%;
     height: 100%;
-    background: var(--background-color);
+    background: var(--nice-background-color);
     padding: 2rem;
     box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
     z-index: 2;

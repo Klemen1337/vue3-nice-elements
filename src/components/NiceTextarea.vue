@@ -109,9 +109,9 @@ export default {
   .input-group {
     min-height: var(--nice-height);
     display: flex;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    background: var(--card-bg);
+    border: 1px solid var(--nice-border-color);
+    border-radius: var(--nice-border-radius);
+    background: var(--nice-card-bg);
     overflow: hidden;
 
     .input-group-icon {
@@ -129,7 +129,7 @@ export default {
     }
 
     .input-group-suffix + input {
-      // border-left: 1px solid var(--border-color);
+      // border-left: 1px solid var(--nice-border-color);
       .nice-button {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
@@ -137,7 +137,7 @@ export default {
     }
 
     input + .input-group-append {
-      // border-left: 1px solid var(--border-color);
+      // border-left: 1px solid var(--nice-border-color);
       .nice-button {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
@@ -152,7 +152,7 @@ export default {
       background: transparent;
 
       &::placeholder {
-        color: var(--border-color);
+        color: var(--nice-border-color);
       }
     }
   }

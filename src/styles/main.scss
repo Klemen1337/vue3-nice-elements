@@ -4,7 +4,7 @@
 
 .nice-focus {
   outline-offset: 3px;
-  offset: 2px solid var(--primary-color);
+  offset: 2px solid var(--nice-primary-color);
 }
 
 .nice-component {
@@ -27,7 +27,7 @@
     font-size: 0.8em;
 
     &.nice-error {
-      color: var(--danger-color);
+      color: var(--nice-danger-color);
       opacity: 1;
     }
   }
@@ -76,17 +76,17 @@
     max-width: 100%;
     display: block;
     font-size: 1em;
-    background: var(--input-bg);
+    background: var(--nice-input-bg);
     padding: 0.2rem 1rem;
     padding-right: 2.5rem;
-    border-radius: var(--border-radius);
-    border: 1px solid var(--border-color);
+    border-radius: var(--nice-border-radius);
+    border: 1px solid var(--nice-border-color);
     font-family: inherit;
     height: var(--nice-height);
     color: currentColor;
 
     &.no-value {
-      color: var(--danger-color);
+      color: var(--nice-danger-color);
     }
 
     &:focus {
@@ -122,10 +122,10 @@
     max-width: 100%;
     display: block;
     // font-size: 1em;
-    background: var(--input-bg);
+    background: var(--nice-input-bg);
     padding: 0.2rem 1rem;
-    border-radius: var(--border-radius);
-    border: 1px solid var(--border-color);
+    border-radius: var(--nice-border-radius);
+    border: 1px solid var(--nice-border-color);
     font-family: inherit;
     height: var(--nice-height);
     color: currentColor;
@@ -145,7 +145,7 @@
   }
 
   // rgba(0,0,0,0.3);
-  --placeholder-color: var(--font-color);
+  --placeholder-color: var(--nice-font-color);
 
   ::-webkit-input-placeholder {
     /* Chrome/Opera/Safari */

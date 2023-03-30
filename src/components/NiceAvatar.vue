@@ -113,8 +113,8 @@ export default {
   display: inline-block;
   width: var(--nice-height);
   height: var(--nice-height);
-  background: var(--primary-color);
-  color: var(--primary-color-lighter);
+  background: var(--nice-primary-color);
+  color: var(--nice-primary-color-lighter);
   font-size: 1em;
   line-height: 0;
   text-transform: uppercase;
@@ -169,7 +169,7 @@ export default {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: var(--primary-color);
+    background: var(--nice-primary-color);
     border: 2px solid white;
     z-index: 4;
   }
@@ -197,7 +197,7 @@ export default {
 
   // Shape
   &.shape-rounded {
-    --radius: var(--border-radius);
+    --radius: var(--nice-border-radius);
   }
 
   &.shape-square {
@@ -215,7 +215,7 @@ export default {
 
   &.type-dark {
     color: white;
-    background: var(--dark-color);
+    background: var(--nice-dark-color);
   }
 
   // Plain
@@ -228,7 +228,7 @@ export default {
 
   &.plain.type-dark {
     color: white;
-    background: var(--secondary-color);
+    background: var(--nice-secondary-color);
   }
 
   // Status

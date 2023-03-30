@@ -81,34 +81,34 @@ export default {
   &.active,
   &:active {
     .nice-checkbox-box {
-      background: var(--primary-color);
-      border-color: var(--primary-color);
-      box-shadow: 0 2px 3px var(--primary-color-shadow);
+      background: var(--nice-primary-color);
+      border-color: var(--nice-primary-color);
+      box-shadow: 0 2px 3px var(--nice-primary-color-shadow);
     }
   }
 
   &:focus-within {
     .nice-checkbox-box {
       outline-offset: 2px;
-      outline: 2px solid var(--primary-color);
+      outline: 2px solid var(--nice-primary-color);
     }
   }
 
   &:hover {
     .nice-checkbox-box {
-      box-shadow: 0 0 4px var(--primary-color-shadow);
+      box-shadow: 0 0 4px var(--nice-primary-color-shadow);
     }
   }
 
   .nice-checkbox-box {
     height: 16px;
     width: 16px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--nice-border-color);
     border-radius: 3px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--input-bg);
+    background: var(--nice-input-bg);
     color: white;
 
     svg {
@@ -117,7 +117,7 @@ export default {
     }
 
     &:hover {
-      border-color: var(--primary-color);
+      border-color: var(--nice-primary-color);
     }
   }
 

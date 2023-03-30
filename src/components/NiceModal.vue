@@ -132,8 +132,8 @@ export default {
   --nice-modal-padding: 2rem;
   display: flex;
   flex-direction: column;
-  background: var(--card-bg);
-  border-radius: var(--border-radius);
+  background: var(--nice-card-bg);
+  border-radius: var(--nice-border-radius);
   max-width: 90%;
   max-height: 90%;
   z-index: 2001;

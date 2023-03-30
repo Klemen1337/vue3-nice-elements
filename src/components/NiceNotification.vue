@@ -64,10 +64,10 @@ export default {
 
 <style lang="scss" scoped>
 .nice-notification {
-  background: var(--card-bg);
-  color: var(--font-color);
+  background: var(--nice-card-bg);
+  color: var(--nice-font-color);
   padding: 1rem;
-  border-radius: var(--border-radius);
+  border-radius: var(--nice-border-radius);
   margin: 0.5rem 1rem;
   width: 300px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);

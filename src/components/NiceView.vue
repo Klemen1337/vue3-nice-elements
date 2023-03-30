@@ -107,7 +107,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    background: var(--background-color);
+    background: var(--nice-background-color);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.03);
     flex-shrink: 0;
   }

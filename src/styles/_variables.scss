@@ -2,88 +2,88 @@ $types: "primary", "default", "success", "warning", "danger", "info", "dark",
   "white";
 
 :root {
-  --font-color: #173c61;
-  --background-color: #f5f5f9;
-  --border-radius: 5px;
-  --border-radius-large: 10px;
-  --border-color: #e4e7ea;
-  --card-bg: #fff;
-  --hover-color: #f5f5f9;
-  --input-bg: #ffffff;
+  --nice-font-color: #173c61;
+  --nice-background-color: #f5f5f9;
+  --nice-border-radius: 5px;
+  --nice-border-radius-large: 10px;
+  --nice-border-color: #e4e7ea;
+  --nice-card-bg: #fff;
+  --nice-hover-color: #f5f5f9;
+  --nice-input-bg: #ffffff;
 
-  --primary-font: white;
-  --primary-color: #696cff;
-  --primary-color-darker: #595bda;
-  --primary-color-lighter: #f1f5ff;
-  --primary-color-shadow: #cccdff;
+  --nice-primary-font: white;
+  --nice-primary-color: #696cff;
+  --nice-primary-color-darker: #595bda;
+  --nice-primary-color-lighter: #f1f5ff;
+  --nice-primary-color-shadow: #cccdff;
 
-  --secondary-font: white;
-  --secondary-color: #8592a3;
-  --secondary-color-darker: #748296;
-  --secondary-color-lighter: #ebedf0;
-  --secondary-color-shadow: #d6dae0;
+  --nice-secondary-font: white;
+  --nice-secondary-color: #8592a3;
+  --nice-secondary-color-darker: #748296;
+  --nice-secondary-color-lighter: #ebedf0;
+  --nice-secondary-color-shadow: #d6dae0;
 
-  --default-font: var(--secondary-font);
-  --default-color: var(--secondary-color);
-  --default-color-darker: var(--secondary-color-darker);
-  --default-color-lighter: var(--secondary-color-lighter);
-  --default-color-shadow: var(--secondary-color-shadow);
+  --nice-default-font: var(--nice-secondary-font);
+  --nice-default-color: var(--nice-secondary-color);
+  --nice-default-color-darker: var(--nice-secondary-color-darker);
+  --nice-default-color-lighter: var(--nice-secondary-color-lighter);
+  --nice-default-color-shadow: var(--nice-secondary-color-shadow);
 
-  --success-font: white;
-  --success-color: #71dd37;
-  --success-color-darker: #61d424;
-  --success-color-lighter: #e9f9e0;
-  --success-color-shadow: #cff3bc;
+  --nice-success-font: white;
+  --nice-success-color: #71dd37;
+  --nice-success-color-darker: #61d424;
+  --nice-success-color-lighter: #e9f9e0;
+  --nice-success-color-shadow: #cff3bc;
 
-  --danger-font: white;
-  --danger-color: #f33d1e;
-  --danger-color-darker: #e92c0c;
-  --danger-color-lighter: #fce0dc;
-  --danger-color-shadow: #f9beb2;
+  --nice-danger-font: white;
+  --nice-danger-color: #f33d1e;
+  --nice-danger-color-darker: #e92c0c;
+  --nice-danger-color-lighter: #fce0dc;
+  --nice-danger-color-shadow: #f9beb2;
 
-  --warning-font: white;
-  --warning-color: #f6ab02;
-  --warning-color-darker: #dd9901;
-  --warning-color-lighter: #fcf1d6;
-  --warning-color-shadow: #fae2a8;
+  --nice-warning-font: white;
+  --nice-warning-color: #f6ab02;
+  --nice-warning-color-darker: #dd9901;
+  --nice-warning-color-lighter: #fcf1d6;
+  --nice-warning-color-shadow: #fae2a8;
 
-  --info-font: white;
-  --info-color: #4cc4ec;
-  --info-color-darker: #2fbae9;
-  --info-color-lighter: #d7f5fc;
-  --info-color-shadow: #a9ebf8;
+  --nice-info-font: white;
+  --nice-info-color: #4cc4ec;
+  --nice-info-color-darker: #2fbae9;
+  --nice-info-color-lighter: #d7f5fc;
+  --nice-info-color-shadow: #a9ebf8;
 
-  --dark-font: white;
-  --dark-color: #233446;
-  --dark-color-darker: #1f2e3f;
-  --dark-color-lighter: #e2e4e8;
-  --dark-color-shadow: #dfe3e7;
+  --nice-dark-font: white;
+  --nice-dark-color: #233446;
+  --nice-dark-color-darker: #1f2e3f;
+  --nice-dark-color-lighter: #e2e4e8;
+  --nice-dark-color-shadow: #dfe3e7;
 
-  --white-font: var(--font-color);
-  --white-color: white;
-  --white-color-darker: white;
-  --white-color-lighter: white;
-  --white-color-shadow: #dfe3e7;
+  --nice-white-font: var(--nice-font-color);
+  --nice-white-color: white;
+  --nice-white-color-darker: white;
+  --nice-white-color-lighter: white;
+  --nice-white-color-shadow: #dfe3e7;
 }
 
 .dark {
-  --font-color: white;
-  --background-color: #232333;
-  --border-color: #3b3d56;
-  --card-bg: #2b2c40;
-  --hover-color: #252537;
-  --input-bg: #2b2c40;
+  --nice-font-color: white;
+  --nice-background-color: #232333;
+  --nice-border-color: #3b3d56;
+  --nice-card-bg: #2b2c40;
+  --nice-hover-color: #252537;
+  --nice-input-bg: #2b2c40;
 
   @each $type in $types {
     --#{$type}-color-shadow: rgba(0, 0, 0, 0.1);
   }
 
-  --primary-color-lighter: #2a2a4d;
-  --secondary-color-lighter: #2e303f;
-  --default-color-lighter: #2e303f;
-  --success-color-lighter: #2b3c2d;
-  --danger-color-lighter: #422329;
-  --warning-color-lighter: #423424;
-  --info-color-lighter: #19384a;
-  --dark-color-lighter: #2a2a3d;
+  --nice-primary-color-lighter: #2a2a4d;
+  --nice-secondary-color-lighter: #2e303f;
+  --nice-default-color-lighter: #2e303f;
+  --nice-success-color-lighter: #2b3c2d;
+  --nice-danger-color-lighter: #422329;
+  --nice-warning-color-lighter: #423424;
+  --nice-info-color-lighter: #19384a;
+  --nice-dark-color-lighter: #2a2a3d;
 }

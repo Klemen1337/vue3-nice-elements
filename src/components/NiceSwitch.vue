@@ -105,13 +105,13 @@ export default {
   &:focus-within {
     .nice-switch-box {
       outline-offset: 2px;
-      outline: 2px solid var(--primary-color);
+      outline: 2px solid var(--nice-primary-color);
     }
   }
 
   &.active {
     .nice-switch-box {
-      background: var(--primary-color);
+      background: var(--nice-primary-color);
 
       .nice-switch-handle {
         transform: translateX(100%);
@@ -122,8 +122,8 @@ export default {
   .nice-switch-box {
     height: calc(var(--size) + 8px);
     width: calc(calc(2 * var(--size)) + 8px);
-    border: 1px solid var(--border-color);
-    background: var(--border-color);
+    border: 1px solid var(--nice-border-color);
+    background: var(--nice-border-color);
     border-radius: 20px;
     position: relative;
     transition: all 0.3s;
@@ -137,7 +137,7 @@ export default {
       height: var(--size);
       border-radius: 50%;
       transform: translateX(0%);
-      background: var(--card-bg);
+      background: var(--nice-card-bg);
       transition: all 0.3s;
     }
   }
