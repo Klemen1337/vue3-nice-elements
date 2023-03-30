@@ -1,5 +1,6 @@
 import mitt from "mitt";
 import components from'./components'
+import './styles/main.scss'
 
 const plugin = {
   install (Vue) {

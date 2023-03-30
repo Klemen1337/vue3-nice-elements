@@ -1,34 +1,29 @@
 <script setup>
-import { onMounted, ref } from "vue";
-
-// import { NiceIcon } from "./components"
-import NiceIcon from "./components/NiceIcon.vue";
-import NiceSvgs from "./components/NiceSvgs.vue";
+import { onMounted, ref } from 'vue'
 
 const list = [
-  { id: 1, value: "List 1" },
-  { id: 2, value: "List 2" },
-  { id: 3, value: "List 3" },
-  { id: 4, value: "List 4" },
-  { id: 5, value: "List 5" },
+  { id: 1, value: 'List 1' },
+  { id: 2, value: 'List 2' },
+  { id: 3, value: 'List 3' },
+  { id: 4, value: 'List 4' },
+  { id: 5, value: 'List 5' }
 ]
 async function searchList() {
   return list
 }
 
-const types = ["primary", "default", "success", "warning", "danger", "info", "dark",
-  "white"]
-const selectedIcon = ref("icon-check");
-let icons = ref([]);
+const types = ['primary', 'default', 'success', 'warning', 'danger', 'info', 'dark', 'white']
+const selectedIcon = ref('icon-check')
+const icons = ref([])
 const form = ref({
-  niceInputName: "",
-  niceInputEmail: "",
+  niceInputName: '',
+  niceInputEmail: '',
   niceDropdown: null,
   niceDropdownSimple: null
 })
 
 onMounted(() => {
-  icons.value = Array.from(document.getElementsByTagName("symbol")).map(element => {
+  icons.value = Array.from(document.getElementsByTagName('symbol')).map((element) => {
     return element.id
   })
 })
@@ -41,84 +36,114 @@ onMounted(() => {
     <!-- Nice input -->
     <NiceWrapper title="Nice input" id="nice-input">
       <NiceInput title="Name" v-model="form.niceInputName" />
-      <pre>&lt;NiceInput 
+      <pre>
+&lt;NiceInput 
   title="Name" 
   v-model="form.niceInputName" 
-/></pre>
+/></pre
+      >
 
       <NiceInput title="Email" type="email" v-model="form.niceInputEmail" />
-      <pre>&lt;NiceInput 
+      <pre>
+&lt;NiceInput 
   title="Email" 
   type="email" 
   v-model="form.niceInputEmail" 
-/></pre>
+/></pre
+      >
     </NiceWrapper>
-
 
     <!-- Nice dropdown -->
     <NiceWrapper title="Nice dropdown" id="nice-dropdown">
       <NiceDropdown title="Dropdown" v-model="form.niceDropdown" :search-function="searchList" />
-      <pre>&lt;NiceDropdown 
+      <pre>
+&lt;NiceDropdown 
   title="Dropdown" 
   v-model="form.niceDropdown" 
   :search-function="searchList 
-/></pre>
+/></pre
+      >
 
       <NiceDropdownSimple title="Native" v-model="form.niceDropdownSimple" :values="list" />
-      <pre>&lt;NiceDropdownSimple 
+      <pre>
+&lt;NiceDropdownSimple 
   title="Native" 
   v-model="form.niceDropdown" 
   :values="list"
-/></pre>
+/></pre
+      >
     </NiceWrapper>
-
 
     <!-- Nice button -->
     <NiceWrapper title="Nice button" id="nice-button" collapsable>
       <div class="buttons">
         <div class="buttons-wrap" v-for="t in types" :key="t">
           <NiceButton icon="icon-circle" :type="t" size="large">{{ t }} large</NiceButton>
-          <NiceButton icon="icon-circle" :type="t" >{{ t }} medium</NiceButton>
+          <NiceButton icon="icon-circle" :type="t">{{ t }} medium</NiceButton>
           <NiceButton icon="icon-circle" :type="t" size="small">{{ t }} small</NiceButton>
         </div>
-  
+
         <div class="buttons-wrap" v-for="t in types" :key="t">
-          <NiceButton icon="icon-circle" :type="t" plain size="large">{{ t }} large plain</NiceButton>
-          <NiceButton icon="icon-circle" :type="t" plain >{{ t }} medium plain</NiceButton>
-          <NiceButton icon="icon-circle" :type="t" plain size="small">{{ t }} small plain</NiceButton>
+          <NiceButton icon="icon-circle" :type="t" plain size="large"
+            >{{ t }} large plain</NiceButton
+          >
+          <NiceButton icon="icon-circle" :type="t" plain>{{ t }} medium plain</NiceButton>
+          <NiceButton icon="icon-circle" :type="t" plain size="small"
+            >{{ t }} small plain</NiceButton
+          >
         </div>
 
         <div class="buttons-wrap" v-for="t in types" :key="t">
-          <NiceButton icon="icon-circle" :type="t" naked size="large">{{ t }} large naked</NiceButton>
-          <NiceButton icon="icon-circle" :type="t" naked >{{ t }} medium naked</NiceButton>
-          <NiceButton icon="icon-circle" :type="t" naked size="small">{{ t }} small naked</NiceButton>
+          <NiceButton icon="icon-circle" :type="t" naked size="large"
+            >{{ t }} large naked</NiceButton
+          >
+          <NiceButton icon="icon-circle" :type="t" naked>{{ t }} medium naked</NiceButton>
+          <NiceButton icon="icon-circle" :type="t" naked size="small"
+            >{{ t }} small naked</NiceButton
+          >
         </div>
 
         <div class="buttons-wrap" v-for="t in types" :key="t">
-          <NiceButton icon="icon-circle" :type="t" rounded size="large">{{ t }} large rounded</NiceButton>
+          <NiceButton icon="icon-circle" :type="t" rounded size="large"
+            >{{ t }} large rounded</NiceButton
+          >
           <NiceButton icon="icon-circle" :type="t" rounded>{{ t }} medium rounded</NiceButton>
-          <NiceButton icon="icon-circle" :type="t" rounded size="small">{{ t }} small rounded</NiceButton>
+          <NiceButton icon="icon-circle" :type="t" rounded size="small"
+            >{{ t }} small rounded</NiceButton
+          >
         </div>
 
         <div class="buttons-wrap" v-for="t in types" :key="t">
-          <NiceButton icon="icon-circle" :type="t" outline size="large">{{ t }} large outline</NiceButton>
+          <NiceButton icon="icon-circle" :type="t" outline size="large"
+            >{{ t }} large outline</NiceButton
+          >
           <NiceButton icon="icon-circle" :type="t" outline>{{ t }} medium outline</NiceButton>
-          <NiceButton icon="icon-circle" :type="t" outline size="small">{{ t }} small outline</NiceButton>
+          <NiceButton icon="icon-circle" :type="t" outline size="small"
+            >{{ t }} small outline</NiceButton
+          >
         </div>
       </div>
     </NiceWrapper>
-
 
     <!-- Nice icon -->
     <NiceWrapper title="Nice icon" id="nice-icon" collapsable>
       <NiceIcon :icon="selectedIcon" />
-      <pre>&lt;NiceIcon icon="{{  selectedIcon  }}" /></pre>
+      <pre>&lt;NiceIcon icon="{{ selectedIcon }}" /></pre>
 
       <div class="icons">
-        <NiceButton :icon="icon" size="small" type="primary" plain :class="{'active': selectedIcon == icon }" v-for="icon in icons" :key="icon" @click="selectedIcon = icon" />
+        <NiceButton
+          :icon="icon"
+          size="small"
+          type="primary"
+          plain
+          :class="{ active: selectedIcon == icon }"
+          v-for="icon in icons"
+          :key="icon"
+          @click="selectedIcon = icon"
+        />
       </div>
     </NiceWrapper>
-  
+
     <!-- <pre>{{  form  }}</pre> -->
   </div>
 
@@ -213,7 +238,6 @@ onMounted(() => {
   --dark-color-lighter: #2a2a3d;
 }
 
-
 html,
 body {
   padding: 0;
@@ -222,9 +246,8 @@ body {
   line-height: 1.4;
   color: var(--font-color);
   background: var(--background-color);
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
 .demo {
