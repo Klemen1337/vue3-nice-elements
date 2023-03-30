@@ -204,7 +204,7 @@ export default {
     },
     valueName: {
       type: String,
-      default: "name",
+      default: "value",
     },
   },
 
@@ -435,7 +435,7 @@ export default {
     .arrow-down {
       position: absolute;
       top: 50%;
-      right: 1rem;
+      right: 0.5rem;
       margin-top: -9px;
       width: 18px;
       height: 18px;
@@ -459,7 +459,8 @@ export default {
       position: relative;
       font-size: 1em;
       background: var(--card-bg);
-      padding: 8px 2.5rem 8px 12px;
+      padding: 4px 2.5rem 5px 12px;
+      min-height: 34px !important;
       border-radius: var(--border-radius);
       border: 1px solid var(--border-color);
       min-height: var(--nice-height);
@@ -517,11 +518,44 @@ export default {
       }
     }
 
+    // -------------------------- LIST --------------------------
+// .list {
+//   width: 250px;
+
+//   .divider {
+//     border-bottom: 1px solid var(--border-color);
+//   }
+
+//   .element {
+//     display: flex;
+//     align-items: center;
+//     padding: 0.8rem 1rem;
+//     color: var(--font-color);
+
+//     .nice-icon {
+//       height: 18px;
+//       width: 18px;
+//       margin-right: 0.5rem;
+//     }
+
+//     &:hover {
+//       background: var(--hover-color);
+//     }
+
+//     &:last-child {
+//       border-bottom: 0 none;
+//     }
+//   }
+// }
     .list {
       max-height: 300px;
       overflow: auto;
       .element {
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        padding: 0.8rem 1rem;
+        color: var(--font-color);
 
         &.no-options {
           text-align: center;

@@ -20,7 +20,7 @@
         ref="arrow"
         v-show="showArrow"
       ></div>
-      <div class="nice-popup-content" :class="{ 'p-0': noPadding }">
+      <div class="nice-popup-content" :class="{ 'no-padding': noPadding }">
         <slot name="content"></slot>
       </div>
     </div>
@@ -222,6 +222,10 @@ export default {
       background: var(--card-bg);
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
       overflow: hidden;
+
+      &.no-padding {
+        padding: 0;
+      }
     }
   }
 

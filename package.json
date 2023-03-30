@@ -1,6 +1,6 @@
 {
   "name": "vue3-nice-elements",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "files": [
     "dist"
@@ -27,9 +27,9 @@
     "gradient-avatar": "^1.0.2",
     "just-safe-get": "^4.2.0",
     "md5": "^2.3.0",
+    "mitt": "^3.0.0",
     "vue": "^3.2.47",
-    "vue3-gettext": "^2.5.0-alpha.1",
-    "vuex": "^4.1.0"
+    "vue3-gettext": "^2.5.0-alpha.1"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
@@ -40,7 +40,6 @@
     "eslint-plugin-vue": "^9.9.0",
     "prettier": "^2.8.4",
     "sass": "^1.60.0",
-    "scss": "^0.2.4",
     "vite": "^4.1.4"
   }
 }

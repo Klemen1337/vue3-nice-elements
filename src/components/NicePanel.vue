@@ -29,8 +29,6 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
-
 export default {
   name: "SideView",
 
@@ -51,11 +49,8 @@ export default {
     return {
       isOpen: false,
       dragging: false,
+      sideViewWidth: 500
     };
-  },
-
-  computed: {
-    ...mapState("nice", ["sideViewWidth"]),
   },
 
   mounted() {
@@ -75,7 +70,9 @@ export default {
   },
 
   methods: {
-    ...mapMutations("nice", ["changeSideViewWidth"]),
+    changeSideViewWidth(value) {
+      this.sideViewWidth = value
+    },
 
     focusOnInput() {
       setTimeout(() => {

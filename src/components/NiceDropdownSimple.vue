@@ -160,13 +160,37 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.nice-dropdown {
+.nice-dropdown-simple {
   .input-group {
     margin-bottom: 0;
     display: flex;
 
     .select-wrapper {
       flex-grow: 1;
+      position: relative;
+
+      .arrow-down {
+        position: absolute;
+        top: 50%;
+        right: 0.5rem;
+        margin-top: -9px;
+        width: 18px;
+        height: 18px;
+      }
+
+      select {
+        position: relative;
+        font-size: 1em;
+        background: var(--card-bg);
+        padding: 3px 2.5rem 4px 12px;
+        min-height: 34px !important;
+        border-radius: var(--border-radius);
+        border: 1px solid var(--border-color);
+        min-height: var(--nice-height);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+      }
 
       &.no-value {
         select {

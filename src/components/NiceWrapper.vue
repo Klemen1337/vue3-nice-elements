@@ -29,7 +29,7 @@
     </div>
 
     <!-- Body -->
-    <div class="wrapper-body" :class="{ 'p-0': noBodyPadding }" v-if="isOpen">
+    <div class="wrapper-body" :class="{ 'no-padding': noBodyPadding }" v-if="isOpen">
       <slot></slot>
     </div>
 
@@ -142,6 +142,10 @@ export default {
   .wrapper-body {
     padding: var(--padding);
     padding-top: 0;
+
+    &.no-padding {
+      padding: 0;
+    }
   }
 
   .wrapper-footer {
