@@ -150,7 +150,7 @@ export default {
   $types: "primary", "default", "success", "warning", "danger", "info", "dark";
   @each $type in $types {
     &.nice-switch-#{$type}.active .nice-switch-box {
-      background: var(--#{$type}-color);
+      background: var(--nice-#{$type}-color);
     }
   }
 

@@ -30,7 +30,7 @@
 
 <script>
 export default {
-  name: "SideView",
+  name: "NicePanel",
 
   props: {
     name: {

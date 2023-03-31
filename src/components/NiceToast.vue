@@ -89,8 +89,8 @@ export default {
     $types: "primary", "default", "success", "warning", "danger", "info", "dark";
     @each $type in $types {
       &.nice-toast-#{$type} {
-        background: var(--#{$type}-color-lighter);
-        color: var(--#{$type}-color);
+        background: var(--nice-#{$type}-color-lighter);
+        color: var(--nice-#{$type}-color);
       }
     }
   }

@@ -3,13 +3,12 @@
     class="nice-loading"
     :class="[size ? 'nice-loading-' + size : '', { 'full-div': fullDiv }]"
   >
-    <NiceIcon icon="icon-loader" />
-    <!-- <div class="lds-ring">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div> -->
+    <!-- <NiceIcon icon="icon-loading" /> -->
+    <div class="nice-loading-wrapper">
+      <NiceIcon icon="icon-half-loading" />
+      <NiceIcon icon="icon-half-loading" />
+    </div>
+    <div class="nice-loading-message" v-if="message">{{ message }}</div>
   </div>
 </template>
 
@@ -30,7 +29,7 @@ export default {
       type: String,
       default: null,
       validator(value) {
-        return ["small", "large"].includes(value);
+        return ["mini", "small", "large"].includes(value);
       },
     },
   },
@@ -39,17 +38,37 @@ export default {
 
 <style lang="scss" scoped>
 .nice-loading {
-  padding: 1rem;
-  text-align: center;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-  svg {
-    animation: 2s rotate linear infinite;
+  .nice-loading-wrapper {
+    position: relative;
+    display: inline-block;
     height: 25px;
     width: 25px;
     max-height: 100%;
     max-width: 100%;
-    // fill: var(--nice-primary-color);
     z-index: 2;
+  }
+
+  .nice-loading-message {
+    margin-top: 0.2rem;
+    font-size: 0.8em;
+  }
+
+  svg {
+    animation: 1s rotate linear infinite;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    &:first-child {
+      animation-duration: 0.5s;
+    }
   }
 
   @keyframes rotate {
@@ -60,18 +79,25 @@ export default {
       transform: rotate(360deg);
     }
   }
+  
+  &.nice-loading-mini {
+    .nice-loading-wrapper  {
+      height: 12px;
+      width: 12px;
+    }
+  }
 
   &.nice-loading-small {
-    svg {
-      height: 20px;
-      width: 20px;
+    .nice-loading-wrapper  {
+      height: 18px;
+      width: 18px;
     }
   }
 
   &.nice-loading-large {
-    svg {
-      height: var(--nice-height-large);
-      width: var(--nice-height-large);
+    .nice-loading-wrapper  {
+      height: 40px;
+      width: 40px;
     }
   }
 
@@ -81,12 +107,9 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.02);
+    background: rgba(255, 255, 255, 0.4);
     border-radius: var(--nice-border-radius);
-    z-index: 1;
+    z-index: 10;
   }
 }
 </style>

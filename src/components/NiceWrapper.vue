@@ -94,6 +94,7 @@ export default {
   margin-bottom: 2rem;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
   border: 1px solid var(--nice-border-color);
+  position: relative;
 
   .wrapper-header {
     padding: var(--padding);

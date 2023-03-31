@@ -72,6 +72,11 @@ export default {
     shape: {
       type: String,
       default: null,
+      validator(value) {
+        return [
+          "rounded", "square",
+        ].includes(value);
+      },
     },
     image: {
       type: String,
@@ -181,8 +186,8 @@ export default {
   }
 
   &.size-medium {
-    --nice-height: 34px;
-    font-size: 0.9em;
+    --nice-height: 45px;
+    font-size: 1.1em;
   }
 
   &.size-small {
@@ -208,8 +213,8 @@ export default {
   $types: "primary", "default", "success", "warning", "danger", "info";
   @each $type in $types {
     &.type-#{$type} {
-      color: var(--#{$type}-color-lighter);
-      background: var(--#{$type}-color);
+      color: var(--nice-#{$type}-color-lighter);
+      background: var(--nice-#{$type}-color);
     }
   }
 
@@ -221,8 +226,8 @@ export default {
   // Plain
   @each $type in $types {
     &.plain.type-#{$type} {
-      color: var(--#{$type}-color-darker);
-      background: var(--#{$type}-color-lighter);
+      color: var(--nice-#{$type}-color-darker);
+      background: var(--nice-#{$type}-color-lighter);
     }
   }
 
@@ -235,7 +240,7 @@ export default {
   @each $type in $types {
     &.status-#{$type} {
       .status {
-        background: var(--#{$type}-color);
+        background: var(--nice-#{$type}-color);
       }
     }
   }

@@ -95,7 +95,7 @@ export default {
   $types: "primary", "default", "success", "warning", "danger", "info", "dark";
   @each $type in $types {
     &.nice-notification-#{$type} {
-      background: var(--#{$type}-color);
+      background: var(--nice-#{$type}-color);
       color: white;
     }
   }

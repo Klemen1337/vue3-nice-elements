@@ -3,16 +3,15 @@ import components from'./components'
 import './styles/main.scss'
 
 const plugin = {
-  install (Vue) {
+  install (app, options) {
     for (const prop in components) {
       const component = components[prop]
-      Vue.component(component.name, component)
+      app.component(component.name, component)
     }
 
     const emitter = mitt();
-
-    Vue.config.globalProperties.$nice = {
-      debug: false,
+    const service = {
+      debug: options ? options.debug : false,
       emitter,
 
       // Notification
@@ -39,6 +38,9 @@ const plugin = {
         emitter.emit("modal", { name, isOpen });
       },
     };
+
+    app.config.globalProperties.$nice = service;
+    app.provide('nice', service);
   }
 }
 
