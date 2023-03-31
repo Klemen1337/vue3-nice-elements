@@ -72,7 +72,7 @@ export default {
       type: String,
       default: null,
       validator(value) {
-        return ["small", "large"].includes(value);
+        return ["mini", "small", "large"].includes(value);
       },
     },
     nativeType: {

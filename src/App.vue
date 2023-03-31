@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref, inject } from 'vue'
-const nice = inject("nice")
+const nice = inject('nice')
 
 const list = [
   { id: 1, value: 'List 1' },
@@ -25,19 +25,19 @@ const form = ref({
 })
 
 function openModal() {
-  nice.modal("modal", true);
+  nice.modal('modal', true)
 }
 
 function openPanel() {
-  nice.panel("panel", true);
+  nice.panel('panel', true)
 }
 
 function openToast() {
-  nice.toast("This is a test");
+  nice.toast('This is a test')
 }
 
 function openNotification() {
-  nice.notification("This is a test");
+  nice.notification('This is a test')
 }
 
 onMounted(() => {
@@ -50,7 +50,6 @@ onMounted(() => {
 <template>
   <div class="demo">
     <h1>Nice elements - Vue3</h1>
-
 
     <!-- Nice input -->
     <NiceWrapper title="Nice input" id="nice-input" collapsable>
@@ -71,7 +70,6 @@ onMounted(() => {
 /></pre
       >
     </NiceWrapper>
-
 
     <!-- Nice dropdown -->
     <NiceWrapper title="Nice dropdown" id="nice-dropdown" collapsable>
@@ -94,13 +92,11 @@ onMounted(() => {
       >
     </NiceWrapper>
 
-
     <!-- Nice date -->
     <NiceWrapper title="Nice date" id="nice-date" collapsable>
       <NiceDate title="Birthday" v-model="form.niceDate" />
       <pre>&lt;NiceDate title="Birthday" v-model="form.niceDate" /></pre>
     </NiceWrapper>
-
 
     <!-- Nice checkbox -->
     <NiceWrapper title="Nice checkbox" id="nice-checkbox" collapsable>
@@ -108,13 +104,11 @@ onMounted(() => {
       <pre>&lt;NiceCheckbox title="I like pizza" v-model="form.niceCheckbox"/></pre>
     </NiceWrapper>
 
-
     <!-- Nice switch -->
     <NiceWrapper title="Nice switch" id="nice-switch" collapsable>
       <NiceSwitch title="I like pizza" v-model="form.niceSwitch" />
       <pre>&lt;NiceSwitch title="I like pizza" v-model="form.niceSwitch" /></pre>
     </NiceWrapper>
-
 
     <!-- Nice checkbox -->
     <NiceWrapper title="Nice loading" id="nice-loading" collapsable>
@@ -127,7 +121,6 @@ onMounted(() => {
       <pre class="mb-2">&lt;NiceLoading /></pre>
       <pre>&lt;NiceLoading message="Loading..." full-div="true" size="large" /></pre>
     </NiceWrapper>
-
 
     <!-- Nice avatar -->
     <NiceWrapper title="Nice avatar" id="nice-avatar" collapsable>
@@ -172,7 +165,6 @@ onMounted(() => {
       <pre>&lt;NiceAvatar /></pre>
     </NiceWrapper>
 
-
     <!-- Nice modal -->
     <NiceWrapper title="Nice modal" id="nice-modal" collapsable>
       <NiceModal name="modal">This is a test modal</NiceModal>
@@ -187,7 +179,6 @@ onMounted(() => {
       <NiceButton @click="openNotification">Open notification</NiceButton>
     </NiceWrapper>
 
-
     <!-- Nice button -->
     <NiceWrapper title="Nice button" id="nice-button" collapsable>
       <div class="buttons">
@@ -195,6 +186,14 @@ onMounted(() => {
           <NiceButton icon="icon-circle" :type="t" size="large">{{ t }} large</NiceButton>
           <NiceButton icon="icon-circle" :type="t">{{ t }} medium</NiceButton>
           <NiceButton icon="icon-circle" :type="t" size="small">{{ t }} small</NiceButton>
+          <NiceButton icon="icon-circle" :type="t" size="mini">{{ t }} mini</NiceButton>
+        </div>
+        
+        <div class="buttons-wrap" v-for="t in types" :key="t">
+          <NiceButton icon="icon-circle" :type="t" size="large"></NiceButton>
+          <NiceButton icon="icon-circle" :type="t"></NiceButton>
+          <NiceButton icon="icon-circle" :type="t" size="small"></NiceButton>
+          <NiceButton icon="icon-circle" :type="t" size="mini"></NiceButton>
         </div>
 
         <div class="buttons-wrap" v-for="t in types" :key="t">
@@ -204,6 +203,9 @@ onMounted(() => {
           <NiceButton icon="icon-circle" :type="t" plain>{{ t }} medium plain</NiceButton>
           <NiceButton icon="icon-circle" :type="t" plain size="small">
             {{ t }} small plain
+          </NiceButton>
+          <NiceButton icon="icon-circle" :type="t" plain size="mini">
+            {{ t }} small mini
           </NiceButton>
         </div>
 
@@ -215,6 +217,9 @@ onMounted(() => {
           <NiceButton icon="icon-circle" :type="t" naked size="small">
             {{ t }} small naked
           </NiceButton>
+          <NiceButton icon="icon-circle" :type="t" naked size="mini">
+            {{ t }} mini naked
+          </NiceButton>
         </div>
 
         <div class="buttons-wrap" v-for="t in types" :key="t">
@@ -225,20 +230,25 @@ onMounted(() => {
           <NiceButton icon="icon-circle" :type="t" rounded size="small">
             {{ t }} small rounded
           </NiceButton>
+          <NiceButton icon="icon-circle" :type="t" rounded size="mini">
+            {{ t }} mini rounded
+          </NiceButton>
         </div>
 
         <div class="buttons-wrap" v-for="t in types" :key="t">
-          <NiceButton icon="icon-circle" :type="t" outline size="large"
-            >{{ t }} large outline</NiceButton
-          >
+          <NiceButton icon="icon-circle" :type="t" outline size="large">
+            {{ t }} large outline
+          </NiceButton>
           <NiceButton icon="icon-circle" :type="t" outline>{{ t }} medium outline</NiceButton>
-          <NiceButton icon="icon-circle" :type="t" outline size="small"
-            >{{ t }} small outline</NiceButton
-          >
+          <NiceButton icon="icon-circle" :type="t" outline size="small">
+            {{ t }} small outline
+          </NiceButton>
+          <NiceButton icon="icon-circle" :type="t" outline size="mini">
+            {{ t }} mini outline
+          </NiceButton>
         </div>
       </div>
     </NiceWrapper>
-
 
     <!-- Nice icon -->
     <NiceWrapper title="Nice icon" id="nice-icon" collapsable>
