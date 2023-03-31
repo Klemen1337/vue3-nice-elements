@@ -68,7 +68,7 @@ const O = (e, s) => {
       type: String,
       default: null,
       validator(e) {
-        return ["small", "large"].includes(e);
+        return ["mini", "small", "large"].includes(e);
       }
     },
     nativeType: {
@@ -140,7 +140,7 @@ function z2(e, s, t, i, c, o) {
     }, null, 8, ["icon"])) : f("", !0)
   ], 10, y2);
 }
-const b0 = /* @__PURE__ */ O(f2, [["render", z2], ["__scopeId", "data-v-eca63365"]]);
+const b0 = /* @__PURE__ */ O(f2, [["render", z2], ["__scopeId", "data-v-45b5043d"]]);
 const g2 = {
   name: "NiceModal",
   props: {
@@ -2924,7 +2924,7 @@ const j7 = {
       this.localValue = !this.localValue;
     }
   }
-}, W7 = (e) => (N0("data-v-a1e15c14"), e = e(), S0(), e), U7 = /* @__PURE__ */ W7(() => /* @__PURE__ */ y("div", { class: "nice-switch-box" }, [
+}, W7 = (e) => (N0("data-v-e53b927f"), e = e(), S0(), e), U7 = /* @__PURE__ */ W7(() => /* @__PURE__ */ y("div", { class: "nice-switch-box" }, [
   /* @__PURE__ */ y("div", { class: "nice-switch-handle" })
 ], -1)), Y7 = ["for"], Z7 = ["id"];
 function K7(e, s, t, i, c, o) {
@@ -2948,7 +2948,7 @@ function K7(e, s, t, i, c, o) {
     }, null, 8, Z7)
   ], 2);
 }
-const e2 = /* @__PURE__ */ O(j7, [["render", K7], ["__scopeId", "data-v-a1e15c14"]]);
+const e2 = /* @__PURE__ */ O(j7, [["render", K7], ["__scopeId", "data-v-e53b927f"]]);
 const G7 = {
   name: "NiceFilters",
   components: {
@@ -3205,7 +3205,7 @@ function r8(e, s, t, i, c, o) {
     ])
   ], 34);
 }
-const t2 = /* @__PURE__ */ O(i8, [["render", r8], ["__scopeId", "data-v-9db8b933"]]);
+const t2 = /* @__PURE__ */ O(i8, [["render", r8], ["__scopeId", "data-v-b3cdc099"]]);
 const h8 = {
   name: "NiceNotifications",
   components: {
@@ -3869,7 +3869,7 @@ function e5(e, s, t, i, c, o) {
     })
   ]);
 }
-const t5 = /* @__PURE__ */ O(Q8, [["render", e5], ["__scopeId", "data-v-696fded7"]]);
+const t5 = /* @__PURE__ */ O(Q8, [["render", e5], ["__scopeId", "data-v-d538dc55"]]);
 const s5 = {
   name: "NiceView",
   props: {
