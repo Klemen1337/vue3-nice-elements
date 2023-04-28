@@ -44,6 +44,7 @@ onMounted(() => {
   icons.value = Array.from(document.getElementsByTagName('symbol')).map((element) => {
     return element.id
   })
+  selectedIcon.value = icons.value[Math.floor(Math.random()*icons.value.length)];
 })
 </script>
 
@@ -183,67 +184,67 @@ onMounted(() => {
     <NiceWrapper title="Nice button" id="nice-button" collapsable>
       <div class="buttons">
         <div class="buttons-wrap" v-for="t in types" :key="t">
-          <NiceButton icon="icon-circle" :type="t" size="large">{{ t }} large</NiceButton>
-          <NiceButton icon="icon-circle" :type="t">{{ t }} medium</NiceButton>
-          <NiceButton icon="icon-circle" :type="t" size="small">{{ t }} small</NiceButton>
-          <NiceButton icon="icon-circle" :type="t" size="mini">{{ t }} mini</NiceButton>
+          <NiceButton :icon="selectedIcon" :type="t" size="large">{{ t }} large</NiceButton>
+          <NiceButton :icon="selectedIcon" :type="t">{{ t }} medium</NiceButton>
+          <NiceButton :icon="selectedIcon" :type="t" size="small">{{ t }} small</NiceButton>
+          <NiceButton :icon="selectedIcon" :type="t" size="mini">{{ t }} mini</NiceButton>
         </div>
         
         <div class="buttons-wrap" v-for="t in types" :key="t">
-          <NiceButton icon="icon-circle" :type="t" size="large"></NiceButton>
-          <NiceButton icon="icon-circle" :type="t"></NiceButton>
-          <NiceButton icon="icon-circle" :type="t" size="small"></NiceButton>
-          <NiceButton icon="icon-circle" :type="t" size="mini"></NiceButton>
+          <NiceButton :icon="selectedIcon" :type="t" size="large"></NiceButton>
+          <NiceButton :icon="selectedIcon" :type="t"></NiceButton>
+          <NiceButton :icon="selectedIcon" :type="t" size="small"></NiceButton>
+          <NiceButton :icon="selectedIcon" :type="t" size="mini"></NiceButton>
         </div>
 
         <div class="buttons-wrap" v-for="t in types" :key="t">
-          <NiceButton icon="icon-circle" :type="t" plain size="large">
+          <NiceButton :icon="selectedIcon" :type="t" plain size="large">
             {{ t }} large plain
           </NiceButton>
-          <NiceButton icon="icon-circle" :type="t" plain>{{ t }} medium plain</NiceButton>
-          <NiceButton icon="icon-circle" :type="t" plain size="small">
+          <NiceButton :icon="selectedIcon" :type="t" plain>{{ t }} medium plain</NiceButton>
+          <NiceButton :icon="selectedIcon" :type="t" plain size="small">
             {{ t }} small plain
           </NiceButton>
-          <NiceButton icon="icon-circle" :type="t" plain size="mini">
+          <NiceButton :icon="selectedIcon" :type="t" plain size="mini">
             {{ t }} small mini
           </NiceButton>
         </div>
 
         <div class="buttons-wrap" v-for="t in types" :key="t">
-          <NiceButton icon="icon-circle" :type="t" naked size="large">
+          <NiceButton :icon="selectedIcon" :type="t" naked size="large">
             {{ t }} large naked
           </NiceButton>
-          <NiceButton icon="icon-circle" :type="t" naked>{{ t }} medium naked</NiceButton>
-          <NiceButton icon="icon-circle" :type="t" naked size="small">
+          <NiceButton :icon="selectedIcon" :type="t" naked>{{ t }} medium naked</NiceButton>
+          <NiceButton :icon="selectedIcon" :type="t" naked size="small">
             {{ t }} small naked
           </NiceButton>
-          <NiceButton icon="icon-circle" :type="t" naked size="mini">
+          <NiceButton :icon="selectedIcon" :type="t" naked size="mini">
             {{ t }} mini naked
           </NiceButton>
         </div>
 
         <div class="buttons-wrap" v-for="t in types" :key="t">
-          <NiceButton icon="icon-circle" :type="t" rounded size="large">
+          <NiceButton :icon="selectedIcon" :type="t" rounded size="large">
             {{ t }} large rounded
           </NiceButton>
-          <NiceButton icon="icon-circle" :type="t" rounded>{{ t }} medium rounded</NiceButton>
-          <NiceButton icon="icon-circle" :type="t" rounded size="small">
+          <NiceButton :icon="selectedIcon" :type="t" rounded>{{ t }} medium rounded</NiceButton>
+          <NiceButton :icon="selectedIcon" :type="t" rounded size="small">
             {{ t }} small rounded
           </NiceButton>
-          <NiceButton icon="icon-circle" :type="t" rounded size="mini">
+          <NiceButton :icon="selectedIcon" :type="t" rounded size="mini">
             {{ t }} mini rounded
           </NiceButton>
         </div>
 
         <div class="buttons-wrap" v-for="t in types" :key="t">
-          <NiceButton icon="icon-circle" :type="t" outline size="large">
+          <NiceButton :icon="selectedIcon" :type="t" outline size="large">
             {{ t }} large outline
           </NiceButton>
-          <NiceButton icon="icon-circle" :type="t" outline>{{ t }} medium outline</NiceButton>
-          <NiceButton icon="icon-circle" :type="t" outline size="small">
+          <NiceButton :icon="selectedIcon" :type="t" outline>{{ t }} medium outline</NiceButton>
+          <NiceButton :icon="selectedIcon" :type="t" outline size="small">
             {{ t }} small outline
           </NiceButton>
-          <NiceButton icon="icon-circle" :type="t" outline size="mini">
+          <NiceButton :icon="selectedIcon" :type="t" outline size="mini">
             {{ t }} mini outline
           </NiceButton>
         </div>
@@ -252,14 +253,15 @@ onMounted(() => {
 
     <!-- Nice icon -->
     <NiceWrapper title="Nice icon" id="nice-icon" collapsable>
-      <NiceIcon :icon="selectedIcon" />
-      <pre>&lt;NiceIcon icon="{{ selectedIcon }}" /></pre>
+      <div class="text-center">
+        <NiceIcon :icon="selectedIcon" />
+        <pre class="mb-4">&lt;NiceIcon icon="{{ selectedIcon }}" /></pre>
+      </div>
 
       <div class="icons">
         <NiceButton
           :icon="icon"
-          size="small"
-          type="primary"
+          type="dark"
           plain
           :class="{ active: selectedIcon == icon }"
           v-for="icon in icons"
@@ -382,6 +384,14 @@ body {
   max-width: 100%;
   margin: 0 auto;
   margin-top: 2rem;
+
+  .text-center {
+    text-align: center;
+
+    pre {
+      margin: 0 auto;
+    }
+  }
 
   pre {
     background: var(--nice-background-color);

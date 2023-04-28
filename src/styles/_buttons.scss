@@ -26,9 +26,9 @@ $types: "primary", "default", "success", "warning", "danger", "info", "dark",
     text-decoration: none;
   }
 
-  svg {
-    height: 18px !important;
-    width: 18px !important;
+  svg, .nice-icon {
+    height: 18px;
+    width: 18px;
     fill: currentColor;
   }
 

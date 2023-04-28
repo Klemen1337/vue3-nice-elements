@@ -19,7 +19,7 @@ export default {
 <style lang="scss" scoped>
 .nice-icon {
   fill: currentColor;
-  height: 24px;
-  width: 24px;
+  // height: 24px;
+  // width: 24px;
 }
 </style>

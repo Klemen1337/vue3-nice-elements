@@ -2306,7 +2306,7 @@ function o7(e, s, t, i, c, o) {
     }, null, 8, c7)
   ]);
 }
-const W0 = /* @__PURE__ */ O(t7, [["render", o7], ["__scopeId", "data-v-1a01f9eb"]]);
+const W0 = /* @__PURE__ */ O(t7, [["render", o7], ["__scopeId", "data-v-40da5ac0"]]);
 const i7 = {
   name: "NiceDropdownSimple",
   components: {
