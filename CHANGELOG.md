@@ -1,5 +1,9 @@
 # Changelog
 
+## **v0.0.4** - 28.4.2022
+
+- fixed button svg important size
+
 ## **v0.0.3** - 31.3.2022
 
 - added button size mini,
