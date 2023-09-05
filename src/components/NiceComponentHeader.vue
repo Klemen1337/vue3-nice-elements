@@ -1,5 +1,5 @@
 <template>
-  <div class="nice-component-header">
+  <div class="nice-component-header" v-if="title || caption">
     <div class="nice-component-title" v-if="title">
       {{ title }}
       <span class="nice-component-requried" v-if="required"> *</span>
