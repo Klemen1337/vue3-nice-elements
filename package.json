@@ -29,6 +29,7 @@
     "md5": "^2.3.0",
     "mitt": "^3.0.0",
     "vue": "^3.2.47",
+    "vue-router": "^4.2.4",
     "vue3-gettext": "^2.5.0-alpha.1"
   },
   "devDependencies": {

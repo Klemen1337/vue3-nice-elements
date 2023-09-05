@@ -41,6 +41,31 @@ const plugin = {
 
     app.config.globalProperties.$nice = service;
     app.provide('nice', service);
+
+    async function getQuery() {
+      await options.router.isReady()
+      const query = clone(options.router.currentRoute.value.query);
+      delete query.id;
+      return query;
+    }
+
+    // async function getLocationQuery () {
+    //   await options.router.isReady()
+    //   const query = {}
+    //   const params = new URLSearchParams(window.location.search)
+    //   params.forEach((k, p) => query[p] = k)
+    //   delete query.id;
+    //   return query
+    // }
+    
+    function clone(o) {
+      return Object.assign({}, o);
+    }
+
+    app.config.globalProperties.$query = getQuery;
+    app.provide('getQuery', getQuery);
+    app.config.globalProperties.$clone = clone;
+    app.provide('clone', clone);
   }
 }
 
