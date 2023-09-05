@@ -14,9 +14,13 @@ $spacers: (
   .mb-#{$size} { margin-bottom: $length !important; }
   .ml-#{$size} { margin-left: $length !important; }
   .mr-#{$size} { margin-right: $length !important; }
+  .mx-#{$size} { margin-top: $length !important; margin-bottom: $length !important; }
+  .my-#{$size} { margin-left: $length !important; margin-right: $length !important; }
 
   .pt-#{$size} { padding-top: $length !important; }
   .pb-#{$size} { padding-bottom: $length !important; }
   .pl-#{$size} { padding-left: $length !important; }
   .pr-#{$size} { padding-right: $length !important; }
+  .px-#{$size} { padding-top: $length !important; padding-bottom: $length !important; }
+  .py-#{$size} { padding-left: $length !important; padding-right: $length !important; }
 }

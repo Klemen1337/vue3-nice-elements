@@ -168,3 +168,9 @@
     opacity: 0.8;
   }
 }
+
+.badge {
+  background: var(--nice-primary-color);
+  border-radius: var(--nice-border-radius);
+  color: white;
+}
