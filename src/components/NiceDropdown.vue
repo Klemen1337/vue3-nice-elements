@@ -4,6 +4,7 @@
     :class="{
       disabled: disabled,
       'no-margin': noMargin,
+      'can-clear': canClear,
       'has-value': modelValue,
     }"
   >
@@ -96,16 +97,16 @@
               <NiceLoading class="loading" v-if="innerLoading" />
             </div>
             <div class="list">
-              <!-- <div
+              <div
                 v-if="nullable"
                 class="element"
-                @click="handleChange(null)"
+                @click="handleChange(undefined)"
                 :class="{
-                  selected: modelValue == null,
+                  selected: modelValue == undefined,
                 }"
               >
                 {{ nullText }}
-              </div> -->
+              </div>
               <div
                 class="element"
                 v-for="(item, index) in innerValues"
@@ -230,6 +231,10 @@ export default {
       }
       return this.modelValue;
     },
+
+    canClear () {
+      return !!this.modelValue && !!this.nullable
+    }
   },
 
   async mounted() {
@@ -375,7 +380,7 @@ export default {
 
 <style lang="scss" scoped>
 .nice-dropdown {
-  &.has-value {
+  &.can-clear {
     .input-group {
       &:hover {
         .arrow-down {
