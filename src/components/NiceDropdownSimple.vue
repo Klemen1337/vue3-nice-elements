@@ -8,13 +8,12 @@
       :required="required"
       :caption="caption"
     />
-
     <div class="input-group">
       <div class="select-wrapper" :class="{ 'no-value': localValue == null }">
         <select
           :required="required"
           :disabled="disabled"
-          :modelValue="localValue"
+          v-model="localValue"
           @change="handleChange"
         >
           <option v-if="nullable" :value="null" :selected="!localValue">
@@ -139,7 +138,7 @@ export default {
     handleDefault() {
       // Select default value
       setTimeout(() => {
-        if (!this.value && this.values.length > 0 && !this.nullable) {
+        if (!this.localValue && this.values.length > 0 && !this.nullable) {
           this.changeValue(this.values[0]);
         }
       });
@@ -168,6 +167,7 @@ export default {
     .select-wrapper {
       flex-grow: 1;
       position: relative;
+      background: var(--nice-card-bg);
 
       .arrow-down {
         position: absolute;
@@ -181,7 +181,7 @@ export default {
       select {
         position: relative;
         font-size: 1em;
-        background: var(--nice-card-bg);
+        background: transparent;
         padding: 3px 2.5rem 4px 12px;
         min-height: 34px !important;
         border-radius: var(--nice-border-radius);
@@ -190,6 +190,7 @@ export default {
         cursor: pointer;
         display: flex;
         align-items: center;
+        z-index: 1;
       }
 
       &.no-value {
