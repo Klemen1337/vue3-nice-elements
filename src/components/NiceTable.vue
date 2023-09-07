@@ -7,17 +7,9 @@
           <tr>
             <th class="w-0" v-if="selectMultiple">
               <!-- De/Select all -->
-              <NiceCheckbox
-                :modelValue="allSelected"
-                no-margin
-                @click="toggleSelectAll"
-              />
+              <NiceCheckbox :modelValue="allSelected" no-margin @click="toggleSelectAll" />
             </th>
-            <th
-              v-for="column in enabledColumns"
-              :key="column.key"
-              :class="column.class"
-            >
+            <th v-for="column in enabledColumns" :key="column.key" :class="column.class">
               <!-- Order -->
               <div
                 v-if="showOrder"
@@ -25,15 +17,11 @@
                 @click="setOrder(column)"
                 :class="{
                   'active asc': order == column.key,
-                  'active desc': order == '-' + column.key,
+                  'active desc': order == '-' + column.key
                 }"
               >
                 <span>{{ column.name }}</span>
-                <NiceIcon
-                  icon="icon-bar-chart"
-                  class="table-order"
-                  v-if="showOrder"
-                />
+                <NiceIcon icon="icon-bar-chart" class="table-order" v-if="showOrder" />
               </div>
               <span v-else>{{ column.name }}</span>
             </th>
@@ -43,11 +31,7 @@
               v-if="!!actions.length"
             >
               <!-- Toggle columns -->
-              <NicePopup
-                class="actions-columns"
-                placement="bottom-end"
-                no-padding
-              >
+              <NicePopup class="actions-columns" placement="bottom-end" no-padding>
                 <template #trigger>
                   <NiceIcon icon="icon-plus-circle" />
                 </template>
@@ -60,11 +44,7 @@
                       :key="column.key"
                       @click="toggleColumn(column)"
                     >
-                      <NiceCheckbox
-                        :modelValue="!column.disabled"
-                        :title="column.name"
-                        no-margin
-                      />
+                      <NiceCheckbox :modelValue="!column.disabled" :title="column.name" no-margin />
                     </div>
                   </div>
                 </template>
@@ -78,18 +58,10 @@
           <tr v-for="row in innerData" :key="row.id">
             <td class="w-0" v-if="selectMultiple">
               <!-- Select -->
-              <NiceCheckbox
-                :modelValue="row._selected"
-                @click="toggleSelect(row)"
-                no-margin
-              />
+              <NiceCheckbox :modelValue="row._selected" @click="toggleSelect(row)" no-margin />
             </td>
             <!-- Column -->
-            <td
-              v-for="column in enabledColumns"
-              :key="column.key"
-              :class="column.class"
-            >
+            <td v-for="column in enabledColumns" :key="column.key" :class="column.class">
               <!-- Component -->
               <component
                 v-if="column.component"
@@ -106,17 +78,9 @@
               <!-- Value or formatter -->
               <span
                 v-if="!column.component && !column.html"
-                :class="
-                  column.fieldClass
-                    ? column.fieldClass(row[column.key], row)
-                    : ''
-                "
+                :class="column.fieldClass ? column.fieldClass(row[column.key], row) : ''"
               >
-                {{
-                  column.formatter
-                    ? column.formatter(row[column.key], row)
-                    : row[column.key]
-                }}
+                {{ column.formatter ? column.formatter(row[column.key], row) : row[column.key] }}
               </span>
             </td>
             <td
@@ -155,16 +119,16 @@
 
     <!-- No data -->
     <div class="no-data" v-if="!loading && data.length == 0">
-      {{ $gettext("No data.") }}
+      {{ $gettext('No data.') }}
     </div>
 
     <!-- Footer -->
     <div class="nice-table-footer" v-if="showFooter">
       <div class="pagination-info">
         <!-- Showing {{ data.length }} of  -->
-        {{ count }} {{ $gettext("total") }}
+        {{ count }} {{ $gettext('total') }}
       </div>
-      <div class="pagination" v-if="paginated && pages > 1">
+      <div class="pagination" v-if="paginated && pages > 1 && pages < 5">
         <!-- <NiceButton
           size="small"
           @click="firstPage"
@@ -200,6 +164,27 @@
           icon="icon-chevrons-right"
         /> -->
       </div>
+      <div class="pagination-dropdown" v-if="paginated && pages > 1 && pages > 5">
+        <!-- Page -->
+        <NiceDropdownSimple
+          v-model="currentPageDropdown"
+          :values="pagesList"
+          keyOnly
+          noMargin
+          @change="setPage"
+        ></NiceDropdownSimple>
+      </div>
+
+      <!-- Limit -->
+      <NiceDropdown
+        v-if="showLimit"
+        v-model="limit"
+        :class="{ 'dropdown-small': pages > 1 && pages < 5}"
+        :values="limits"
+        keyOnly
+        noMargin
+        @change="setLimit"
+      ></NiceDropdown>
     </div>
 
     <!-- <pre>{{ innerData }}</pre> -->
@@ -208,29 +193,29 @@
 </template>
 
 <script>
-import NiceCheckbox from "./NiceCheckbox.vue";
-import NiceLoading from "./NiceLoading.vue";
-import NiceButton from "./NiceButton.vue";
-import NicePopup from "./NicePopup.vue";
+import NiceCheckbox from './NiceCheckbox.vue'
+import NiceLoading from './NiceLoading.vue'
+import NiceButton from './NiceButton.vue'
+import NicePopup from './NicePopup.vue'
 
 export default {
-  name: "NiceTable",
+  name: 'NiceTable',
 
   components: {
     NiceCheckbox,
     NiceLoading,
     NiceButton,
-    NicePopup,
+    NicePopup
   },
 
   props: {
     data: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     columns: {
       type: Array,
-      default: () => [],
+      default: () => []
       // {
       //   name: "Created",
       //   key: "created_at",
@@ -242,7 +227,7 @@ export default {
     },
     actions: {
       type: Array,
-      default: () => [],
+      default: () => []
       // {
       //   text: "Edit",
       //   icon: "icon-edit",
@@ -258,162 +243,198 @@ export default {
     },
     selectMultiple: {
       type: Boolean,
-      default: false,
+      default: false
     },
     showFooter: {
       type: Boolean,
-      default: false,
+      default: false
     },
     showOrder: {
       type: Boolean,
-      default: false,
+      default: false
+    },
+    showLimit: {
+      type: Boolean,
+      default: false
     },
     paginated: {
       type: Boolean,
-      default: false,
+      default: false
     },
     freezeFirstColumn: {
       type: Boolean,
-      default: false,
+      default: false
     },
     freezeLastColumn: {
       type: Boolean,
-      default: false,
+      default: false
     },
     loading: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
 
-  emits: ["selected", "orderChange", "pageChange"],
+  emits: ['selected', 'orderChange', 'pageChange', 'filterChange'],
 
   data() {
     return {
       order: undefined,
-      limit: 100,
-      limits: [20, 50, 100],
+      limit: 50,
+      // limits: [20, 50, 100],
+      limits: [
+        { id: 10, value: 10 },
+        { id: 20, value: 20 },
+        { id: 50, value: 50 },
+        { id: 100, value: 100 },
+      ],
       currentPage: 1,
-    };
+      currentPageDropdown: null
+    }
   },
 
   computed: {
     count() {
-      return this.data?._metadata?.count || 0;
+      return this.data?._metadata?.count || 0
     },
 
     pages() {
-      return Math.ceil(this.count / this.limit) || 1;
+      return Math.ceil(this.count / this.limit) || 1
+    },
+
+    pagesList() {
+      return Array.from({ length: this.pages }, (v, i) => ({ id: i + 1, value: i + 1 }))
     },
 
     enabledColumns() {
-      return this.columns.filter((c) => !c.disabled);
+      return this.columns.filter((c) => !c.disabled)
     },
 
     innerData() {
-      let newData = this.data;
+      let newData = this.data
 
       // Inject _selected
       newData.forEach((d) => {
-        if (d._selected === undefined) d._selected = false;
-      });
+        if (d._selected === undefined) d._selected = false
+      })
 
       // Order by
       if (this.order !== undefined) {
-        const cleanOrder = this.order.replace("-", "");
+        const cleanOrder = this.order.replace('-', '')
         newData.sort((a, b) => {
-          if (this.order[0] != "-") {
-            const temp = a;
-            a = b;
-            b = temp;
+          if (this.order[0] != '-') {
+            const temp = a
+            a = b
+            b = temp
           }
-          return String(a[cleanOrder]).localeCompare(String(b[cleanOrder]));
-        });
+          return String(a[cleanOrder]).localeCompare(String(b[cleanOrder]))
+        })
       }
-      return newData;
+      return newData
     },
 
     selectedItems() {
-      return this.innerData.filter((row) => row._selected);
+      return this.innerData.filter((row) => row._selected)
     },
 
     allSelected() {
-      return this.selectedItems.length == this.innerData.length;
-    },
+      return this.selectedItems.length == this.innerData.length
+    }
   },
 
-  mounted() {
-    this.order = this.$route.query.ordering;
+  async mounted() {
+    const query = await this.$query()
+    // console.log("[DEMO] Query:", query)
+    this.order = query.ordering
     if (this.paginated) {
-      this.currentPage = Number(this.$route.query.page) || 1;
-      this.setPage(this.currentPage);
+      this.limit = Number(query.limit) || 50
+      this.currentPage = Number(query.page) || 1
+      this.currentPageDropdown = Number(query.page) || 1
+      this.setPage(this.currentPage)
     }
   },
 
   methods: {
+    getPageList() {
+      return this.pagesList
+    },
+
     toggleSelectAll() {
-      let selected = true;
-      if (this.allSelected) selected = false;
-      this.innerData.forEach((row) => (row._selected = selected));
-      this.emitSelected();
+      let selected = true
+      if (this.allSelected) selected = false
+      this.innerData.forEach((row) => (row._selected = selected))
+      this.emitSelected()
     },
 
     toggleSelect(row) {
-      row._selected = !row._selected;
-      this.emitSelected();
+      row._selected = !row._selected
+      this.emitSelected()
     },
 
     emitSelected() {
-      this.$emit("selected", this.selectedItems);
+      this.$emit('selected', this.selectedItems)
     },
 
     toggleColumn(column) {
-      column.disabled = !column.disabled;
+      column.disabled = !column.disabled
     },
 
     setOrder(column) {
-      if (column.key == this.order) this.order = "-" + column.key;
-      else if (
-        this.order &&
-        this.order[0] === "-" &&
-        this.order === "-" + column.key
-      )
-        this.order = undefined;
-      else this.order = column.key;
-
-      this.$emit("orderChange", this.order);
+      if (column.key == this.order) this.order = '-' + column.key
+      else if (this.order && this.order[0] === '-' && this.order === '-' + column.key)
+        this.order = undefined
+      else this.order = column.key
+      
       this.$router.push({
-        query: { ...this.$route.query, ordering: this.order },
-      });
+        query: { ...this.$route.query, ordering: this.order }
+      })
+      this.$emit('orderChange', this.order)
+      this.$emit('filtersChange')
     },
 
     firstPage() {
-      this.setPage(1);
+      this.setPage(1)
     },
 
     lastPage() {
-      this.setPage(this.pages);
+      this.setPage(this.pages)
     },
 
     nextPage() {
-      const newPage = this.currentPage + 1;
-      if (newPage <= this.pages) this.setPage(newPage);
+      const newPage = this.currentPage + 1
+      if (newPage <= this.pages) this.setPage(newPage)
     },
 
     prevPage() {
-      const newPage = this.currentPage - 1;
-      if (newPage > 0) this.setPage(newPage);
+      const newPage = this.currentPage - 1
+      if (newPage > 0) this.setPage(newPage)
     },
 
-    setPage(page) {
-      this.currentPage = page;
-      this.$router.push({
-        query: { ...this.$route.query, page, limit: this.limit },
-      });
-      this.$emit("pageChange", page);
+    async setPage(page) {
+      this.currentPage = page
+      this.$router.replace({
+        path: this.$route.path,
+        query: { ...this.$route.query, page, offset: ((page-1)*this.limit), limit: this.limit }
+      })
+      this.$emit('pageChange', page)
+      this.filterChange()
     },
-  },
-};
+
+    setLimit(limit) {
+      this.limit = limit
+      this.$router.push({
+        path: this.$route.path,
+        query: { ...this.$route.query, limit }
+      })
+      this.$emit('pageChange', this.currentPage)
+      this.filterChange()
+    },
+
+    filterChange() {
+      this.$emit('filterChange', { ordering: this.order, page: this.currentPage, offset: ((this.currentPage-1)*this.limit), limit: this.limit })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -436,13 +457,16 @@ export default {
       width: 4px;
       height: 4px;
     }
+
     &::-webkit-scrollbar-track {
       background: var(--nice-card-bg);
     }
+
     &::-webkit-scrollbar-thumb {
       background: var(--nice-primary-color);
       border-radius: 4px;
     }
+
     &::-webkit-scrollbar-thumb:hover {
       background: var(--nice-primary-color-darker);
     }
@@ -475,7 +499,7 @@ export default {
         position: absolute;
         bottom: -1px;
         left: 0;
-        content: "";
+        content: '';
         height: 1px;
         width: 100%;
         background: var(--nice-border-color);
@@ -500,6 +524,7 @@ export default {
 
             &.active {
               color: var(--nice-primary-color);
+
               .table-order {
                 display: inline-block;
               }
@@ -552,13 +577,13 @@ export default {
       th {
         vertical-align: middle;
 
-        &:first-child {
-          padding-left: 1.5rem;
-        }
+        // &:first-child {
+        //   padding-left: 1.5rem;
+        // }
 
-        &:last-child {
-          padding-right: 1.5rem;
-        }
+        // &:last-child {
+        //   padding-right: 1.5rem;
+        // }
       }
     }
   }
@@ -603,20 +628,33 @@ export default {
 
   .nice-table-footer {
     border-top: 1px solid var(--nice-border-color);
-    padding: 1rem 1.5rem;
+    padding: 1rem;
     display: flex;
     align-items: center;
-
+    flex-wrap: wrap;
+    gap: 0.5rem;
     .pagination-info {
       flex-grow: 1;
       font-size: 0.8rem;
       opacity: 0.5;
     }
 
+    .pagination-dropdown {
+      display: flex;
+      flex-wrap: wrap;
+      grid-gap: 0.5rem;
+    }
+
     .pagination {
-      display: grid;
-      grid-auto-flow: column;
-      grid-gap: 0.2rem;
+      display: flex;
+      flex-wrap: wrap;
+      grid-gap: 0.3rem;
+      flex-grow: 1;
+      justify-content: flex-end;
+
+      .btn + .btn {
+        margin-left: 0;
+      }
     }
   }
 }
