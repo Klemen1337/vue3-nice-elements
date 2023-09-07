@@ -29,7 +29,7 @@
     </div>
 
     <!-- Body -->
-    <div class="wrapper-body" :class="{ 'no-padding': noBodyPadding }" v-if="isOpen">
+    <div class="wrapper-body" :class="{ 'no-top-padding': $slots.header || title || subtitle, 'no-padding': noBodyPadding }" v-if="isOpen">
       <slot></slot>
     </div>
 
@@ -61,6 +61,10 @@ export default {
       type: Boolean,
       required: false,
     },
+    collapsed: {
+      type: Boolean,
+      default: false
+    },
     noBodyPadding: {
       type: Boolean,
       default: false,
@@ -73,7 +77,7 @@ export default {
 
   data() {
     return {
-      isOpen: true,
+      isOpen: !this.collapsed,
     };
   },
 
@@ -144,6 +148,10 @@ export default {
 
     &.no-padding {
       padding: 0;
+    }
+
+    &.no-top-padding {
+      padding-top: 0;
     }
   }
 
