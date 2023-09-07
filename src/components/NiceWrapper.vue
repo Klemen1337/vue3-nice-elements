@@ -87,7 +87,6 @@ export default {
 
 <style lang="scss" scoped>
 .nice-wrapper {
-  --padding: 2rem;
   border-radius: var(--nice-border-radius-large);
   background: var(--nice-card-bg);
   display: block;
@@ -97,7 +96,7 @@ export default {
   position: relative;
 
   .wrapper-header {
-    padding: var(--padding);
+    padding: var(--nice-wrapper-padding);
     position: relative;
     display: flex;
     align-items: center;
@@ -131,7 +130,7 @@ export default {
     .wrapper-header-chevron {
       position: absolute;
       top: 50%;
-      right: var(--padding);
+      right: var(--nice-wrapper-padding);
       transform: translateY(-50%);
 
       &.rotate-180 {
@@ -141,8 +140,7 @@ export default {
   }
 
   .wrapper-body {
-    padding: var(--padding);
-    padding-top: 0;
+    padding: var(--nice-wrapper-padding);
 
     &.no-padding {
       padding: 0;
@@ -150,7 +148,7 @@ export default {
   }
 
   .wrapper-footer {
-    padding: var(--padding);
+    padding: var(--nice-wrapper-padding);
     padding-top: 0;
   }
 }

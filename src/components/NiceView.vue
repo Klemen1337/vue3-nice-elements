@@ -49,24 +49,23 @@ export default {
 
 <style lang="scss" scoped>
 .nice-view {
-  --padding: 3rem;
   height: 100%;
   display: flex;
   flex-direction: column;
 
   // Mobile
   @media (max-width: 576px) {
-    --padding: 1.5rem;
+    --nice-view-padding: 1.5rem;
   }
 
   &.nice-view-no-header {
     .nice-view-body {
-      padding-top: var(--padding);
+      padding-top: var(--nice-view-padding);
     }
   }
 
   .nice-view-header {
-    padding: var(--padding);
+    padding: var(--nice-view-padding);
     padding-bottom: 1rem;
     position: relative;
     flex-shrink: 0;
@@ -91,7 +90,7 @@ export default {
   }
 
   .nice-view-body {
-    padding: var(--padding);
+    padding: var(--nice-view-padding);
     padding-top: 1rem;
     flex-grow: 1;
     overflow: auto;
@@ -103,7 +102,7 @@ export default {
   }
 
   .nice-view-footer {
-    padding: 1rem var(--padding);
+    padding: 1rem var(--nice-view-padding);
     display: flex;
     align-items: center;
     justify-content: flex-end;
