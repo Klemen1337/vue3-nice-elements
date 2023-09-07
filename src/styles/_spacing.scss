@@ -24,3 +24,7 @@ $spacers: (
   .px-#{$size} { padding-top: $length !important; padding-bottom: $length !important; }
   .py-#{$size} { padding-left: $length !important; padding-right: $length !important; }
 }
+
+.f-grow {
+  flex-grow: 1;
+}
