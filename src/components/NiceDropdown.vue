@@ -70,7 +70,7 @@
                 <div class="no-options" v-if="!loading && !modelValue">
                   {{ nullText }}
                 </div>
-                <div class="no-options" v-if="loading">Loading</div>
+                <div class="no-options" v-if="loading">{{ $gettext('Loading') }}</div>
                 <NiceIcon class="arrow-down" icon="icon-chevron-down" />
                 <NiceIcon
                   class="arrow-down clear"
@@ -89,8 +89,8 @@
               <input
                 v-model="search"
                 type="text"
-                placeholder="Search..."
-                name="Search"
+                :placeholder="$gettext('Search...')"
+                :name="$gettext('Search')"
                 @input="handleSearch"
                 ref="search"
               />
@@ -167,6 +167,10 @@ export default {
     modelValue: {
       type: [Object, String, Number, null],
       required: true,
+    },
+    values: {
+      type: Array,
+      retured: false
     },
     title: String,
     noMargin: Boolean,
@@ -343,6 +347,9 @@ export default {
     },
 
     async fetchSearch() {
+      if (this.values) {
+        this.innerValues = this.values
+      }
       if (this.searchFunction) {
         this.innerLoading = true;
         let response = await this.searchFunction(this.search);
@@ -452,12 +459,12 @@ export default {
     }
 
     .no-options {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      left: 1rem;
-      color: var(--placeholder-color);
-      opacity: 0.8;
+      // position: absolute;
+      // top: 50%;
+      // transform: translateY(-50%);
+      // left: 1rem;
+      // color: var(--placeholder-color);
+      opacity: 0.5;
     }
 
     .selected-value {
@@ -465,7 +472,6 @@ export default {
       font-size: 1em;
       background: var(--nice-card-bg);
       padding: 4px 2.5rem 5px 12px;
-      min-height: 34px !important;
       border-radius: var(--nice-border-radius);
       border: 1px solid var(--nice-border-color);
       min-height: var(--nice-height);
@@ -496,7 +502,7 @@ export default {
     border-radius: var(--nice-border-radius);
     border: 1px solid var(--nice-border-color);
     overflow: hidden;
-
+    min-width: 100px;
     .input-group {
       position: relative;
       border: 0 none;
