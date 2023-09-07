@@ -146,18 +146,18 @@ function openNotification() {
 }
 
 onMounted(() => {
-  icons.value = Array.from(document.getElementsByTagName('symbol')).map((element) => {
-    return element.id
-  })
+  icons.value = Array.from(document.getElementsByTagName('symbol')).map((element) => element.id)
   selectedIcon.value = icons.value[Math.floor(Math.random()*icons.value.length)];
   getData()
 })
 </script>
 
 <template>
-  <div class="demo">
-    <h1>Vue3 - Nice elements</h1>
-
+  <NiceView :flexBody="true" title="Vue3 - Nice elements">
+    <template #footer>
+      <NiceButton>Test</NiceButton>
+    </template>
+    <div class="demo">
     <!-- <div class="split">
       <div class="left-side">
         <div class="navigation">
@@ -174,7 +174,7 @@ onMounted(() => {
     </div> -->
 
     <!-- Nice table -->
-    <NiceWrapper title="Form test" id="nice-test" collapsable>
+    <NiceWrapper title="Form test" id="nice-test" collapsable collapsed>
       <NiceInput title="Name" v-model="testForm.name" />
       <NiceInput title="Email" type="email" v-model="testForm.email" />
       <NiceDropdown v-if="show" title="List" v-model="testForm.list" :search-function="searchList" nullable />
@@ -451,7 +451,8 @@ onMounted(() => {
     </NiceWrapper>
 
     <!-- <pre>{{  form  }}</pre> -->
-  </div>
+    </div>
+  </NiceView>
 
   <NiceSvgs />
   <NiceToast />
@@ -561,8 +562,8 @@ body {
 .demo {
   width: 800px;
   max-width: 100%;
-  margin: 0 auto;
-  margin-top: 2rem;
+  // margin: 0 auto;
+  // margin-top: 2rem;
 
   .split {
     display: flex;
