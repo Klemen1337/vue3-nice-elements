@@ -2813,13 +2813,13 @@ const N7 = {
           const o = await s.fetch(t);
           s.value = o;
         } else
-          console.log("Query not handeled", s.key, t);
+          console.log("[NiceFilters] Query not handeled: ", s.key, t);
       }), setTimeout(() => {
         this.$emit("update:modelValue", this.filters), this.$emit("change", this.filters);
       });
     },
     async updateQuery() {
-      console.log("updateQuery", this.filters[0].value), setTimeout(async () => {
+      setTimeout(async () => {
         await this.$router.isReady();
         const e = {
           ...this.$route.query,
@@ -2844,7 +2844,7 @@ const N7 = {
       e.value = null, this.updateQuery();
     }
   }
-}, V7 = (e) => (k0("data-v-d1df5c9e"), e = e(), N0(), e), S7 = { class: "nice-filters-wrapper" }, O7 = { class: "nice-component nice-filters" }, D7 = {
+}, V7 = (e) => (k0("data-v-6244768a"), e = e(), N0(), e), S7 = { class: "nice-filters-wrapper" }, O7 = { class: "nice-component nice-filters" }, D7 = {
   key: 0,
   class: "nice-filters-options"
 }, T7 = /* @__PURE__ */ V7(() => /* @__PURE__ */ M("div", { class: "f-grow" }, null, -1)), P7 = {
@@ -2940,7 +2940,7 @@ function I7(e, s, t, o, c, i) {
     ])) : f("", !0)
   ]);
 }
-const $7 = /* @__PURE__ */ O(N7, [["render", I7], ["__scopeId", "data-v-d1df5c9e"]]);
+const $7 = /* @__PURE__ */ O(N7, [["render", I7], ["__scopeId", "data-v-6244768a"]]);
 var q7 = F7;
 function F7(e, s, t) {
   if (!e)
@@ -3978,7 +3978,7 @@ const t5 = {
 function o5(e, s, t, o, c, i) {
   const a = x("NiceIcon"), n = x("NiceLoading");
   return u(), m("div", {
-    class: B(["nice-view", { "nice-view-no-header": !i.showHeader }])
+    class: B(["nice-view", { "nice-view-no-header": !i.showHeader, "nice-view-flex-body": t.flexBody }])
   }, [
     i.showHeader ? (u(), m("div", s5, [
       t.icon && !t.loading ? (u(), S(a, {
@@ -4006,7 +4006,7 @@ function o5(e, s, t, o, c, i) {
     ])) : f("", !0)
   ], 2);
 }
-const n5 = /* @__PURE__ */ O(t5, [["render", o5], ["__scopeId", "data-v-a49db2bc"]]);
+const n5 = /* @__PURE__ */ O(t5, [["render", o5], ["__scopeId", "data-v-3644b288"]]);
 const l5 = {
   name: "NiceWrapper",
   components: { NiceButton: V0 },
@@ -4023,6 +4023,10 @@ const l5 = {
       type: Boolean,
       required: !1
     },
+    collapsed: {
+      type: Boolean,
+      default: !1
+    },
     noBodyPadding: {
       type: Boolean,
       default: !1
@@ -4034,7 +4038,7 @@ const l5 = {
   },
   data() {
     return {
-      isOpen: !0
+      isOpen: !this.collapsed
     };
   },
   methods: {
@@ -4042,7 +4046,7 @@ const l5 = {
       this.isOpen = !this.isOpen;
     }
   }
-}, a5 = (e) => (k0("data-v-dc1e67ab"), e = e(), N0(), e), r5 = {
+}, a5 = (e) => (k0("data-v-e0a79396"), e = e(), N0(), e), r5 = {
   key: 0,
   class: "wrapper-header"
 }, h5 = {
@@ -4085,7 +4089,7 @@ function m5(e, s, t, o, c, i) {
     ])) : f("", !0),
     c.isOpen ? (u(), m("div", {
       key: 1,
-      class: B(["wrapper-body", { "no-padding": t.noBodyPadding }])
+      class: B(["wrapper-body", { "no-top-padding": e.$slots.header || t.title || t.subtitle, "no-padding": t.noBodyPadding }])
     }, [
       E(e.$slots, "default", {}, void 0, !0)
     ], 2)) : f("", !0),
@@ -4094,7 +4098,7 @@ function m5(e, s, t, o, c, i) {
     ])) : f("", !0)
   ], 2);
 }
-const f5 = /* @__PURE__ */ O(l5, [["render", m5], ["__scopeId", "data-v-dc1e67ab"]]), P1 = {
+const f5 = /* @__PURE__ */ O(l5, [["render", m5], ["__scopeId", "data-v-e0a79396"]]), P1 = {
   NiceActions: V2,
   NiceAvatar: G2,
   NiceButton: V0,

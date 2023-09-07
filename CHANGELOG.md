@@ -1,5 +1,14 @@
 # Changelog
 
+## **v0.1.1** - 7.9.2023
+
+- added collapsed prop for nice wrapper and fixed no padding,
+- added nice-view-padding and nice-wrapper-padding to variables,
+- worked on nice view hader and footer blured,
+- worked on demo page,
+- removed console log from nice filters and fixed code style,
+- removed badge style
+
 ## **v0.1.0** - 7.9.2023
 
 - worked on translations,
