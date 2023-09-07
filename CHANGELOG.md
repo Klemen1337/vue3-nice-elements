@@ -1,10 +1,28 @@
 # Changelog
 
-## **v0.0.4** - 28.4.2022
+## **v0.1.0** - 7.9.2023
+
+- worked on translations,
+- worked on nice table page dropdown,
+- worked on demo view,
+- worked on style,
+- worked on nice table,
+- worked on nice filters,
+- worked on nice dropdown simple component,
+- worked on nice dropdown component,
+- worked on nice dropdown simple value change and click area,
+- worked on nice dropdown clear button,
+- added router,
+- added getQuery and clone library functions,
+- added px, py, mx and my spacings,
+- added badge style,
+- added hide nice component header if no title
+
+## **v0.0.4** - 28.4.2023
 
 - fixed button svg important size
 
-## **v0.0.3** - 31.3.2022
+## **v0.0.3** - 31.3.2023
 
 - added button size mini,
 - fixed emmiter,
@@ -13,13 +31,13 @@
 - worked on demo page,
 - worked on button sizes
 
-## **v0.0.2** - 30.3.2022
+## **v0.0.2** - 30.3.2023
 
 - added nice to css variables,
 - added dist folder,
 - fixed nice svgs,
 - fixed css,
 
-## **v0.0.1** - 30.3.2022
+## **v0.0.1** - 30.3.2023
 
 - Init
