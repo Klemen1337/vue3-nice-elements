@@ -13,7 +13,7 @@
         <select
           :required="required"
           :disabled="disabled"
-          v-model="localValue"
+          :modelValue="localValue"
           @change="handleChange"
         >
           <option v-if="nullable" :value="null" :selected="!localValue">
@@ -31,7 +31,7 @@
           class="no-options"
           v-if="!nullable && !loading && (!values || values.length == 0)"
         >
-          No options
+          {{ $gettext('No options') }}
         </div>
         <NiceLoading class="no-options" v-if="loading" />
         <NiceIcon class="arrow-down" icon="icon-chevron-down" />
@@ -53,6 +53,8 @@
 <script>
 import NiceIcon from "./NiceIcon.vue";
 import NiceComponentHeader from "./NiceComponentHeader.vue";
+import gettext from "@/language";
+const { $gettext } = gettext;
 
 export default {
   name: "NiceDropdownSimple",
@@ -84,7 +86,7 @@ export default {
     },
     nullText: {
       type: String,
-      default: "None",
+      default: $gettext('None'),
     },
     caption: {
       type: String,
@@ -111,7 +113,7 @@ export default {
         this.$emit("update:modelValue", val);
         this.$emit("change", val);
       },
-    },
+    }
   },
 
   watch: {
