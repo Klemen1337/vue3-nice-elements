@@ -166,13 +166,13 @@
       </div>
       <div class="pagination-dropdown" v-if="paginated && pages > 1 && pages > 5">
         <!-- Page -->
-        <NiceDropdownSimple
+        <NiceDropdown
           v-model="currentPageDropdown"
           :values="pagesList"
           keyOnly
           noMargin
           @change="setPage"
-        ></NiceDropdownSimple>
+        ></NiceDropdown>
       </div>
 
       <!-- Limit -->

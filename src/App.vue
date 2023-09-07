@@ -207,7 +207,7 @@ onMounted(() => {
       />
 
       <!-- <pre>{{ data }}</pre> -->
-      <pre class="mx-2">{{ filters }}</pre>
+      <!-- <pre class="mx-2">{{ filters }}</pre> -->
 
       <pre class="mx-2">
 &lt;NiceFilters
