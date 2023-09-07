@@ -1912,10 +1912,10 @@ vue-router@^4.2.4:
   dependencies:
     "@vue/devtools-api" "^6.5.0"
 
-vue3-gettext@^2.5.0-alpha.1:
-  version "2.5.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/vue3-gettext/-/vue3-gettext-2.5.0-alpha.1.tgz#058429d815c914d1241712977ab9362c8d34ff43"
-  integrity sha512-hHTzUBsCISRes58f2b47pEVsQQg0yZMiTsNtDHaJTmQlwRhsxsLbuacSdv82qtw+jW1jPUHnnvQ+9xXzbYBmfg==
+vue3-gettext@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/vue3-gettext/-/vue3-gettext-2.4.0.tgz#d7b2027ff3116049ca1cb99dcdcf66f90753361d"
+  integrity sha512-xnCndk88nzC+EiUJpNKykUulvPhivM1AQuT6oa72PA4DUOFPjJvpy5hZ/GbxLUJiqvYJebMDMTWywCJwIw+biA==
   dependencies:
     chalk "^4.1.2"
     command-line-args "^5.2.1"

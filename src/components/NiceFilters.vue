@@ -4,8 +4,8 @@
     <div class="nice-component nice-filters">
       <!-- Search -->
       <NiceInput
-        :title="$gettext('Search')"
-        :placeholder="$gettext('Search...')"
+        :title="$t('Nice', 'Search')"
+        :placeholder="$t('Nice', 'Search...')"
         icon="icon-search"
         v-model="search"
         class="w-300"
@@ -58,7 +58,7 @@
             v-model="filter.value"
             :title="filter.name"
             :search-function="searchYesNo"
-            :nullText="$gettext('All')"
+            :nullText="$t('Nice', 'All')"
             @change="updateQuery"
             valueName="name"
             nullable
@@ -73,7 +73,7 @@
       <!-- Create -->
       <NiceButton
         v-if="showCreateButton"
-        :text="$gettext('Create')"
+        :text="$t('Nice', 'Create')"
         @click="create"
         icon="icon-plus"
       />
@@ -133,8 +133,8 @@ export default {
       search: "",
       filters: this.modelValue,
       yesNo: [
-        { id: "true", name: this.$gettext("Yes") },
-        { id: "false", name: this.$gettext("No") },
+        { id: "true", name: this.$t('Nice', "Yes") },
+        { id: "false", name: this.$t('Nice', "No") },
       ],
       searchYesNo: (search) => {
         if (!search) return this.yesNo;
@@ -186,7 +186,7 @@ export default {
         return this.$formatDateWithTime(filter.value);
       }
       if (filter.type == "boolean") {
-        return filter.value ? this.$gettext("Yes") : this.$gettext("No");
+        return filter.value ? this.$t('Nice', "Yes") : this.$t('Nice', "No");
       }
       if (filter.valueName) return filter.value[filter.valueName];
       if (filter.value?.name) return filter.value.name;

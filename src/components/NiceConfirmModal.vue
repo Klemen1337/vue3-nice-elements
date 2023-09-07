@@ -1,14 +1,14 @@
 <template>
   <NiceModal
     :name="name"
-    :title="$gettext('Delete')"
-    :subtitle="$gettext('Are you sure you want to delete?')"
+    :title="$t('Nice', 'Delete')"
+    :subtitle="$t('Nice', 'Are you sure you want to delete?')"
     @close="cancel"
   >
     <div class="text-right">
       <!-- Cancel -->
       <NiceButton
-        :text="$gettext('Cancel')"
+        :text="$t('Nice', 'Cancel')"
         @click="cancel"
         type="default"
         plain
@@ -17,7 +17,7 @@
 
       <!-- Confirm -->
       <NiceButton
-        :text="$gettext('Confirm')"
+        :text="$t('Nice', 'Confirm')"
         @click="confirm"
         icon="icon-check"
       />

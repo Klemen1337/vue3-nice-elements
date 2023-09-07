@@ -53,7 +53,7 @@
                     !required
                   "
                 >
-                  {{ $gettext("No options") }}
+                  {{ $t('Nice', "No options") }}
                 </div> -->
                 <!-- <div
                   class="no-options"
@@ -65,12 +65,12 @@
                     innerValues.length > 0
                   "
                 >
-                  {{ $gettext("Not Selected") }}
+                  {{ $t('Nice', "Not Selected") }}
                 </div> -->
                 <div class="no-options" v-if="!loading && !modelValue">
-                  {{ nullText }}
+                  {{ nullText || $t('Nice', 'None') }}
                 </div>
-                <div class="no-options" v-if="loading">{{ $gettext('Loading') }}</div>
+                <div class="no-options" v-if="loading">{{ $t('Nice', 'Loading') }}</div>
                 <NiceIcon class="arrow-down" icon="icon-chevron-down" />
                 <NiceIcon
                   class="arrow-down clear"
@@ -89,8 +89,8 @@
               <input
                 v-model="search"
                 type="text"
-                :placeholder="$gettext('Search...')"
-                :name="$gettext('Search')"
+                :placeholder="$t('Nice', 'Search...')"
+                :name="$t('Nice', 'Search')"
                 @input="handleSearch"
                 ref="search"
               />
@@ -105,7 +105,7 @@
                   selected: modelValue == undefined,
                 }"
               >
-                {{ nullText }}
+                {{ nullText || $t('Nice', 'None') }}
               </div>
               <div
                 class="element"
@@ -127,7 +127,7 @@
                   !innerLoading && (!innerValues || innerValues.length == 0)
                 "
               >
-                {{ $gettext("No options") }}
+                {{ $t('Nice', "No options") }}
               </div>
             </div>
           </div>
@@ -150,8 +150,6 @@ import NicePopup from "./NicePopup.vue";
 import NiceLoading from "./NiceLoading.vue";
 import NiceButton from "./NiceButton.vue";
 import NiceComponentHeader from "./NiceComponentHeader.vue";
-import gettext from "@/language";
-const { $gettext } = gettext;
 
 export default {
   name: "NiceDropdown",
@@ -195,10 +193,7 @@ export default {
       type: Function,
       default: null,
     },
-    nullText: {
-      type: String,
-      default: $gettext("None"),
-    },
+    nullText: String,
     caption: {
       type: String,
       default: null,

@@ -51,13 +51,13 @@ export default {
       // Set default title
       if (!title) {
         if (type == "danger") {
-          notification.title = this.$gettext("Error");
+          notification.title = this.$t("Nice", "Error");
           notification.icon = "icon-alert-triangle";
         } else if (type == "success") {
-          notification.title = this.$gettext("Success");
+          notification.title = this.$t("Nice", "Success");
           notification.icon = "icon-smile";
         } else if (type == "warning") {
-          notification.title = this.$gettext("Warning");
+          notification.title = this.$t("Nice", "Warning");
           notification.icon = "icon-alert-circle";
         }
       }

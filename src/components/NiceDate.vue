@@ -24,7 +24,7 @@
         <div class="input-group">
           <input
             v-model="inputVal"
-            :placeholder="placeholder"
+            :placeholder="placeholder || $t('Nice', 'None')"
             :disabled="disabled"
             :required="required"
             @blur="inputChanged"
@@ -123,8 +123,6 @@
 <script>
 import NiceComponentHeader from "./NiceComponentHeader.vue";
 import NicePopup from "./NicePopup.vue";
-import gettext from "@/language";
-const { $gettext } = gettext;
 
 export default {
   name: "NiceDate",
@@ -142,10 +140,7 @@ export default {
     required: Boolean,
     disabled: Boolean,
     loading: Boolean,
-    placeholder: {
-      type: String,
-      default: $gettext("None"),
-    },
+    placeholder: String,
     time: {
       default: true,
       type: Boolean,

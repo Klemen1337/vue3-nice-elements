@@ -7,7 +7,7 @@
       type="danger"
       class="mr-2"
       @click="askToDelete"
-      :text="$gettext('Delete')"
+      :text="$t('Nice', 'Delete')"
       :form="form"
       :disabled="loading"
     />
@@ -18,7 +18,7 @@
       type="default"
       class="mr-2"
       @click="cancel"
-      :text="$gettext('Cancel')"
+      :text="$t('Nice', 'Cancel')"
       :form="form"
       :disabled="loading"
     />
@@ -26,7 +26,7 @@
     <NiceButton
       native-type="submit"
       @click="submit"
-      :text="$gettext('Submit')"
+      :text="$t('Nice', 'Submit')"
       :form="form"
       :disabled="loading"
     />
@@ -36,8 +36,8 @@
     name="delete-prompt"
     @confirm="confirmDelete"
     @cancel="cancel"
-    :title="$gettext('Delete')"
-    :subtitle="$gettext('Are you sure you want to delete?')"
+    :title="$t('Nice', 'Delete')"
+    :subtitle="$t('Nice', 'Are you sure you want to delete?')"
   />
 </template>
 

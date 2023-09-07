@@ -119,14 +119,14 @@
 
     <!-- No data -->
     <div class="no-data" v-if="!loading && data.length == 0">
-      {{ $gettext('No data.') }}
+      {{ $t('Nice', 'No data.') }}
     </div>
 
     <!-- Footer -->
     <div class="nice-table-footer" v-if="showFooter">
       <div class="pagination-info">
         <!-- Showing {{ data.length }} of  -->
-        {{ count }} {{ $gettext('total') }}
+        {{ count }} {{ $t('Nice', 'total') }}
       </div>
       <div class="pagination" v-if="paginated && pages > 1 && pages < 5">
         <!-- <NiceButton

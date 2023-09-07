@@ -56,7 +56,6 @@ const form = ref({
 })
 
 const data = ref([])
-const filters = ref({})
 const filtersList = [
   {
     type: "select",

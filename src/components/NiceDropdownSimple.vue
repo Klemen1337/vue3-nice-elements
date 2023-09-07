@@ -17,7 +17,7 @@
           @change="handleChange"
         >
           <option v-if="nullable" :value="null" :selected="!localValue">
-            {{ nullText }}
+            {{ nullText || $t('Nice', 'None') }}
           </option>
           <option
             v-for="item in values"
@@ -31,7 +31,7 @@
           class="no-options"
           v-if="!nullable && !loading && (!values || values.length == 0)"
         >
-          {{ $gettext('No options') }}
+          {{ $t('Nice', 'No options') }}
         </div>
         <NiceLoading class="no-options" v-if="loading" />
         <NiceIcon class="arrow-down" icon="icon-chevron-down" />
@@ -53,8 +53,6 @@
 <script>
 import NiceIcon from "./NiceIcon.vue";
 import NiceComponentHeader from "./NiceComponentHeader.vue";
-import gettext from "@/language";
-const { $gettext } = gettext;
 
 export default {
   name: "NiceDropdownSimple",
@@ -84,10 +82,7 @@ export default {
       type: Function,
       default: null,
     },
-    nullText: {
-      type: String,
-      default: $gettext('None'),
-    },
+    nullText: String,
     caption: {
       type: String,
       default: null,

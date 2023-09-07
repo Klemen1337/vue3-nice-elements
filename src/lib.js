@@ -66,6 +66,9 @@ const plugin = {
     app.provide('getQuery', getQuery);
     app.config.globalProperties.$clone = clone;
     app.provide('clone', clone);
+
+    app.config.globalProperties.$t = options.gettext.$pgettext;
+    app.provide('$t', options.gettext.$pgettext);
   }
 }
 

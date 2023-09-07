@@ -8,5 +8,5 @@ import NiceElements from './lib.js';
 const app = createApp(App)
 app.use(router);
 app.use(gettext)
-app.use(NiceElements, {router})
+app.use(NiceElements, {router, gettext})
 app.mount('#app')
