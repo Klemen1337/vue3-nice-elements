@@ -1,6 +1,8 @@
 <script setup>
 import { onMounted, ref, inject } from 'vue'
 const nice = inject('nice')
+const getQuery = inject('getQuery')
+
 
 const list = [
   { id: 1, value: 'List 1' },
@@ -9,20 +11,124 @@ const list = [
   { id: 4, value: 'List 4' },
   { id: 5, value: 'List 5' }
 ]
-async function searchList() {
-  return list
+async function searchList(search) {
+  if (!search) return list;
+  return list.filter((s) =>
+    s.value.toLowerCase().includes(search.toLowerCase())
+  );
+}
+
+async function getFromList(id) {
+  return list.find((s) =>
+    s.id == id
+  );
 }
 
 const types = ['primary', 'default', 'success', 'warning', 'danger', 'info', 'dark', 'white']
 const selectedIcon = ref('icon-check')
+const loading = ref(false)
+const show = ref(false)
+setTimeout(() => {
+  show.value = true
+}, 500)
 const icons = ref([])
+const testForm = ref({
+  name: "",
+  email: "",
+  list: {
+    "id": 4,
+    "value": "List 4"
+  },
+  listSimple: 2
+})
 const form = ref({
   niceInputName: '',
   niceInputEmail: '',
-  niceDropdown: null,
-  niceDropdownSimple: null,
+  niceDropdown: {
+    "id": 3,
+    "value": "List 3"
+  },
+  niceDropdownSimple: {
+    "id": 3,
+    "value": "List 3"
+  },
   niceSwitch: false
 })
+
+const data = ref([])
+const filters = ref({})
+const filtersList = [
+  {
+    type: "select",
+    name: "List",
+    key: "something",
+    value: null,
+    searchFunction: searchList,
+    fetch: getFromList
+  },
+  {
+    type: "yesno",
+    name: "Has event",
+    help: "Get all documents that have a related event.",
+    key: "has_event",
+    value: null,
+  }, 
+  {
+    type: "yesno",
+    name: "Has launch",
+    help: "Get all documents that have a related launch.",
+    key: "has_launch",
+    value: null,
+  },
+];
+const actions = [
+  // {
+  //   icon: "icon-arrow-right",
+  //   to: (row) => ({
+  //     name: "app.projects",
+  //     params: { projectId: row.id },
+  //   }),
+  // },
+]
+const columns = [
+  {
+    name: "Site",
+    key: "news_site",
+  },
+  {
+    name: "Title",
+    key: "title",
+  },  
+]
+       
+
+async function getData() {
+  const q = await getQuery();
+  loading.value = true;
+  try {
+    const response = await fetch("https://api.spaceflightnewsapi.net/v4/articles/?" + new URLSearchParams(q));
+    const jsonResponse = await response.json()
+    data.value = jsonResponse.results
+    data.value._metadata = {
+      count: jsonResponse.count,
+      next: jsonResponse.next,
+      previous: jsonResponse.previous,
+    }
+  } catch (error) {
+    console.error(error)
+  } finally {
+    loading.value = false;
+  }
+}
+
+function randomShit() {
+  const value = list[Math.floor(Math.random() * list.length)]
+  testForm.value.list = value
+}
+
+function filterChanged() {
+  getData()
+}
 
 function openModal() {
   nice.modal('modal', true)
@@ -45,12 +151,86 @@ onMounted(() => {
     return element.id
   })
   selectedIcon.value = icons.value[Math.floor(Math.random()*icons.value.length)];
+  getData()
 })
 </script>
 
 <template>
   <div class="demo">
-    <h1>Nice elements - Vue3</h1>
+    <h1>Vue3 - Nice elements</h1>
+
+    <!-- <div class="split">
+      <div class="left-side">
+        <div class="navigation">
+          <NiceButton>Home</NiceButton>
+          <NiceButton>Nice table</NiceButton>
+          <NiceButton>Nice filters</NiceButton>
+          <router-link to="/">Go to Home</router-link>
+          <router-link to="/about">Go to About</router-link>
+        </div>
+      </div>
+      <div class="right-side">
+        <router-view></router-view>
+      </div>
+    </div> -->
+
+    <!-- Nice table -->
+    <NiceWrapper title="Form test" id="nice-test" collapsable>
+      <NiceInput title="Name" v-model="testForm.name" />
+      <NiceInput title="Email" type="email" v-model="testForm.email" />
+      <NiceDropdown v-if="show" title="List" v-model="testForm.list" :search-function="searchList" nullable />
+      <NiceDropdownSimple title="List simple" v-model="testForm.listSimple" keyOnly :values="list" nullable />
+      <NiceButton @click="randomShit">Random</NiceButton>
+      <pre>{{ testForm }}</pre>
+    </NiceWrapper>
+    
+    <!-- Nice table -->
+    <NiceWrapper title="Nice table and filters" id="nice-table" collapsable>
+      <!-- Filters -->
+      <NiceFilters
+        v-model="filtersList"
+        @change="filterChanged"
+        :showCreateButton="true"
+      />
+
+      <!-- Table -->
+      <NiceTable
+        :actions="actions"
+        :columns="columns"
+        :data="data"
+        :loading="loading"
+        paginated
+        showOrder
+        showFooter
+        showLimit
+        @filterChange="filterChanged"
+      />
+
+      <!-- <pre>{{ data }}</pre> -->
+      <pre class="mx-2">{{ filters }}</pre>
+
+      <pre class="mx-2">
+&lt;NiceFilters
+  :filters="filtersList"
+  @change="filterChanged"
+  :showCreateButton="false"
+/></pre>
+
+        <pre>
+&lt;NiceTable
+  :actions="actions"
+  :columns="columns"
+  :data="data"
+  :loading="loading"
+  :showOrder="true"
+  :paginated="true"
+  :showFooter="true"
+  @pageChange="getData"
+  @orderChange="getData"
+/>
+        </pre>
+    </NiceWrapper>
+      
 
     <!-- Nice input -->
     <NiceWrapper title="Nice input" id="nice-input" collapsable>
@@ -80,17 +260,17 @@ onMounted(() => {
   title="Dropdown" 
   v-model="form.niceDropdown" 
   :search-function="searchList 
-/></pre
-      >
+/></pre>
+      <pre>{{ form.niceDropdown }}</pre>
 
-      <NiceDropdownSimple title="Native" v-model="form.niceDropdownSimple" :values="list" />
-      <pre>
+      <NiceDropdownSimple title="Nice dropdown simple" v-model="form.niceDropdownSimple" :values="list" />
+      <pre class="mb-2">
 &lt;NiceDropdownSimple 
   title="Native" 
   v-model="form.niceDropdown" 
   :values="list"
-/></pre
-      >
+/></pre>
+      <pre>{{ form.niceDropdownSimple }}</pre>
     </NiceWrapper>
 
     <!-- Nice date -->
@@ -125,11 +305,11 @@ onMounted(() => {
 
     <!-- Nice avatar -->
     <NiceWrapper title="Nice avatar" id="nice-avatar" collapsable>
-      <NiceAvatar :type="t" text="KK" size="mini" />
-      <NiceAvatar :type="t" text="KK" size="small" />
-      <NiceAvatar :type="t" text="KK" size="default" />
-      <NiceAvatar :type="t" text="KK" size="medium" />
-      <NiceAvatar :type="t" text="KK" size="large" />
+      <NiceAvatar text="KK" size="mini" />
+      <NiceAvatar text="KK" size="small" />
+      <NiceAvatar text="KK" size="default" />
+      <NiceAvatar text="KK" size="medium" />
+      <NiceAvatar text="KK" size="large" />
 
       <!-- <div v-for="t in types" :key="t">
         <NiceAvatar :type="t" text="KK" size="mini" />
@@ -384,6 +564,31 @@ body {
   max-width: 100%;
   margin: 0 auto;
   margin-top: 2rem;
+
+  .split {
+    display: flex;
+
+    .left-side {
+      width: 200px;
+      flex-shrink: 0;
+      padding: 2rem;
+      padding-right: 0;
+
+      .navigation {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        .btn + .btn {
+          margin-left: 0;
+        }
+      }
+    }
+
+    .right-side {
+      flex-grow: 1;
+      padding: 2rem;
+    }
+  }
 
   .text-center {
     text-align: center;
