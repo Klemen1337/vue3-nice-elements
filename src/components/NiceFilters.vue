@@ -230,7 +230,7 @@ export default {
           const p = await filter.fetch(value);
           filter.value = p;
         } else {
-          console.log("Query not handeled", filter.key, value)
+          console.log("[NiceFilters] Query not handeled: ", filter.key, value)
         }
       });
       // this.$emit("change", { ...this.rawValues, search: this.search });
@@ -242,28 +242,28 @@ export default {
     },
 
     async updateQuery() {
-      console.log("updateQuery", this.filters[0].value)
+      // console.log("updateQuery", this.filters[0].value)
       setTimeout(async() => {
-      await this.$router.isReady();
-      const query = {
-        ...this.$route.query,
-        ...this.rawValues,
-        search: this.search,
-      };
-      this.filters.forEach(f => {
-        const filterValue = this.getFilterValue(f)
-        query[f.key] = filterValue
-      })
-      let cleanQuery = Object.keys(query).filter((k) => query[k] != null && query[k] != "")
-        .reduce((a, k) => ({ ...a, [k]: query[k] }), {})
-      this.$router.push({ query: cleanQuery });
-      await this.$router.isReady();
-      // this.$emit("change", { ...this.rawValues, search: this.search });
-      setTimeout(() => {
-        this.$emit("update:modelValue", this.filters);
-        this.$emit("change", this.filters);
-      })
-    });
+        await this.$router.isReady();
+        const query = {
+          ...this.$route.query,
+          ...this.rawValues,
+          search: this.search,
+        };
+        this.filters.forEach(f => {
+          const filterValue = this.getFilterValue(f)
+          query[f.key] = filterValue
+        })
+        let cleanQuery = Object.keys(query).filter((k) => query[k] != null && query[k] != "")
+          .reduce((a, k) => ({ ...a, [k]: query[k] }), {})
+        this.$router.push({ query: cleanQuery });
+        await this.$router.isReady();
+        // this.$emit("change", { ...this.rawValues, search: this.search });
+        setTimeout(() => {
+          this.$emit("update:modelValue", this.filters);
+          this.$emit("change", this.filters);
+        })
+      });
     },
 
     async create() {
