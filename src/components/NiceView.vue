@@ -1,5 +1,5 @@
 <template>
-  <div class="nice-view" :class="{ 'nice-view-no-header': !showHeader }">
+  <div class="nice-view" :class="{ 'nice-view-no-header': !showHeader, 'nice-view-flex-body': flexBody }">
     <div class="nice-view-header" v-if="showHeader">
       <NiceIcon :icon="icon" class="view-header-icon" v-if="icon && !loading" />
       <NiceLoading class="view-header-icon" v-if="loading" />
@@ -67,10 +67,17 @@ export default {
   .nice-view-header {
     padding: var(--nice-view-padding);
     padding-bottom: 1rem;
-    position: relative;
+    position: sticky;
     flex-shrink: 0;
     display: flex;
     align-items: center;
+    top: 0;
+    z-index: 100;
+    // background: rgba(245, 245, 249, 0.8);
+    background: var(--nice-overlay);
+
+    backdrop-filter: blur(5px);
+
 
     .view-header-icon {
       height: 40px;
@@ -106,9 +113,16 @@ export default {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    background: var(--nice-background-color);
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.03);
+    // background: var(--nice-background-color);
+    // box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.03);
     flex-shrink: 0;
+    border-top: 1px solid var(--nice-border-color);
+
+    z-index: 100;
+    position: sticky;
+    bottom: 0;
+    background: var(--nice-overlay);
+    backdrop-filter: blur(5px);
   }
 }
 </style>
