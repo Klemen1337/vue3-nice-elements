@@ -43,6 +43,10 @@
   flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 2rem;
+
+  .btn + .btn {
+    margin-left: 0 !important;
+  }
 }
 
 .select-wrapper {

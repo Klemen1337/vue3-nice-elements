@@ -444,6 +444,7 @@ export default {
   border: 1px solid var(--nice-border-color);
   overflow: auto;
   position: relative;
+  min-height: 41px;
 
   display: flex;
   flex-direction: column;

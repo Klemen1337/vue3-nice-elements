@@ -474,6 +474,11 @@ export default {
       display: flex;
       align-items: center;
 
+      .option {
+        display: flex;
+        align-items: center;
+      }
+
       &:focus,
       &.focus {
         background: var(--nice-bg-focus);
