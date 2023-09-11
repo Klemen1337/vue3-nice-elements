@@ -26,5 +26,6 @@ List of components:
 - NiceTable,
 - NiceTextarea,
 - NiceToast,
+- NiceUpload,
 - NiceView,
 - NiceWrapper

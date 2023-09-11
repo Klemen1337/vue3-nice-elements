@@ -42,6 +42,7 @@ const testForm = ref({
   listSimple: 2
 })
 const form = ref({
+  niceUpload: null,
   niceInputName: '',
   niceInputEmail: '',
   niceDropdown: {
@@ -125,6 +126,10 @@ function randomShit() {
   testForm.value.list = value
 }
 
+function onChange() {
+  console.log(...arguments)
+}
+
 function filterChanged() {
   getData()
 }
@@ -172,6 +177,14 @@ onMounted(() => {
         <router-view></router-view>
       </div>
     </div> -->
+
+    <!-- Nice upload -->
+    <NiceWrapper title="Nice upload" id="nice-upload" collapsable>
+      <NiceUpload title="Nice upload" @change="onChange" v-model="form.niceUpload" />
+      <div v-if="form.niceUpload">
+        <pre v-for="file in form.niceUpload" :key="file.name">{{ file.name }}</pre>
+      </div>
+    </NiceWrapper>
 
     <!-- Nice table -->
     <NiceWrapper title="Form test" id="nice-test" collapsable collapsed>

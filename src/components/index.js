@@ -22,6 +22,7 @@ import NiceSwitch from "./NiceSwitch.vue";
 import NiceTable from "./NiceTable.vue";
 import NiceTextarea from "./NiceTextarea.vue";
 import NiceToast from "./NiceToast.vue";
+import NiceUpload from "./NiceUpload.vue";
 import NiceView from "./NiceView.vue";
 import NiceWrapper from "./NiceWrapper.vue";
 
@@ -50,6 +51,7 @@ export default {
   NiceTable,
   NiceTextarea,
   NiceToast,
+  NiceUpload,
   NiceView,
   NiceWrapper,
 }
