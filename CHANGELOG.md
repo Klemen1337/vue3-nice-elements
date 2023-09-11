@@ -1,5 +1,11 @@
 # Changelog
 
+## **v0.1.2** - 11.9.2023
+
+- worked on nice modal overflow,
+- created nice upload component,
+- style fixes
+
 ## **v0.1.1** - 7.9.2023
 
 - added collapsed prop for nice wrapper and fixed no padding,
