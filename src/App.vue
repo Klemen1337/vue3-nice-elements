@@ -360,7 +360,58 @@ onMounted(() => {
 
     <!-- Nice modal -->
     <NiceWrapper title="Nice modal" id="nice-modal" collapsable>
-      <NiceModal name="modal">This is a test modal</NiceModal>
+      <NiceModal name="modal" title="Header">
+        <template #footer>Footer</template>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+        <div>This is a test modal</div>
+
+      </NiceModal>
       <pre class="mb-2">&lt;NiceModal name="modal">This is a test modal&lt;/NiceModal></pre>
 
       <NicePanel name="panel">This is a test panel</NicePanel>

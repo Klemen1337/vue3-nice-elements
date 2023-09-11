@@ -33,7 +33,7 @@
         </div>
 
         <!-- Body -->
-        <div class="nice-modal-body">
+        <div class="nice-modal-body" :class="{ 'no-header': !($slots.title || title || $slots.subtitle || subtitle), 'no-footer': !$slots.footer }">
           <slot />
         </div>
 
@@ -146,7 +146,6 @@ export default {
   .nice-modal-header {
     flex-shrink: 0;
     padding: var(--nice-modal-padding);
-    padding-bottom: 0;
     position: relative;
 
     .nice-modal-title {
@@ -159,8 +158,8 @@ export default {
 
     .nice-modal-close {
       position: absolute;
-      top: var(--nice-modal-padding);
-      right: var(--nice-modal-padding);
+      top: 1.2rem;
+      right: 1rem;
     }
   }
 
@@ -168,16 +167,26 @@ export default {
     overflow: auto;
     flex-grow: 1;
     padding: 0 var(--nice-modal-padding);
-    margin: var(--nice-modal-padding) 0;
+
+    &.no-header {
+      padding-top: var(--nice-modal-padding);
+    }    
+    &.no-footer {
+      padding-bottom: var(--nice-modal-padding);
+    }
   }
 
   .nice-modal-footer {
     flex-shrink: 0;
     padding: var(--nice-modal-padding);
-    padding-top: 0;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    gap: 1rem;
+
+    .btn + .btn {
+      margin-left: 0;
+    }
   }
 }
 
