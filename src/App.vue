@@ -67,6 +67,14 @@ const filtersList = [
     fetch: getFromList
   },
   {
+    type: "date",
+    name: "Date",
+    help: "Date test",
+    key: "date",
+    time: false,
+    value: null,
+  }, 
+  {
     type: "yesno",
     name: "Has event",
     help: "Get all documents that have a related event.",
@@ -80,6 +88,12 @@ const filtersList = [
     key: "has_launch",
     value: null,
   },
+  {
+    type: "boolean",
+    name: "Boolean",
+    key: "boolean",
+    value: null,
+  }, 
 ];
 const actions = [
   // {

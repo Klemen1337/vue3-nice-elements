@@ -23,8 +23,14 @@ $spacers: (
   .pr-#{$size} { padding-right: $length !important; }
   .px-#{$size} { padding-top: $length !important; padding-bottom: $length !important; }
   .py-#{$size} { padding-left: $length !important; padding-right: $length !important; }
+  
+  .gap-#{$size} { gap: $length; }
 }
 
 .f-grow {
   flex-grow: 1;
+}
+
+.d-flex {
+  display: flex;
 }
