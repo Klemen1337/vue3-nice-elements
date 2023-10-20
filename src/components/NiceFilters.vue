@@ -34,6 +34,7 @@
             v-if="filter.type == 'date'"
             v-model="filter.value"
             :title="filter.name"
+            :time="filter.time"
             @change="updateQuery"
             noMargin
           />
