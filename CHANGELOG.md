@@ -1,5 +1,11 @@
 # Changelog
 
+## **v0.1.4** - 20.10.2023
+
+- fixed nice date no date selected,
+- added time param to date filter,
+- added gap spacings
+
 ## **v0.1.3** - 20.10.2023
 
 - added submitText and deleteText props to NiceActions,
