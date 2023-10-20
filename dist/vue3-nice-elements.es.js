@@ -1918,7 +1918,7 @@ const k3 = {
     NiceComponentHeader: v0
   },
   props: {
-    modelValue: [String, Date],
+    modelValue: [String, Date, null],
     title: String,
     caption: String,
     noMargin: Boolean,
@@ -2061,13 +2061,16 @@ const k3 = {
   },
   watch: {
     modelValue() {
-      this.modelValue && (this.innerDate = new Date(this.modelValue), this.selected = new Date(this.modelValue), this._extractData());
+      this.modelValue && this.isDateValid(this.modelValue) && (this.innerDate = new Date(this.modelValue), this.selected = new Date(this.modelValue), this._extractData());
     }
   },
   mounted() {
     this.handleDefault();
   },
   methods: {
+    isDateValid(e) {
+      return !isNaN(new Date(e));
+    },
     close() {
       var e;
       (e = this.$refs.popup) == null || e.close();
@@ -2106,7 +2109,7 @@ const k3 = {
       this.innerDate.setYear(e.year), this.innerDate.setMonth(e.month), this.innerDate.setDate(e.day), this.handleChange();
     },
     handleDefault() {
-      this.modelValue ? (this.innerDate = new Date(this.modelValue), this.innerDate.setSeconds(0, 0), this.inputVal = this._formatDate(this.innerDate)) : (this.innerDate = /* @__PURE__ */ new Date(), this.innerDate.setSeconds(0, 0));
+      this.modelValue || (this.innerDate = /* @__PURE__ */ new Date(), this.innerDate.setSeconds(0, 0)), this.modelValue && this.isDateValid(this.modelValue) && (this.innerDate = new Date(this.modelValue), this.innerDate.setSeconds(0, 0), this.inputVal = this._formatDate(this.innerDate));
     },
     changeYear(e) {
       let s = this.selected.getFullYear();
@@ -2162,7 +2165,7 @@ const k3 = {
       this.innerDate || (this.innerDate = /* @__PURE__ */ new Date()), this.data.day = this.innerDate.getDate(), this.data.month = this.innerDate.getMonth(), this.data.year = this.innerDate.getFullYear(), this.data.hour = this.innerDate.getHours(), this.data.minute = this.innerDate.getMinutes(), this.inputVal = this._formatDate(this.innerDate), this.selected.year = this.data.year, this.selected.month = this.data.month, this._buildMonth();
     }
   }
-}, r1 = (e) => (k0("data-v-f0896777"), e = e(), N0(), e), N3 = { class: "input-group" }, V3 = ["placeholder", "disabled", "required"], S3 = { class: "nice-dropdown" }, O3 = { class: "month-wrapper" }, D3 = { class: "value" }, T3 = { class: "year" }, P3 = { class: "month" }, I3 = { class: "calendar" }, E3 = { class: "header" }, q3 = { class: "month" }, F3 = ["onClick", "title"], A3 = {
+}, r1 = (e) => (k0("data-v-e810dc14"), e = e(), N0(), e), N3 = { class: "input-group" }, V3 = ["placeholder", "disabled", "required"], S3 = { class: "nice-dropdown" }, O3 = { class: "month-wrapper" }, D3 = { class: "value" }, T3 = { class: "year" }, P3 = { class: "month" }, I3 = { class: "calendar" }, E3 = { class: "header" }, q3 = { class: "month" }, F3 = ["onClick", "title"], A3 = {
   key: 0,
   class: "time"
 }, $3 = { class: "select-wrapper" }, L3 = /* @__PURE__ */ r1(() => /* @__PURE__ */ M("div", { class: "arrow-down" }, null, -1)), H3 = ["value", "selected"], R3 = /* @__PURE__ */ r1(() => /* @__PURE__ */ M("div", null, ":", -1)), j3 = { class: "select-wrapper" }, W3 = /* @__PURE__ */ r1(() => /* @__PURE__ */ M("div", { class: "arrow-down" }, null, -1)), U3 = ["value", "selected"];
@@ -2289,7 +2292,7 @@ function Y3(e, s, t, o, c, i) {
     }, 8, ["onChange"])
   ], 2);
 }
-const Z3 = /* @__PURE__ */ O(k3, [["render", Y3], ["__scopeId", "data-v-f0896777"]]);
+const Z3 = /* @__PURE__ */ O(k3, [["render", Y3], ["__scopeId", "data-v-e810dc14"]]);
 const Q3 = {
   name: "NiceIcon",
   props: {
@@ -2848,7 +2851,7 @@ const N7 = {
       e.value = null, this.updateQuery();
     }
   }
-}, V7 = (e) => (k0("data-v-6244768a"), e = e(), N0(), e), S7 = { class: "nice-filters-wrapper" }, O7 = { class: "nice-component nice-filters" }, D7 = {
+}, V7 = (e) => (k0("data-v-48a9a65a"), e = e(), N0(), e), S7 = { class: "nice-filters-wrapper" }, O7 = { class: "nice-component nice-filters" }, D7 = {
   key: 0,
   class: "nice-filters-options"
 }, T7 = /* @__PURE__ */ V7(() => /* @__PURE__ */ M("div", { class: "f-grow" }, null, -1)), P7 = {
@@ -2887,9 +2890,10 @@ function E7(e, s, t, o, c, i) {
             modelValue: h.value,
             "onUpdate:modelValue": (v) => h.value = v,
             title: h.name,
+            time: h.time,
             onChange: i.updateQuery,
             noMargin: ""
-          }, null, 8, ["modelValue", "onUpdate:modelValue", "title", "onChange"])) : f("", !0),
+          }, null, 8, ["modelValue", "onUpdate:modelValue", "title", "time", "onChange"])) : f("", !0),
           h.type == "select" ? (u(), S(r, {
             key: 2,
             modelValue: h.value,
@@ -2944,7 +2948,7 @@ function E7(e, s, t, o, c, i) {
     ])) : f("", !0)
   ]);
 }
-const q7 = /* @__PURE__ */ O(N7, [["render", E7], ["__scopeId", "data-v-6244768a"]]);
+const q7 = /* @__PURE__ */ O(N7, [["render", E7], ["__scopeId", "data-v-48a9a65a"]]);
 var K1 = F7;
 function F7(e, s, t) {
   if (!e)
