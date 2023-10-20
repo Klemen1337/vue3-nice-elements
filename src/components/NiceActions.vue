@@ -5,39 +5,43 @@
       v-if="showDelete"
       plain
       type="danger"
-      class="mr-2"
       @click="askToDelete"
       :text="$t('Nice', 'Delete')"
       :form="form"
       :disabled="loading"
+      icon="icon-trash-2"
     />
-    <div class="flex-grow"></div>
+
+    <div class="f-grow"></div>
+
     <!-- Cancel -->
     <NiceButton
       plain
       type="default"
-      class="mr-2"
       @click="cancel"
       :text="$t('Nice', 'Cancel')"
       :form="form"
       :disabled="loading"
+      icon="icon-x"
     />
+
     <!-- Submit -->
     <NiceButton
       native-type="submit"
       @click="submit"
-      :text="$t('Nice', 'Submit')"
+      :text="submitText ? submitText : $t('Nice', 'Submit')"
       :form="form"
       :disabled="loading"
+      icon="icon-save"
     />
   </div>
 
+  <!-- Delete prompt -->
   <NiceConfirmModal
     name="delete-prompt"
     @confirm="confirmDelete"
-    @cancel="cancel"
     :title="$t('Nice', 'Delete')"
-    :subtitle="$t('Nice', 'Are you sure you want to delete?')"
+    :subtitle="deleteText ? deleteText : $t('Nice', 'Are you sure you want to delete?')"
   />
 </template>
 
@@ -55,6 +59,8 @@ export default {
     form: String,
     loading: Boolean,
     showDelete: Boolean,
+    submitText: String,
+    deleteText: String,
   },
 
   emits: ["submit", "cancel", "delete"],
@@ -67,6 +73,7 @@ export default {
       this.$nice.modal("delete-prompt", true);
     },
     confirmDelete() {
+      this.$nice.modal("delete-prompt", false);
       this.$emit("delete");
     },
     cancel() {
@@ -81,6 +88,12 @@ export default {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  flex-wrap: wrap;
   width: 100%;
+  gap: 1rem;
+
+  .btn + .btn {
+    margin: 0;
+  }
 }
 </style>

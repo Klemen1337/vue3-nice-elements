@@ -5,7 +5,7 @@
     :subtitle="$t('Nice', 'Are you sure you want to delete?')"
     @close="cancel"
   >
-    <div class="text-right">
+    <div class="nice-actions">
       <!-- Cancel -->
       <NiceButton
         :text="$t('Nice', 'Cancel')"

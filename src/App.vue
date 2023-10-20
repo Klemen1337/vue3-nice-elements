@@ -142,8 +142,8 @@ function openPanel() {
   nice.panel('panel', true)
 }
 
-function openToast() {
-  nice.toast('This is a test')
+function openToast(text) {
+  nice.toast(text ? text : 'This is a test')
 }
 
 function openNotification() {
@@ -160,7 +160,7 @@ onMounted(() => {
 <template>
   <NiceView :flexBody="true" title="Vue3 - Nice elements">
     <template #footer>
-      <NiceButton>Test</NiceButton>
+      <NiceActions showDelete submitText="Save" deleteText="Please confirm this action" @cancel="openToast('cancel')" @submit="openToast('submit')" @delete="openToast('delete')"></NiceActions>
     </template>
     <div class="demo">
     <!-- <div class="split">
