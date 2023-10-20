@@ -1,5 +1,10 @@
 # Changelog
 
+## **v0.1.5** - 20.10.2023
+
+- fixed double date input in filters,
+- fixed date input font size
+
 ## **v0.1.4** - 20.10.2023
 
 - fixed nice date no date selected,
