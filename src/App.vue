@@ -222,7 +222,9 @@ onMounted(() => {
         v-model="filtersList"
         @change="filterChanged"
         :showCreateButton="true"
-      />
+      >
+        <NiceButton plain>Slot</NiceButton>
+      </NiceFilters>
 
       <!-- Table -->
       <NiceTable

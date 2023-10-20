@@ -70,6 +70,7 @@
       </div>
 
       <div class="f-grow"></div>
+      <slot></slot>
 
       <!-- Create -->
       <NiceButton
