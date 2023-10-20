@@ -133,7 +133,7 @@ export default {
   },
 
   props: {
-    modelValue: [String, Date],
+    modelValue: [String, Date, null],
     title: String,
     caption: String,
     noMargin: Boolean,
@@ -200,7 +200,7 @@ export default {
 
   watch: {
     modelValue() {
-      if (this.modelValue) {
+      if (this.modelValue && this.isDateValid(this.modelValue)) {
         this.innerDate = new Date(this.modelValue);
         this.selected = new Date(this.modelValue);
         this._extractData();
@@ -213,6 +213,9 @@ export default {
   },
 
   methods: {
+    isDateValid(dateStr) {
+      return !isNaN(new Date(dateStr));
+    },
     close() {
       this.$refs.popup?.close();
     },
@@ -277,7 +280,9 @@ export default {
         this.innerDate = new Date();
         this.innerDate.setSeconds(0, 0);
         // this.inputVal = this._formatDate(this.innerDate)
-      } else {
+      }
+      
+      if (this.modelValue && this.isDateValid(this.modelValue)) {
         this.innerDate = new Date(this.modelValue);
         this.innerDate.setSeconds(0, 0);
         this.inputVal = this._formatDate(this.innerDate);
