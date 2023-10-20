@@ -2851,7 +2851,7 @@ const N7 = {
       e.value = null, this.updateQuery();
     }
   }
-}, V7 = (e) => (k0("data-v-80e81871"), e = e(), N0(), e), S7 = { class: "nice-filters-wrapper" }, O7 = { class: "nice-component nice-filters" }, D7 = {
+}, V7 = (e) => (k0("data-v-b626332a"), e = e(), N0(), e), S7 = { class: "nice-filters-wrapper" }, O7 = { class: "nice-component nice-filters" }, D7 = {
   key: 0,
   class: "nice-filters-options"
 }, T7 = /* @__PURE__ */ V7(() => /* @__PURE__ */ M("div", { class: "f-grow" }, null, -1)), P7 = {
@@ -2923,6 +2923,7 @@ function E7(e, s, t, o, c, i) {
         ]))), 128))
       ])) : f("", !0),
       T7,
+      I(e.$slots, "default", {}, void 0, !0),
       t.showCreateButton ? (u(), S(l, {
         key: 1,
         text: e.$t("Nice", "Create"),
@@ -2948,7 +2949,7 @@ function E7(e, s, t, o, c, i) {
     ])) : f("", !0)
   ]);
 }
-const q7 = /* @__PURE__ */ O(N7, [["render", E7], ["__scopeId", "data-v-80e81871"]]);
+const q7 = /* @__PURE__ */ O(N7, [["render", E7], ["__scopeId", "data-v-b626332a"]]);
 var K1 = F7;
 function F7(e, s, t) {
   if (!e)
