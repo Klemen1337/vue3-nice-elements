@@ -133,6 +133,11 @@
     font-family: inherit;
     height: var(--nice-height);
     color: currentColor;
+    font-size: 1em;
+
+    &::placeholder {
+      opacity: 0.5;
+    }
 
     &:focus {
       background: var(--nice-bg-focus);

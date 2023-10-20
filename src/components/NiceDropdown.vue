@@ -512,6 +512,11 @@ export default {
         border-bottom: 1px solid var(--nice-border-color);
         background: var(--nice-card-bg);
         border-radius: 0;
+        font-size: 1em;
+
+        &::placeholder {
+          color: var(--nice-border-color);
+        }
 
         &:focus {
           outline: 0 none;

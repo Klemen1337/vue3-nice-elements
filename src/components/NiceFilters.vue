@@ -198,6 +198,8 @@ export default {
     getFilterValue(f) {
       if (!f) return null
       if (f.type == "date") {
+        if (!f.value) return null;
+        if (isNaN(new Date(f.value))) return null;
         return f.value ? new Date(f.value).toISOString() : null;
       }
       return (
@@ -231,7 +233,7 @@ export default {
           const p = await filter.fetch(value);
           filter.value = p;
         } else {
-          console.log("[NiceFilters] Query not handeled: ", filter.key, value)
+          console.log("[NiceFilters] Query not handled: ", filter.key, value)
         }
       });
       // this.$emit("change", { ...this.rawValues, search: this.search });

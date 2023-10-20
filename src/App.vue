@@ -68,9 +68,14 @@ const filtersList = [
   },
   {
     type: "date",
-    name: "Date",
-    help: "Date test",
-    key: "date",
+    name: "To date",
+    key: "to_date",
+    time: false,
+    value: null,
+  },   {
+    type: "date",
+    name: "From date",
+    key: "from_date",
     time: false,
     value: null,
   }, 
