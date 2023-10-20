@@ -1,5 +1,10 @@
 # Changelog
 
+## **v0.1.3** - 20.10.2023
+
+- added submitText and deleteText props to NiceActions,
+- fixes
+
 ## **v0.1.2** - 11.9.2023
 
 - worked on nice modal overflow,
