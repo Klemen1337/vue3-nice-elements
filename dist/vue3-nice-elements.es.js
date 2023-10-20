@@ -267,7 +267,7 @@ const q1 = /* @__PURE__ */ O(f2, [["render", z2], ["__scopeId", "data-v-46a2523a
       this.$emit("confirm");
     }
   }
-}, _2 = { class: "text-right" };
+}, _2 = { class: "nice-actions" };
 function x2(e, s, t, o, c, i) {
   const a = _("NiceButton"), n = _("NiceModal");
   return u(), S(n, {
@@ -304,7 +304,9 @@ const C2 = {
   props: {
     form: String,
     loading: Boolean,
-    showDelete: Boolean
+    showDelete: Boolean,
+    submitText: String,
+    deleteText: String
   },
   emits: ["submit", "cancel", "delete"],
   methods: {
@@ -315,13 +317,13 @@ const C2 = {
       this.$nice.modal("delete-prompt", !0);
     },
     confirmDelete() {
-      this.$emit("delete");
+      this.$nice.modal("delete-prompt", !1), this.$emit("delete");
     },
     cancel() {
       this.$emit("cancel");
     }
   }
-}, B2 = { class: "nice-actions" }, k2 = /* @__PURE__ */ M("div", { class: "flex-grow" }, null, -1);
+}, B2 = { class: "nice-actions" }, k2 = /* @__PURE__ */ M("div", { class: "f-grow" }, null, -1);
 function N2(e, s, t, o, c, i) {
   const a = _("NiceButton"), n = _("NiceConfirmModal");
   return u(), p(A, null, [
@@ -330,37 +332,37 @@ function N2(e, s, t, o, c, i) {
         key: 0,
         plain: "",
         type: "danger",
-        class: "mr-2",
         onClick: i.askToDelete,
         text: e.$t("Nice", "Delete"),
         form: t.form,
-        disabled: t.loading
+        disabled: t.loading,
+        icon: "icon-trash-2"
       }, null, 8, ["onClick", "text", "form", "disabled"])) : f("", !0),
       k2,
       w(a, {
         plain: "",
         type: "default",
-        class: "mr-2",
         onClick: i.cancel,
         text: e.$t("Nice", "Cancel"),
         form: t.form,
-        disabled: t.loading
+        disabled: t.loading,
+        icon: "icon-x"
       }, null, 8, ["onClick", "text", "form", "disabled"]),
       w(a, {
         "native-type": "submit",
         onClick: i.submit,
-        text: e.$t("Nice", "Submit"),
+        text: t.submitText ? t.submitText : e.$t("Nice", "Submit"),
         form: t.form,
-        disabled: t.loading
+        disabled: t.loading,
+        icon: "icon-save"
       }, null, 8, ["onClick", "text", "form", "disabled"])
     ]),
     w(n, {
       name: "delete-prompt",
       onConfirm: i.confirmDelete,
-      onCancel: i.cancel,
       title: e.$t("Nice", "Delete"),
-      subtitle: e.$t("Nice", "Are you sure you want to delete?")
-    }, null, 8, ["onConfirm", "onCancel", "title", "subtitle"])
+      subtitle: t.deleteText ? t.deleteText : e.$t("Nice", "Are you sure you want to delete?")
+    }, null, 8, ["onConfirm", "title", "subtitle"])
   ], 64);
 }
 const V2 = /* @__PURE__ */ O(C2, [["render", N2]]);
