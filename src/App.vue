@@ -177,7 +177,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <NiceView :flexBody="true" title="Vue3 - Nice elements v0.1.5">
+  <NiceView :flexBody="true" title="Vue3 - Nice elements v0.1.6">
     <template #footer>
       <NiceActions showDelete submitText="Save" deleteText="Please confirm this action" @cancel="openToast('cancel')" @submit="openToast('submit')" @delete="openToast('delete')"></NiceActions>
     </template>

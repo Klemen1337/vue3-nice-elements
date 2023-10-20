@@ -1,5 +1,9 @@
 # Changelog
 
+## **v0.1.6** - 20.10.2023
+
+- added default slot to nice filters
+
 ## **v0.1.5** - 20.10.2023
 
 - fixed double date input in filters,
