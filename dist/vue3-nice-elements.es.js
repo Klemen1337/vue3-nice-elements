@@ -2731,7 +2731,7 @@ function B7(e, s, t, o, c, i) {
     ])
   ], 2);
 }
-const k7 = /* @__PURE__ */ O(u7, [["render", B7], ["__scopeId", "data-v-620620f3"]]);
+const k7 = /* @__PURE__ */ O(u7, [["render", B7], ["__scopeId", "data-v-4977e293"]]);
 const N7 = {
   name: "NiceFilters",
   props: {
@@ -2800,7 +2800,7 @@ const N7 = {
     },
     getFilterValue(e) {
       var s;
-      return e ? e.type == "date" ? e.value ? new Date(e.value).toISOString() : null : e.valueRaw || (e.getKey ? e.getKey(e.value) : null) || ((s = e.value) == null ? void 0 : s.id) || e.value : null;
+      return e ? e.type == "date" ? !e.value || isNaN(new Date(e.value)) ? null : e.value ? new Date(e.value).toISOString() : null : e.valueRaw || (e.getKey ? e.getKey(e.value) : null) || ((s = e.value) == null ? void 0 : s.id) || e.value : null;
     },
     async getQuery() {
       await this.$router.isReady();
@@ -2820,7 +2820,7 @@ const N7 = {
           const o = await s.fetch(t);
           s.value = o;
         } else
-          console.log("[NiceFilters] Query not handeled: ", s.key, t);
+          console.log("[NiceFilters] Query not handled: ", s.key, t);
       }), setTimeout(() => {
         this.$emit("update:modelValue", this.filters), this.$emit("change", this.filters);
       });
@@ -2851,7 +2851,7 @@ const N7 = {
       e.value = null, this.updateQuery();
     }
   }
-}, V7 = (e) => (k0("data-v-48a9a65a"), e = e(), N0(), e), S7 = { class: "nice-filters-wrapper" }, O7 = { class: "nice-component nice-filters" }, D7 = {
+}, V7 = (e) => (k0("data-v-80e81871"), e = e(), N0(), e), S7 = { class: "nice-filters-wrapper" }, O7 = { class: "nice-component nice-filters" }, D7 = {
   key: 0,
   class: "nice-filters-options"
 }, T7 = /* @__PURE__ */ V7(() => /* @__PURE__ */ M("div", { class: "f-grow" }, null, -1)), P7 = {
@@ -2948,7 +2948,7 @@ function E7(e, s, t, o, c, i) {
     ])) : f("", !0)
   ]);
 }
-const q7 = /* @__PURE__ */ O(N7, [["render", E7], ["__scopeId", "data-v-48a9a65a"]]);
+const q7 = /* @__PURE__ */ O(N7, [["render", E7], ["__scopeId", "data-v-80e81871"]]);
 var K1 = F7;
 function F7(e, s, t) {
   if (!e)
