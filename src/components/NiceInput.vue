@@ -209,7 +209,7 @@ export default {
       // background: transparent;
 
       &::placeholder {
-        color: var(--nice-border-color);
+        opacity: 0.5;
       }
     }
   }

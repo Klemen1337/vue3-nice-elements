@@ -155,10 +155,6 @@ export default {
       color: currentColor;
       flex-grow: 1;
       background: transparent;
-
-      &::placeholder {
-        color: var(--nice-border-color);
-      }
     }
   }
 }

@@ -462,7 +462,6 @@ export default {
       // top: 50%;
       // transform: translateY(-50%);
       // left: 1rem;
-      // color: var(--placeholder-color);
       opacity: 0.5;
     }
 
@@ -517,10 +516,6 @@ export default {
         background: var(--nice-card-bg);
         border-radius: 0;
         font-size: 1em;
-
-        &::placeholder {
-          color: var(--nice-border-color);
-        }
 
         &:focus {
           outline: 0 none;
@@ -581,8 +576,8 @@ export default {
           text-align: center;
           font-size: 0.8em;
           justify-content: center;
-          opacity: 0.8;
-          color: var(--placeholder-color);
+          opacity: 0.5;
+          color: currentColor;
           cursor: default;
           &:hover {
             background: inherit;
