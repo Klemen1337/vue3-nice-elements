@@ -16,6 +16,7 @@ $spacers: (
   .mr-#{$size} { margin-right: $length !important; }
   .mx-#{$size} { margin-top: $length !important; margin-bottom: $length !important; }
   .my-#{$size} { margin-left: $length !important; margin-right: $length !important; }
+  .m-#{$size} { margin: $length !important; }
 
   .pt-#{$size} { padding-top: $length !important; }
   .pb-#{$size} { padding-bottom: $length !important; }
@@ -23,6 +24,7 @@ $spacers: (
   .pr-#{$size} { padding-right: $length !important; }
   .px-#{$size} { padding-top: $length !important; padding-bottom: $length !important; }
   .py-#{$size} { padding-left: $length !important; padding-right: $length !important; }
+  .p-#{$size} { padding: $length !important; }
   
   .gap-#{$size} { gap: $length; }
 }

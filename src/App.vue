@@ -182,409 +182,418 @@ onMounted(() => {
 </script>
 
 <template>
-  <NiceView :flexBody="true" title="Vue3 - Nice elements v0.1.7">
-    <template #footer>
-      <NiceActions showDelete submitText="Save" deleteText="Please confirm this action" @cancel="openToast('cancel')" @submit="openToast('submit')" @delete="openToast('delete')">
-        <NiceButton @click="toggleDisabled">Toggle disabled</NiceButton>
-      </NiceActions>
-    </template>
-    <div class="demo">
-    <!-- <div class="split">
-      <div class="left-side">
-        <div class="navigation">
-          <NiceButton>Home</NiceButton>
-          <NiceButton>Nice table</NiceButton>
-          <NiceButton>Nice filters</NiceButton>
-          <router-link to="/">Go to Home</router-link>
-          <router-link to="/about">Go to About</router-link>
+  <div class="main-view">
+    <aside>
+      <div class="py-2">
+        <h1 class="m-0">Vue3 - Nice elements</h1>
+        <h3 class="m-0">v0.1.7</h3>
+      </div>
+
+      <div class="links">
+        <a href="#nice-test" class="link">Form test</a>
+        <a href="#nice-upload" class="link">Nice upload</a>
+        <a href="#nice-table" class="link">Nice table and filters</a>
+        <a href="#nice-input" class="link">Nice input</a>
+        <a href="#nice-dropdown" class="link">Nice dropdown</a>
+        <a href="#nice-date" class="link">Nice date</a>
+        <a href="#nice-checkbox" class="link">Nice checkbox</a>
+        <a href="#nice-switch" class="link">Nice switch</a>
+        <a href="#nice-loading" class="link">Nice loading</a>
+        <a href="#nice-avatar" class="link">Nice avatar</a>
+        <a href="#nice-modal" class="link">Nice modal</a>
+        <a href="#nice-button" class="link">Nice button</a>
+        <a href="#nice-icon" class="link">Nice icon</a>
+      </div>
+    </aside>
+    <NiceView :flexBody="true" class="f-grow">
+      <template #footer>
+        <NiceActions showDelete submitText="Save" deleteText="Please confirm this action" @cancel="openToast('cancel')" @submit="openToast('submit')" @delete="openToast('delete')">
+          <NiceButton @click="toggleDisabled">Toggle disabled</NiceButton>
+        </NiceActions>
+      </template>
+      <div class="demo">
+      <!-- Nice test -->
+      <NiceWrapper title="Form test" id="nice-test" collapsable collapsed>
+        <NiceInput title="Name" v-model="testForm.name" :disabled="isDisabled" />
+        <NiceInput title="Email" type="email" v-model="testForm.email" :disabled="isDisabled" />
+        <NiceTextarea title="Comment" v-model="testForm.comment" :disabled="isDisabled" />
+        <NiceDropdown v-if="show" title="List" v-model="testForm.list" :search-function="searchList" nullable :disabled="isDisabled" />
+        <NiceDropdownSimple title="List simple" v-model="testForm.listSimple" keyOnly :values="list" nullable :disabled="isDisabled" />
+        <NiceButton @click="randomShit" :disabled="isDisabled">Random</NiceButton>
+        <pre class="mt-3">{{ testForm }}</pre>
+      </NiceWrapper>
+
+      <!-- Nice upload -->
+      <NiceWrapper title="Nice upload" id="nice-upload" collapsable>
+        <NiceUpload title="Nice upload" @change="onChange" v-model="form.niceUpload" :disabled="isDisabled" />
+        <div v-if="form.niceUpload">
+          <pre v-for="file in form.niceUpload" :key="file.name">{{ file.name }}</pre>
         </div>
-      </div>
-      <div class="right-side">
-        <router-view></router-view>
-      </div>
-    </div> -->
-
-    <!-- Nice upload -->
-    <NiceWrapper title="Nice upload" id="nice-upload" collapsable>
-      <NiceUpload title="Nice upload" @change="onChange" v-model="form.niceUpload" :disabled="isDisabled" />
-      <div v-if="form.niceUpload">
-        <pre v-for="file in form.niceUpload" :key="file.name">{{ file.name }}</pre>
-      </div>
-    </NiceWrapper>
-
-    <!-- Nice table -->
-    <NiceWrapper title="Form test" id="nice-test" collapsable collapsed>
-      <NiceInput title="Name" v-model="testForm.name" :disabled="isDisabled" />
-      <NiceInput title="Email" type="email" v-model="testForm.email" :disabled="isDisabled" />
-      <NiceTextarea title="Comment" v-model="testForm.comment" :disabled="isDisabled" />
-      <NiceDropdown v-if="show" title="List" v-model="testForm.list" :search-function="searchList" nullable :disabled="isDisabled" />
-      <NiceDropdownSimple title="List simple" v-model="testForm.listSimple" keyOnly :values="list" nullable :disabled="isDisabled" />
-      <NiceButton @click="randomShit" :disabled="isDisabled">Random</NiceButton>
-      <pre>{{ testForm }}</pre>
-    </NiceWrapper>
-    
-    <!-- Nice table -->
-    <NiceWrapper title="Nice table and filters" id="nice-table" collapsable>
-      <!-- Filters -->
-      <NiceFilters
-        v-model="filtersList"
-        @change="filterChanged"
-        :showCreateButton="true"
-      >
-        <NiceButton plain>Slot</NiceButton>
-      </NiceFilters>
-
-      <!-- Table -->
-      <NiceTable
-        :actions="actions"
-        :columns="columns"
-        :data="data"
-        :loading="loading"
-        paginated
-        showOrder
-        showFooter
-        showLimit
-        @filterChange="filterChanged"
-      />
-
-      <!-- <pre>{{ data }}</pre> -->
-      <!-- <pre class="mx-2">{{ filters }}</pre> -->
-
-      <pre class="mx-2">
-&lt;NiceFilters
-  :filters="filtersList"
-  @change="filterChanged"
-  :showCreateButton="false"
-/></pre>
-
-        <pre>
-&lt;NiceTable
-  :actions="actions"
-  :columns="columns"
-  :data="data"
-  :loading="loading"
-  :showOrder="true"
-  :paginated="true"
-  :showFooter="true"
-  @pageChange="getData"
-  @orderChange="getData"
-/>
-        </pre>
-    </NiceWrapper>
+      </NiceWrapper>
       
+      <!-- Nice table -->
+      <NiceWrapper title="Nice table and filters" id="nice-table" collapsable>
+        <!-- Filters -->
+        <NiceFilters
+          v-model="filtersList"
+          @change="filterChanged"
+          :showCreateButton="true"
+        >
+          <NiceButton plain>Slot</NiceButton>
+        </NiceFilters>
 
-    <!-- Nice input -->
-    <NiceWrapper title="Nice input" id="nice-input" collapsable>
-      <NiceInput title="Name" v-model="form.niceInputName" :disabled="isDisabled" />
-      <pre class="mb-2">
-&lt;NiceInput 
-  title="Name" 
-  v-model="form.niceInputName" 
-/></pre
-      >
+        <!-- Table -->
+        <NiceTable
+          :actions="actions"
+          :columns="columns"
+          :data="data"
+          :loading="loading"
+          paginated
+          showOrder
+          showFooter
+          showLimit
+          @filterChange="filterChanged"
+        />
 
-      <NiceInput title="Email" type="email" v-model="form.niceInputEmail" :disabled="isDisabled" />
-      <pre>
-&lt;NiceInput 
-  title="Email" 
-  type="email" 
-  v-model="form.niceInputEmail" 
-/></pre
-      >
-    </NiceWrapper>
+        <!-- <pre>{{ data }}</pre> -->
+        <!-- <pre class="mx-2">{{ filters }}</pre> -->
 
-    <!-- Nice dropdown -->
-    <NiceWrapper title="Nice dropdown" id="nice-dropdown" collapsable>
-      <NiceDropdown title="Dropdown" v-model="form.niceDropdown" :search-function="searchList" :disabled="isDisabled" />
-      <pre class="mb-2">
-&lt;NiceDropdown 
-  title="Dropdown" 
-  v-model="form.niceDropdown" 
-  :search-function="searchList 
-/></pre>
-      <pre>{{ form.niceDropdown }}</pre>
+        <pre class="mx-2">
+  &lt;NiceFilters
+    :filters="filtersList"
+    @change="filterChanged"
+    :showCreateButton="false"
+  /></pre>
 
-      <NiceDropdownSimple title="Nice dropdown simple" v-model="form.niceDropdownSimple" :values="list" />
-      <pre class="mb-2">
-&lt;NiceDropdownSimple 
-  title="Native" 
-  v-model="form.niceDropdown" 
-  :values="list"
-/></pre>
-      <pre>{{ form.niceDropdownSimple }}</pre>
-    </NiceWrapper>
+          <pre>
+  &lt;NiceTable
+    :actions="actions"
+    :columns="columns"
+    :data="data"
+    :loading="loading"
+    :showOrder="true"
+    :paginated="true"
+    :showFooter="true"
+    @pageChange="getData"
+    @orderChange="getData"
+  />
+          </pre>
+      </NiceWrapper>
+        
 
-    <!-- Nice date -->
-    <NiceWrapper title="Nice date" id="nice-date" collapsable>
-      <NiceDate title="Birthday" v-model="form.niceDate" :disabled="isDisabled" />
-      <pre>&lt;NiceDate title="Birthday" v-model="form.niceDate" /></pre>
-    </NiceWrapper>
+      <!-- Nice input -->
+      <NiceWrapper title="Nice input" id="nice-input" collapsable>
+        <NiceInput title="Name" v-model="form.niceInputName" :disabled="isDisabled" />
+        <pre class="mb-2">
+  &lt;NiceInput 
+    title="Name" 
+    v-model="form.niceInputName" 
+  /></pre
+        >
 
-    <!-- Nice checkbox -->
-    <NiceWrapper title="Nice checkbox" id="nice-checkbox" collapsable>
-      <NiceCheckbox title="I like pizza" v-model="form.niceCheckbox" :disabled="isDisabled" />
-      <pre>&lt;NiceCheckbox title="I like pizza" v-model="form.niceCheckbox"/></pre>
-    </NiceWrapper>
+        <NiceInput title="Email" type="email" v-model="form.niceInputEmail" :disabled="isDisabled" />
+        <pre>
+  &lt;NiceInput 
+    title="Email" 
+    type="email" 
+    v-model="form.niceInputEmail" 
+  /></pre
+        >
+      </NiceWrapper>
 
-    <!-- Nice switch -->
-    <NiceWrapper title="Nice switch" id="nice-switch" collapsable>
-      <NiceSwitch title="I like pizza" v-model="form.niceSwitch" :disabled="isDisabled" />
-      <pre>&lt;NiceSwitch title="I like pizza" v-model="form.niceSwitch" /></pre>
-    </NiceWrapper>
+      <!-- Nice dropdown -->
+      <NiceWrapper title="Nice dropdown" id="nice-dropdown" collapsable>
+        <NiceDropdown title="Dropdown" v-model="form.niceDropdown" :search-function="searchList" :disabled="isDisabled" />
+        <pre class="mb-2">
+  &lt;NiceDropdown 
+    title="Dropdown" 
+    v-model="form.niceDropdown" 
+    :search-function="searchList 
+  /></pre>
+        <pre>{{ form.niceDropdown }}</pre>
 
-    <!-- Nice checkbox -->
-    <NiceWrapper title="Nice loading" id="nice-loading" collapsable>
-      <NiceLoading size="mini" />
-      <NiceLoading size="small" />
-      <NiceLoading />
-      <NiceLoading size="large" />
-      <NiceLoading message="Loading..." />
-      <!-- <NiceLoading message="Loading..." full-div="true" size="large" /> -->
-      <pre class="mb-2">&lt;NiceLoading /></pre>
-      <pre>&lt;NiceLoading message="Loading..." full-div="true" size="large" /></pre>
-    </NiceWrapper>
+        <NiceDropdownSimple title="Nice dropdown simple" v-model="form.niceDropdownSimple" :values="list" />
+        <pre class="mb-2">
+  &lt;NiceDropdownSimple 
+    title="Native" 
+    v-model="form.niceDropdown" 
+    :values="list"
+  /></pre>
+        <pre>{{ form.niceDropdownSimple }}</pre>
+      </NiceWrapper>
 
-    <!-- Nice avatar -->
-    <NiceWrapper title="Nice avatar" id="nice-avatar" collapsable>
-      <NiceAvatar text="KK" size="mini" />
-      <NiceAvatar text="KK" size="small" />
-      <NiceAvatar text="KK" size="default" />
-      <NiceAvatar text="KK" size="medium" />
-      <NiceAvatar text="KK" size="large" />
+      <!-- Nice date -->
+      <NiceWrapper title="Nice date" id="nice-date" collapsable>
+        <NiceDate title="Birthday" v-model="form.niceDate" :disabled="isDisabled" />
+        <pre>&lt;NiceDate title="Birthday" v-model="form.niceDate" /></pre>
+      </NiceWrapper>
 
-      <!-- <div v-for="t in types" :key="t">
-        <NiceAvatar :type="t" text="KK" size="mini" />
-        <NiceAvatar :type="t" text="KK" size="small" />
-        <NiceAvatar :type="t" text="KK" size="default" />
-        <NiceAvatar :type="t" text="KK" size="medium" />
-        <NiceAvatar :type="t" text="KK" size="large" />
+      <!-- Nice checkbox -->
+      <NiceWrapper title="Nice checkbox" id="nice-checkbox" collapsable>
+        <NiceCheckbox title="I like pizza" v-model="form.niceCheckbox" :disabled="isDisabled" />
+        <pre>&lt;NiceCheckbox title="I like pizza" v-model="form.niceCheckbox"/></pre>
+      </NiceWrapper>
 
-        <NiceAvatar :type="t" gradient text="KK" size="mini" />
-        <NiceAvatar :type="t" gradient text="KK" size="small" />
-        <NiceAvatar :type="t" gradient text="KK" size="default" />
-        <NiceAvatar :type="t" gradient text="KK" size="medium" />
-        <NiceAvatar :type="t" gradient text="KK" size="large" />
+      <!-- Nice switch -->
+      <NiceWrapper title="Nice switch" id="nice-switch" collapsable>
+        <NiceSwitch title="I like pizza" v-model="form.niceSwitch" :disabled="isDisabled" />
+        <pre>&lt;NiceSwitch title="I like pizza" v-model="form.niceSwitch" /></pre>
+      </NiceWrapper>
 
-        <NiceAvatar :type="t" plain text="KK" size="mini" />
-        <NiceAvatar :type="t" plain text="KK" size="small" />
-        <NiceAvatar :type="t" plain text="KK" size="default" />
-        <NiceAvatar :type="t" plain text="KK" size="medium" />
-        <NiceAvatar :type="t" plain text="KK" size="large" />
+      <!-- Nice checkbox -->
+      <NiceWrapper title="Nice loading" id="nice-loading" collapsable>
+        <NiceLoading size="mini" />
+        <NiceLoading size="small" />
+        <NiceLoading />
+        <NiceLoading size="large" />
+        <NiceLoading message="Loading..." />
+        <!-- <NiceLoading message="Loading..." full-div="true" size="large" /> -->
+        <pre class="mb-2">&lt;NiceLoading /></pre>
+        <pre>&lt;NiceLoading message="Loading..." full-div="true" size="large" /></pre>
+      </NiceWrapper>
 
-        <NiceAvatar :type="t" shape="square" text="KK" size="mini" />
-        <NiceAvatar :type="t" shape="square" text="KK" size="small" />
-        <NiceAvatar :type="t" shape="square" text="KK" size="default" />
-        <NiceAvatar :type="t" shape="square" text="KK" size="medium" />
-        <NiceAvatar :type="t" shape="square" text="KK" size="large" />
+      <!-- Nice avatar -->
+      <NiceWrapper title="Nice avatar" id="nice-avatar" collapsable>
+        <NiceAvatar text="KK" size="mini" />
+        <NiceAvatar text="KK" size="small" />
+        <NiceAvatar text="KK" size="default" />
+        <NiceAvatar text="KK" size="medium" />
+        <NiceAvatar text="KK" size="large" />
 
-        <NiceAvatar :status="t" text="KK" size="mini" />
-        <NiceAvatar :status="t" text="KK" size="small" />
-        <NiceAvatar :status="t" text="KK" size="default" />
-        <NiceAvatar :status="t" text="KK" size="medium" />
-        <NiceAvatar :status="t" text="KK" size="large" />
-      </div> -->
+        <!-- <div v-for="t in types" :key="t">
+          <NiceAvatar :type="t" text="KK" size="mini" />
+          <NiceAvatar :type="t" text="KK" size="small" />
+          <NiceAvatar :type="t" text="KK" size="default" />
+          <NiceAvatar :type="t" text="KK" size="medium" />
+          <NiceAvatar :type="t" text="KK" size="large" />
 
-      <pre>&lt;NiceAvatar /></pre>
-    </NiceWrapper>
+          <NiceAvatar :type="t" gradient text="KK" size="mini" />
+          <NiceAvatar :type="t" gradient text="KK" size="small" />
+          <NiceAvatar :type="t" gradient text="KK" size="default" />
+          <NiceAvatar :type="t" gradient text="KK" size="medium" />
+          <NiceAvatar :type="t" gradient text="KK" size="large" />
 
-    <!-- Nice modal -->
-    <NiceWrapper title="Nice modal" id="nice-modal" collapsable>
-      <NiceModal name="modal" title="Header">
-        <template #footer>Footer</template>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
-        <div>This is a test modal</div>
+          <NiceAvatar :type="t" plain text="KK" size="mini" />
+          <NiceAvatar :type="t" plain text="KK" size="small" />
+          <NiceAvatar :type="t" plain text="KK" size="default" />
+          <NiceAvatar :type="t" plain text="KK" size="medium" />
+          <NiceAvatar :type="t" plain text="KK" size="large" />
 
-      </NiceModal>
-      <pre class="mb-2">&lt;NiceModal name="modal">This is a test modal&lt;/NiceModal></pre>
+          <NiceAvatar :type="t" shape="square" text="KK" size="mini" />
+          <NiceAvatar :type="t" shape="square" text="KK" size="small" />
+          <NiceAvatar :type="t" shape="square" text="KK" size="default" />
+          <NiceAvatar :type="t" shape="square" text="KK" size="medium" />
+          <NiceAvatar :type="t" shape="square" text="KK" size="large" />
 
-      <NicePanel name="panel" noPadding>
-        <NiceView flexView title="Panel test" class="h-auto">
-          <div>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
-            <p>This is a panel test</p>
+          <NiceAvatar :status="t" text="KK" size="mini" />
+          <NiceAvatar :status="t" text="KK" size="small" />
+          <NiceAvatar :status="t" text="KK" size="default" />
+          <NiceAvatar :status="t" text="KK" size="medium" />
+          <NiceAvatar :status="t" text="KK" size="large" />
+        </div> -->
+
+        <pre>&lt;NiceAvatar /></pre>
+      </NiceWrapper>
+
+      <!-- Nice modal -->
+      <NiceWrapper title="Nice modal" id="nice-modal" collapsable>
+        <NiceModal name="modal" title="Header">
+          <template #footer>Footer</template>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+          <div>This is a test modal</div>
+
+        </NiceModal>
+        <pre class="mb-2">&lt;NiceModal name="modal">This is a test modal&lt;/NiceModal></pre>
+
+        <NicePanel name="panel" noPadding>
+          <NiceView flexView title="Panel test" class="h-auto">
+            <div>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+              <p>This is a panel test</p>
+            </div>
+
+            <template #footer>
+              <NiceActions @cancel="openToast('cancel')" @submit="openToast('submit')" @delete="openToast('delete')"></NiceActions>
+            </template>
+          </NiceView>
+        </NicePanel>
+        <pre class="mb-2">&lt;NicePanel name="panel">This is a test panel&lt;/NicePanel></pre>
+
+        <NiceButton @click="openModal">Open modal</NiceButton>
+        <NiceButton @click="openPanel">Open panel</NiceButton>
+        <NiceButton @click="openToast">Open toast</NiceButton>
+        <NiceButton @click="openNotification">Open notification</NiceButton>
+      </NiceWrapper>
+
+      <!-- Nice button -->
+      <NiceWrapper title="Nice button" id="nice-button" collapsable>
+        <div class="buttons">
+          <div class="buttons-wrap" v-for="t in types" :key="t">
+            <NiceButton :icon="selectedIcon" :type="t" size="large">{{ t }} large</NiceButton>
+            <NiceButton :icon="selectedIcon" :type="t">{{ t }} medium</NiceButton>
+            <NiceButton :icon="selectedIcon" :type="t" size="small">{{ t }} small</NiceButton>
+            <NiceButton :icon="selectedIcon" :type="t" size="mini">{{ t }} mini</NiceButton>
+          </div>
+          
+          <div class="buttons-wrap" v-for="t in types" :key="t">
+            <NiceButton :icon="selectedIcon" :type="t" size="large"></NiceButton>
+            <NiceButton :icon="selectedIcon" :type="t"></NiceButton>
+            <NiceButton :icon="selectedIcon" :type="t" size="small"></NiceButton>
+            <NiceButton :icon="selectedIcon" :type="t" size="mini"></NiceButton>
           </div>
 
-          <template #footer>
-            <NiceActions @cancel="openToast('cancel')" @submit="openToast('submit')" @delete="openToast('delete')"></NiceActions>
-          </template>
-        </NiceView>
-      </NicePanel>
-      <pre class="mb-2">&lt;NicePanel name="panel">This is a test panel&lt;/NicePanel></pre>
+          <div class="buttons-wrap" v-for="t in types" :key="t">
+            <NiceButton :icon="selectedIcon" :type="t" plain size="large">
+              {{ t }} large plain
+            </NiceButton>
+            <NiceButton :icon="selectedIcon" :type="t" plain>{{ t }} medium plain</NiceButton>
+            <NiceButton :icon="selectedIcon" :type="t" plain size="small">
+              {{ t }} small plain
+            </NiceButton>
+            <NiceButton :icon="selectedIcon" :type="t" plain size="mini">
+              {{ t }} small mini
+            </NiceButton>
+          </div>
 
-      <NiceButton @click="openModal">Open modal</NiceButton>
-      <NiceButton @click="openPanel">Open panel</NiceButton>
-      <NiceButton @click="openToast">Open toast</NiceButton>
-      <NiceButton @click="openNotification">Open notification</NiceButton>
-    </NiceWrapper>
+          <div class="buttons-wrap" v-for="t in types" :key="t">
+            <NiceButton :icon="selectedIcon" :type="t" naked size="large">
+              {{ t }} large naked
+            </NiceButton>
+            <NiceButton :icon="selectedIcon" :type="t" naked>{{ t }} medium naked</NiceButton>
+            <NiceButton :icon="selectedIcon" :type="t" naked size="small">
+              {{ t }} small naked
+            </NiceButton>
+            <NiceButton :icon="selectedIcon" :type="t" naked size="mini">
+              {{ t }} mini naked
+            </NiceButton>
+          </div>
 
-    <!-- Nice button -->
-    <NiceWrapper title="Nice button" id="nice-button" collapsable>
-      <div class="buttons">
-        <div class="buttons-wrap" v-for="t in types" :key="t">
-          <NiceButton :icon="selectedIcon" :type="t" size="large">{{ t }} large</NiceButton>
-          <NiceButton :icon="selectedIcon" :type="t">{{ t }} medium</NiceButton>
-          <NiceButton :icon="selectedIcon" :type="t" size="small">{{ t }} small</NiceButton>
-          <NiceButton :icon="selectedIcon" :type="t" size="mini">{{ t }} mini</NiceButton>
+          <div class="buttons-wrap" v-for="t in types" :key="t">
+            <NiceButton :icon="selectedIcon" :type="t" rounded size="large">
+              {{ t }} large rounded
+            </NiceButton>
+            <NiceButton :icon="selectedIcon" :type="t" rounded>{{ t }} medium rounded</NiceButton>
+            <NiceButton :icon="selectedIcon" :type="t" rounded size="small">
+              {{ t }} small rounded
+            </NiceButton>
+            <NiceButton :icon="selectedIcon" :type="t" rounded size="mini">
+              {{ t }} mini rounded
+            </NiceButton>
+          </div>
+
+          <div class="buttons-wrap" v-for="t in types" :key="t">
+            <NiceButton :icon="selectedIcon" :type="t" outline size="large">
+              {{ t }} large outline
+            </NiceButton>
+            <NiceButton :icon="selectedIcon" :type="t" outline>{{ t }} medium outline</NiceButton>
+            <NiceButton :icon="selectedIcon" :type="t" outline size="small">
+              {{ t }} small outline
+            </NiceButton>
+            <NiceButton :icon="selectedIcon" :type="t" outline size="mini">
+              {{ t }} mini outline
+            </NiceButton>
+          </div>
         </div>
-        
-        <div class="buttons-wrap" v-for="t in types" :key="t">
-          <NiceButton :icon="selectedIcon" :type="t" size="large"></NiceButton>
-          <NiceButton :icon="selectedIcon" :type="t"></NiceButton>
-          <NiceButton :icon="selectedIcon" :type="t" size="small"></NiceButton>
-          <NiceButton :icon="selectedIcon" :type="t" size="mini"></NiceButton>
-        </div>
+      </NiceWrapper>
 
-        <div class="buttons-wrap" v-for="t in types" :key="t">
-          <NiceButton :icon="selectedIcon" :type="t" plain size="large">
-            {{ t }} large plain
-          </NiceButton>
-          <NiceButton :icon="selectedIcon" :type="t" plain>{{ t }} medium plain</NiceButton>
-          <NiceButton :icon="selectedIcon" :type="t" plain size="small">
-            {{ t }} small plain
-          </NiceButton>
-          <NiceButton :icon="selectedIcon" :type="t" plain size="mini">
-            {{ t }} small mini
-          </NiceButton>
-        </div>
-
-        <div class="buttons-wrap" v-for="t in types" :key="t">
-          <NiceButton :icon="selectedIcon" :type="t" naked size="large">
-            {{ t }} large naked
-          </NiceButton>
-          <NiceButton :icon="selectedIcon" :type="t" naked>{{ t }} medium naked</NiceButton>
-          <NiceButton :icon="selectedIcon" :type="t" naked size="small">
-            {{ t }} small naked
-          </NiceButton>
-          <NiceButton :icon="selectedIcon" :type="t" naked size="mini">
-            {{ t }} mini naked
-          </NiceButton>
-        </div>
-
-        <div class="buttons-wrap" v-for="t in types" :key="t">
-          <NiceButton :icon="selectedIcon" :type="t" rounded size="large">
-            {{ t }} large rounded
-          </NiceButton>
-          <NiceButton :icon="selectedIcon" :type="t" rounded>{{ t }} medium rounded</NiceButton>
-          <NiceButton :icon="selectedIcon" :type="t" rounded size="small">
-            {{ t }} small rounded
-          </NiceButton>
-          <NiceButton :icon="selectedIcon" :type="t" rounded size="mini">
-            {{ t }} mini rounded
-          </NiceButton>
+      <!-- Nice icon -->
+      <NiceWrapper title="Nice icon" id="nice-icon" collapsable>
+        <div class="text-center">
+          <NiceIcon :icon="selectedIcon" />
+          <pre class="mb-4">&lt;NiceIcon icon="{{ selectedIcon }}" /></pre>
         </div>
 
-        <div class="buttons-wrap" v-for="t in types" :key="t">
-          <NiceButton :icon="selectedIcon" :type="t" outline size="large">
-            {{ t }} large outline
-          </NiceButton>
-          <NiceButton :icon="selectedIcon" :type="t" outline>{{ t }} medium outline</NiceButton>
-          <NiceButton :icon="selectedIcon" :type="t" outline size="small">
-            {{ t }} small outline
-          </NiceButton>
-          <NiceButton :icon="selectedIcon" :type="t" outline size="mini">
-            {{ t }} mini outline
-          </NiceButton>
+        <div class="icons">
+          <NiceButton
+            :icon="icon"
+            type="dark"
+            plain
+            :class="{ active: selectedIcon == icon }"
+            v-for="icon in icons"
+            :key="icon"
+            @click="selectedIcon = icon"
+          />
         </div>
+      </NiceWrapper>
+
+      <!-- <pre>{{  form  }}</pre> -->
       </div>
-    </NiceWrapper>
-
-    <!-- Nice icon -->
-    <NiceWrapper title="Nice icon" id="nice-icon" collapsable>
-      <div class="text-center">
-        <NiceIcon :icon="selectedIcon" />
-        <pre class="mb-4">&lt;NiceIcon icon="{{ selectedIcon }}" /></pre>
-      </div>
-
-      <div class="icons">
-        <NiceButton
-          :icon="icon"
-          type="dark"
-          plain
-          :class="{ active: selectedIcon == icon }"
-          v-for="icon in icons"
-          :key="icon"
-          @click="selectedIcon = icon"
-        />
-      </div>
-    </NiceWrapper>
-
-    <!-- <pre>{{  form  }}</pre> -->
-    </div>
-  </NiceView>
+    </NiceView>
+  </div>
 
   <NiceSvgs />
   <NiceToast />
@@ -692,7 +701,6 @@ body {
 }
 
 .demo {
-  width: 800px;
   max-width: 100%;
   // margin: 0 auto;
   // margin-top: 2rem;
@@ -765,6 +773,40 @@ body {
       align-items: center;
       grid-template-columns: repeat(3, 1fr);
       gap: 0.5rem;
+    }
+  }
+}
+
+.main-view {
+  display: flex;
+  height: 100vh;
+}
+
+aside {
+  position: sticky;
+  top: 0;
+  width: 300px;
+  flex-shrink: 0;
+  height: 100vh;
+  background: var(--nice-card-bg);
+  border-right: 1px solid var(--nice-border-color);
+  padding: 1rem;
+
+  .links {
+    margin-top: 1rem;
+    .link {
+      display: block;
+      padding: 0.8rem;
+      margin-bottom: 0.5rem;
+      text-decoration: none;
+      color: var(--nice-font-color);
+      border-radius: var(--nice-border-radius);
+      background: var(--nice-card-bg);
+
+      &:hover {
+        color: white;
+        background: var(--nice-primary-color);
+      }
     }
   }
 }
