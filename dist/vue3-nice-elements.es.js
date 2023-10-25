@@ -2726,7 +2726,7 @@ function w7(e, s, t, o, c, i) {
     ])
   ], 2);
 }
-const _7 = /* @__PURE__ */ O(a7, [["render", w7], ["__scopeId", "data-v-07b9e912"]]);
+const _7 = /* @__PURE__ */ O(a7, [["render", w7], ["__scopeId", "data-v-4dd52871"]]);
 const x7 = {
   name: "NiceFilters",
   props: {
@@ -2846,7 +2846,7 @@ const x7 = {
       e.value = null, this.updateQuery();
     }
   }
-}, C7 = (e) => (k0("data-v-b626332a"), e = e(), N0(), e), B7 = { class: "nice-filters-wrapper" }, k7 = { class: "nice-component nice-filters" }, N7 = {
+}, C7 = (e) => (k0("data-v-fad220d1"), e = e(), N0(), e), B7 = { class: "nice-filters-wrapper" }, k7 = { class: "nice-component nice-filters" }, N7 = {
   key: 0,
   class: "nice-filters-options"
 }, V7 = /* @__PURE__ */ C7(() => /* @__PURE__ */ M("div", { class: "f-grow" }, null, -1)), S7 = {
@@ -2944,7 +2944,7 @@ function D7(e, s, t, o, c, i) {
     ])) : f("", !0)
   ]);
 }
-const T7 = /* @__PURE__ */ O(x7, [["render", D7], ["__scopeId", "data-v-b626332a"]]);
+const T7 = /* @__PURE__ */ O(x7, [["render", D7], ["__scopeId", "data-v-fad220d1"]]);
 const P7 = {
   name: "NiceIcon",
   props: {
@@ -3112,7 +3112,7 @@ function Y7(e, s, t, o, c, i) {
     i.errorMessage ? (u(), p("div", U7, b(i.errorMessage), 1)) : f("", !0)
   ], 2);
 }
-const Z7 = /* @__PURE__ */ O(A7, [["render", Y7], ["__scopeId", "data-v-ba0ece7b"]]);
+const Z7 = /* @__PURE__ */ O(A7, [["render", Y7], ["__scopeId", "data-v-77517aa1"]]);
 const Q7 = {
   name: "NiceNotification",
   props: {
@@ -3929,7 +3929,7 @@ function Z8(e, s, t, o, c, i) {
     t.message ? (u(), p("div", Y8, b(t.message), 1)) : f("", !0)
   ], 2);
 }
-const Q8 = /* @__PURE__ */ O($8, [["render", Z8], ["__scopeId", "data-v-a31ae6ca"]]);
+const Q8 = /* @__PURE__ */ O($8, [["render", Z8], ["__scopeId", "data-v-cf411692"]]);
 const K8 = {
   name: "NiceToast",
   data() {
