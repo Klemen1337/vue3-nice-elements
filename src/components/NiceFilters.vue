@@ -295,6 +295,7 @@ export default {
 
 .nice-filters-options {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
 }
 
