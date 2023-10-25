@@ -1,7 +1,7 @@
 <template>
   <div
     class="nice-component nice-checkbox"
-    :class="{ 'no-margin': noMargin, active: localValue }"
+    :class="{ 'no-margin': noMargin, active: localValue, disabled }"
     @click="toggleValue"
   >
     <div class="nice-checkbox-box">
@@ -13,7 +13,7 @@
     <div class="nice-checkbox-title" :for="'nice-checkbox' + key" v-if="title">
       {{ title }}
     </div>
-    <input type="checkbox" :id="'nice-checkbox' + key" />
+    <input type="checkbox" :id="'nice-checkbox' + key" :disabled="disabled" />
   </div>
 </template>
 
@@ -29,6 +29,10 @@ export default {
     title: {
       type: String,
       default: null,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
     noMargin: {
       type: Boolean,
@@ -58,6 +62,7 @@ export default {
 
   methods: {
     toggleValue() {
+      if (this.disabled) return;
       this.localValue = !this.localValue;
     },
   },

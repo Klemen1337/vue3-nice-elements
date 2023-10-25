@@ -1,7 +1,7 @@
 <template>
   <div
     class="nice-popup"
-    :class="{ 'nice-popup-open': isOpen, 'nice-popup-focused': isFocused }"
+    :class="{ 'nice-popup-open': isOpen, 'nice-popup-focused': isFocused, disabled }"
   >
     <div
       class="nice-popup-trigger"
@@ -133,6 +133,7 @@ export default {
 
   methods: {
     toggle() {
+      if (this.disabled) return;
       this.isOpen = !this.isOpen;
       this.popper.update();
       this.$emit("change", this.isOpen);

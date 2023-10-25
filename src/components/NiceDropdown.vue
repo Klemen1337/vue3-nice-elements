@@ -21,6 +21,7 @@
         ref="popup"
         class="nice-dropdown-popup-wrapper"
         @change="popupChanged"
+        :disabled="disabled"
       >
         <template #trigger>
           <div class="input-group">
@@ -33,6 +34,7 @@
                   @focus="focus = true"
                   @blur="focus = false"
                   @keypress="onKeypress"
+                  :disabled="disabled"
                 />
                 <div class="option" v-if="!loading && modelValue">
                   <slot name="selected-option" :item="modelValue">
@@ -93,6 +95,7 @@
                 :name="$t('Nice', 'Search')"
                 @input="handleSearch"
                 ref="search"
+                :disabled="disabled"
               />
               <NiceLoading class="loading" v-if="innerLoading" />
             </div>
@@ -232,6 +235,7 @@ export default {
     },
 
     canClear () {
+      if (this.disabled) return false
       return !!this.modelValue && !!this.nullable
     }
   },

@@ -1,7 +1,7 @@
 <template>
   <div
     class="nice-component nice-textarea"
-    :class="{ 'no-margin': noMargin, active: localValue }"
+    :class="{ 'no-margin': noMargin, active: localValue, disabled }"
   >
     <NiceComponentHeader
       :title="title"
@@ -19,6 +19,7 @@
         :autocomplete="autocomplete"
         :type="type"
         :rows="rows"
+        :disabled="disabled"
       ></textarea>
       <div class="input-group-append input-group-icon" v-if="icon">
         <NiceIcon :icon="icon" />
@@ -79,6 +80,10 @@ export default {
       default: null,
     },
     required: {
+      type: Boolean,
+      default: false,
+    },
+    disabled: {
       type: Boolean,
       default: false,
     },

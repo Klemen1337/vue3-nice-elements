@@ -1,7 +1,7 @@
 <template>
   <div
     class="nice-component nice-input"
-    :class="{ 'no-margin': noMargin, active: localValue }"
+    :class="{ 'no-margin': noMargin, active: localValue, disabled }"
   >
     <NiceComponentHeader
       :title="title"
@@ -19,6 +19,7 @@
         :autocomplete="autocomplete"
         :type="type"
         :required="required"
+        :disabled="disabled"
       />
       <div class="input-group-append input-group-icon" v-if="icon">
         <NiceIcon :icon="icon" />
@@ -36,7 +37,6 @@
 </template>
 
 <script>
-import NiceIcon from "./NiceIcon.vue";
 import SafeGet from "just-safe-get";
 import NiceComponentHeader from "./NiceComponentHeader.vue";
 
@@ -44,7 +44,6 @@ export default {
   name: "NiceInput",
 
   components: {
-    NiceIcon,
     NiceComponentHeader,
   },
 
@@ -86,6 +85,10 @@ export default {
       default: false,
     },
     noMargin: {
+      type: Boolean,
+      default: false,
+    },
+    disabled: {
       type: Boolean,
       default: false,
     },

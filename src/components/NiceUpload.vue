@@ -1,7 +1,7 @@
 <template>
   <div
     class="nice-component nice-upload"
-    :class="{ 'no-margin': noMargin, active: localValue }"
+    :class="{ 'no-margin': noMargin, active: localValue, disabled }"
   >
     <NiceComponentHeader
       :title="title"
@@ -25,6 +25,7 @@
         :accept="accept"
         type="file"
         @change="fileChanged"
+        :disabled="disabled"
       />
       <div class="nice-upload-overlay" v-if="!localValue">
         <NiceIcon icon="icon-upload" />
@@ -79,7 +80,11 @@ export default {
       type: Boolean,
       default: false,
     },
-    error: [Object, null],
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    error: [Object, String, null],
   },
 
   emits: ["change", "update:modelValue"],
@@ -105,6 +110,7 @@ export default {
     },
 
     errorMessage() {
+      if (typeof this.error == "string") return this.error;
       const err = SafeGet(this.error, ["response", "data", this.prop]);
       return typeof err == "object" ? err.join("-") : err;
     },

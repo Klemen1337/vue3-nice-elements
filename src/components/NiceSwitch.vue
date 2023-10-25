@@ -4,7 +4,7 @@
     :class="[
       'nice-switch-' + type,
       size ? 'nice-switch-' + size : '',
-      { 'no-margin': noMargin, active: localValue },
+      { 'no-margin': noMargin, active: localValue, disabled },
     ]"
     @click="toggleValue"
   >
@@ -14,7 +14,7 @@
     <div class="nice-switch-title" :for="'nice-switch' + key" v-if="title">
       {{ title }}
     </div>
-    <input type="checkbox" :id="'nice-switch' + key" />
+    <input type="checkbox" :id="'nice-switch' + key" :disabled="disabled" />
   </div>
 </template>
 
@@ -41,6 +41,10 @@ export default {
       validator(value) {
         return ["small", "large"].includes(value);
       },
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
     type: {
       type: String,
@@ -81,6 +85,7 @@ export default {
 
   methods: {
     toggleValue() {
+      if (this.disabled) return
       this.localValue = !this.localValue;
     },
   },

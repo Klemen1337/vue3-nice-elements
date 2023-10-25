@@ -1,7 +1,7 @@
 <template>
   <div
     class="nice-component nice-dropdown-simple"
-    :class="{ disabled: disabled, 'no-margin': noMargin }"
+    :class="{ disabled, 'no-margin': noMargin }"
   >
     <NiceComponentHeader
       :title="title"
@@ -51,14 +51,12 @@
 </template>
 
 <script>
-import NiceIcon from "./NiceIcon.vue";
 import NiceComponentHeader from "./NiceComponentHeader.vue";
 
 export default {
   name: "NiceDropdownSimple",
 
   components: {
-    NiceIcon,
     NiceComponentHeader,
   },
 
@@ -71,7 +69,10 @@ export default {
     title: String,
     noMargin: Boolean,
     nullable: Boolean,
-    disabled: Boolean,
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
     loading: Boolean,
     keyOnly: Boolean,
     required: {
