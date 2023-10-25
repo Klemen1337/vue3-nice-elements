@@ -93,7 +93,7 @@ export default {
       default: false,
     },
     prop: String,
-    error: [Object, null],
+    error: [Object, String, null],
   },
 
   emits: ["change", "debounce", "update:modelValue"],
@@ -120,6 +120,7 @@ export default {
     },
 
     errorMessage() {
+      if (typeof this.error == "string") return this.error;
       const err = SafeGet(this.error, ["response", "data", this.prop]);
       return typeof err == "object" ? err.join("-") : err;
     },
