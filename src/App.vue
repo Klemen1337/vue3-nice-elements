@@ -28,6 +28,7 @@ const types = ['primary', 'default', 'success', 'warning', 'danger', 'info', 'da
 const selectedIcon = ref('icon-check')
 const loading = ref(false)
 const show = ref(false)
+const isDisabled = ref(false)
 setTimeout(() => {
   show.value = true
 }, 500)
@@ -140,6 +141,10 @@ async function getData() {
   }
 }
 
+function toggleDisabled() {
+  isDisabled.value = !isDisabled.value
+}
+
 function randomShit() {
   const value = list[Math.floor(Math.random() * list.length)]
   testForm.value.list = value
@@ -179,7 +184,9 @@ onMounted(() => {
 <template>
   <NiceView :flexBody="true" title="Vue3 - Nice elements v0.1.6">
     <template #footer>
-      <NiceActions showDelete submitText="Save" deleteText="Please confirm this action" @cancel="openToast('cancel')" @submit="openToast('submit')" @delete="openToast('delete')"></NiceActions>
+      <NiceActions showDelete submitText="Save" deleteText="Please confirm this action" @cancel="openToast('cancel')" @submit="openToast('submit')" @delete="openToast('delete')">
+        <NiceButton @click="toggleDisabled">Toggle disabled</NiceButton>
+      </NiceActions>
     </template>
     <div class="demo">
     <!-- <div class="split">
@@ -199,7 +206,7 @@ onMounted(() => {
 
     <!-- Nice upload -->
     <NiceWrapper title="Nice upload" id="nice-upload" collapsable>
-      <NiceUpload title="Nice upload" @change="onChange" v-model="form.niceUpload" />
+      <NiceUpload title="Nice upload" @change="onChange" v-model="form.niceUpload" :disabled="isDisabled" />
       <div v-if="form.niceUpload">
         <pre v-for="file in form.niceUpload" :key="file.name">{{ file.name }}</pre>
       </div>
@@ -207,11 +214,12 @@ onMounted(() => {
 
     <!-- Nice table -->
     <NiceWrapper title="Form test" id="nice-test" collapsable collapsed>
-      <NiceInput title="Name" v-model="testForm.name" />
-      <NiceInput title="Email" type="email" v-model="testForm.email" />
-      <NiceDropdown v-if="show" title="List" v-model="testForm.list" :search-function="searchList" nullable />
-      <NiceDropdownSimple title="List simple" v-model="testForm.listSimple" keyOnly :values="list" nullable />
-      <NiceButton @click="randomShit">Random</NiceButton>
+      <NiceInput title="Name" v-model="testForm.name" :disabled="isDisabled" />
+      <NiceInput title="Email" type="email" v-model="testForm.email" :disabled="isDisabled" />
+      <NiceTextarea title="Comment" v-model="testForm.comment" :disabled="isDisabled" />
+      <NiceDropdown v-if="show" title="List" v-model="testForm.list" :search-function="searchList" nullable :disabled="isDisabled" />
+      <NiceDropdownSimple title="List simple" v-model="testForm.listSimple" keyOnly :values="list" nullable :disabled="isDisabled" />
+      <NiceButton @click="randomShit" :disabled="isDisabled">Random</NiceButton>
       <pre>{{ testForm }}</pre>
     </NiceWrapper>
     
@@ -267,7 +275,7 @@ onMounted(() => {
 
     <!-- Nice input -->
     <NiceWrapper title="Nice input" id="nice-input" collapsable>
-      <NiceInput title="Name" v-model="form.niceInputName" />
+      <NiceInput title="Name" v-model="form.niceInputName" :disabled="isDisabled" />
       <pre class="mb-2">
 &lt;NiceInput 
   title="Name" 
@@ -275,7 +283,7 @@ onMounted(() => {
 /></pre
       >
 
-      <NiceInput title="Email" type="email" v-model="form.niceInputEmail" />
+      <NiceInput title="Email" type="email" v-model="form.niceInputEmail" :disabled="isDisabled" />
       <pre>
 &lt;NiceInput 
   title="Email" 
@@ -287,7 +295,7 @@ onMounted(() => {
 
     <!-- Nice dropdown -->
     <NiceWrapper title="Nice dropdown" id="nice-dropdown" collapsable>
-      <NiceDropdown title="Dropdown" v-model="form.niceDropdown" :search-function="searchList" />
+      <NiceDropdown title="Dropdown" v-model="form.niceDropdown" :search-function="searchList" :disabled="isDisabled" />
       <pre class="mb-2">
 &lt;NiceDropdown 
   title="Dropdown" 
@@ -308,19 +316,19 @@ onMounted(() => {
 
     <!-- Nice date -->
     <NiceWrapper title="Nice date" id="nice-date" collapsable>
-      <NiceDate title="Birthday" v-model="form.niceDate" />
+      <NiceDate title="Birthday" v-model="form.niceDate" :disabled="isDisabled" />
       <pre>&lt;NiceDate title="Birthday" v-model="form.niceDate" /></pre>
     </NiceWrapper>
 
     <!-- Nice checkbox -->
     <NiceWrapper title="Nice checkbox" id="nice-checkbox" collapsable>
-      <NiceCheckbox title="I like pizza" v-model="form.niceCheckbox" />
+      <NiceCheckbox title="I like pizza" v-model="form.niceCheckbox" :disabled="isDisabled" />
       <pre>&lt;NiceCheckbox title="I like pizza" v-model="form.niceCheckbox"/></pre>
     </NiceWrapper>
 
     <!-- Nice switch -->
     <NiceWrapper title="Nice switch" id="nice-switch" collapsable>
-      <NiceSwitch title="I like pizza" v-model="form.niceSwitch" />
+      <NiceSwitch title="I like pizza" v-model="form.niceSwitch" :disabled="isDisabled" />
       <pre>&lt;NiceSwitch title="I like pizza" v-model="form.niceSwitch" /></pre>
     </NiceWrapper>
 
@@ -435,7 +443,46 @@ onMounted(() => {
       </NiceModal>
       <pre class="mb-2">&lt;NiceModal name="modal">This is a test modal&lt;/NiceModal></pre>
 
-      <NicePanel name="panel">This is a test panel</NicePanel>
+      <NicePanel name="panel" noPadding>
+        <NiceView flexView title="Panel test" class="h-auto">
+          <div>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+            <p>This is a panel test</p>
+          </div>
+
+          <template #footer>
+            <NiceActions @cancel="openToast('cancel')" @submit="openToast('submit')" @delete="openToast('delete')"></NiceActions>
+          </template>
+        </NiceView>
+      </NicePanel>
       <pre class="mb-2">&lt;NicePanel name="panel">This is a test panel&lt;/NicePanel></pre>
 
       <NiceButton @click="openModal">Open modal</NiceButton>
