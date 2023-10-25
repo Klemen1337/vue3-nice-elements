@@ -1,5 +1,12 @@
 # Changelog
 
+## **v0.1.7** - 25.10.2023
+
+- added nice input error prop string option,
+- added slots to nice actions,
+- worked on disabled components,
+- worked on demo page
+
 ## **v0.1.6** - 20.10.2023
 
 - added default slot to nice filters
