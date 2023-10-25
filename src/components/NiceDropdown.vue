@@ -469,7 +469,7 @@ export default {
       position: relative;
       font-size: 1em;
       background: var(--nice-card-bg);
-      padding: 4px 2.5rem 5px 12px;
+      padding: 0.2rem 2.5rem 0.2rem 1rem;
       border-radius: var(--nice-border-radius);
       border: 1px solid var(--nice-border-color);
       min-height: var(--nice-height);
