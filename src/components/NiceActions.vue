@@ -11,8 +11,10 @@
       :disabled="loading"
       icon="icon-trash-2"
     />
+    <slot name="left"></slot>
 
     <div class="f-grow"></div>
+    <slot></slot>
 
     <!-- Cancel -->
     <NiceButton
