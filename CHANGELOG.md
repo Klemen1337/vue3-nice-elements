@@ -1,5 +1,12 @@
 # Changelog
 
+## **v0.1.8** - 25.10.2023
+
+- fixed nice filters wrap,
+- worked on demo view,
+- worked on nice dropdown and line heights,
+- worked on placeholder colors
+
 ## **v0.1.7** - 25.10.2023
 
 - added nice input error prop string option,
