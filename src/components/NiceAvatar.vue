@@ -2,115 +2,118 @@
   <div
     class="nice-avatar"
     :class="[
-      size ? 'size-' + size : '',
-      shape ? 'shape-' + shape : '',
-      type ? 'type-' + type : '',
-      status ? 'status-' + status : '',
+      props.size ? 'size-' + props.size : '',
+      props.shape ? 'shape-' + props.shape : '',
+      props.type ? 'type-' + props.type : '',
+      props.status ? 'status-' + props.status : '',
       {
-        plain: plain,
-        gradient: gradient,
+        plain: props.plain,
+        gradient: props.gradient,
       },
     ]"
   >
-    <div class="status" v-if="status"></div>
-    <div class="gradient" v-html="gradientSvg" v-if="gradient"></div>
-    <img class="image" :src="gavatarUrl" v-if="gavatar" />
-    <img class="image" :src="image" v-if="image" />
-    <div class="text" v-if="text">{{ safeString }}</div>
+    <div class="status" v-if="props.status"></div>
+    <div class="gradient" v-html="gradientSvg" v-if="props.gradient"></div>
+    <img class="image" :src="gavatarUrl" v-if="props.gavatar" />
+    <img class="image" :src="props.image" v-if="props.image" />
+    <div class="text" v-if="props.text">{{ safeString }}</div>
   </div>
 </template>
 
 <script>
+export default {
+  name: 'NiceAvatar',
+}
+</script>
+
+<script setup>
+import { computed, defineProps } from "vue";
 import avatar from "gradient-avatar";
 import md5 from "md5";
 
-export default {
-  name: "NiceAvatar",
-
-  props: {
-    text: {
-      type: String,
-      required: false,
-    },
-    size: {
-      type: String,
-      default: null,
-      validator(value) {
-        return ["mini", "small", "default", "medium", "large"].includes(value);
-      },
-    },
-    type: {
-      type: String,
-      default: null,
-      validator(value) {
-        return [
-          "primary",
-          "default",
-          "success",
-          "warning",
-          "danger",
-          "info",
-          "dark",
-        ].includes(value);
-      },
-    },
-    status: {
-      type: String,
-      default: null,
-      validator(value) {
-        return [
-          "primary",
-          "default",
-          "success",
-          "warning",
-          "danger",
-          "info",
-          "dark",
-        ].includes(value);
-      },
-    },
-    shape: {
-      type: String,
-      default: null,
-      validator(value) {
-        return [
-          "rounded", "square",
-        ].includes(value);
-      },
-    },
-    image: {
-      type: String,
-      required: false,
-    },
-    gradient: Boolean,
-    plain: Boolean,
-    hash: String,
-    gavatar: String,
+const props = defineProps({
+  text: {
+    type: String,
+    required: false,
   },
-
-  computed: {
-    gradientSvg() {
-      return avatar(md5(this.hash || this.text));
-    },
-
-    safeString() {
-      const split = this.text.split(" ");
-      if (split.length > 1) {
-        return split[0][0] + split[1][0];
-      } else {
-        return this.text[0] + this.text[1];
-      }
-    },
-
-    gavatarUrl() {
-      return (
-        "https://www.gravatar.com/avatar/" +
-        md5(this.gavatar.trim().toLowerCase()) +
-        "?s=50"
-      );
+  size: {
+    type: String,
+    default: null,
+    validator(value) {
+      return ["mini", "small", "default", "medium", "large"].includes(value);
     },
   },
-};
+  type: {
+    type: String,
+    default: null,
+    validator(value) {
+      return [
+        "primary",
+        "default",
+        "success",
+        "warning",
+        "danger",
+        "info",
+        "dark",
+        "white"
+      ].includes(value);
+    },
+  },
+  status: {
+    type: String,
+    default: null,
+    validator(value) {
+      return [
+        "primary",
+        "default",
+        "success",
+        "warning",
+        "danger",
+        "info",
+        "dark",
+        "white"
+      ].includes(value);
+    },
+  },
+  shape: {
+    type: String,
+    default: null,
+    validator(value) {
+      return [
+        "rounded", "square",
+      ].includes(value);
+    },
+  },
+  image: {
+    type: String,
+    required: false,
+  },
+  gradient: Boolean,
+  plain: Boolean,
+  hash: String,
+  gavatar: String,
+});
+
+const gradientSvg = computed(() => {
+  return avatar(md5(props.hash || props.text));
+});
+
+const safeString = computed(() => {
+  const split = props.text.split(" ");
+  if (split.length > 1) {
+    return split[0][0] + split[1][0];
+  } else {
+    return props.text[0] + props.text[1];
+  }
+});
+
+const gavatarUrl = computed(() => {
+  return (
+    "https://www.gravatar.com/avatar/" +
+    md5(props.gavatar.trim().toLowerCase()) +
+    "?s=50"
+  );
+})
 </script>
 
 <style lang="scss">
@@ -234,6 +237,11 @@ export default {
   &.plain.type-dark {
     color: white;
     background: var(--nice-secondary-color);
+  }
+
+  &.type-white {
+    color: var(--nice-font-color);
+    background: white;
   }
 
   // Status

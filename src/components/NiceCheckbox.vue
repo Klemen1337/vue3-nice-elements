@@ -1,7 +1,7 @@
 <template>
   <div
     class="nice-component nice-checkbox"
-    :class="{ 'no-margin': noMargin, active: localValue, disabled }"
+    :class="{ 'no-margin': props.noMargin, active: localValue, disabled: props.disabled }"
     @click="toggleValue"
   >
     <div class="nice-checkbox-box">
@@ -10,64 +10,61 @@
         <path d="M0 11l2-2 5 5 11-11 2 2-13 13z"></path>
       </svg>
     </div>
-    <div class="nice-checkbox-title" :for="'nice-checkbox' + key" v-if="title">
-      {{ title }}
+    <div class="nice-checkbox-title" :for="'nice-checkbox' + key" v-if="props.title">
+      {{ props.title }}
     </div>
-    <input type="checkbox" :id="'nice-checkbox' + key" :disabled="disabled" />
+    <input type="checkbox" :id="'nice-checkbox' + key" :disabled="props.disabled" />
   </div>
 </template>
 
+
 <script>
 export default {
-  name: "NiceCheckbox",
-
-  props: {
-    modelValue: {
-      type: [Boolean, null],
-      default: false,
-    },
-    title: {
-      type: String,
-      default: null,
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    noMargin: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  emits: ["change", "update:modelValue"],
-
-  data() {
-    return {
-      key: Math.random().toString(36).slice(2, 7),
-    };
-  },
-
-  computed: {
-    localValue: {
-      get() {
-        return this.modelValue;
-      },
-      set(value) {
-        this.$emit("update:modelValue", value);
-        this.$emit("change", value);
-      },
-    },
-  },
-
-  methods: {
-    toggleValue() {
-      if (this.disabled) return;
-      this.localValue = !this.localValue;
-    },
-  },
-};
+  name: 'NiceCheckbox',
+}
 </script>
+
+
+<script setup>
+import { computed, defineProps } from "vue";
+
+const props = defineProps({
+  modelValue: {
+    type: [Boolean, null],
+    default: false,
+  },
+  title: {
+    type: String,
+    default: null,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  noMargin: {
+    type: Boolean,
+    default: false,
+  },
+})
+
+const emit = defineEmits(["change", "update:modelValue"]);
+const key = Math.random().toString(36).slice(2, 7);
+const localValue = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    emit("update:modelValue", value);
+    emit("change", value);
+  },
+});
+
+function toggleValue() {
+  if (props.disabled) return;
+  localValue.value = !localValue.value;
+}
+</script>
+
 
 <style lang="scss" scoped>
 .nice-checkbox {

@@ -1,19 +1,24 @@
 <template>
   <svg class="nice-icon">
-    <use :xlink:href="'#' + icon"></use>
+    <use :xlink:href="'#' + props.icon"></use>
   </svg>
 </template>
 
 <script>
 export default {
   name: "NiceIcon",
-  props: {
-    icon: {
-      type: String,
-      required: true,
-    },
-  },
 };
+</script>
+
+<script setup>
+import { defineProps } from "vue";
+
+const props = defineProps({
+  icon: {
+    type: String,
+    required: true,
+  }
+});
 </script>
 
 <style lang="scss" scoped>

@@ -1,39 +1,43 @@
 <template>
   <div
     class="nice-loading"
-    :class="[size ? 'nice-loading-' + size : '', { 'full-div': fullDiv }]"
+    :class="[props.size ? 'nice-loading-' + props.size : '', { 'full-div': props.fullDiv }]"
   >
     <!-- <NiceIcon icon="icon-loading" /> -->
     <div class="nice-loading-wrapper">
       <NiceIcon icon="icon-half-loading" />
       <NiceIcon icon="icon-half-loading" />
     </div>
-    <div class="nice-loading-message" v-if="message">{{ message }}</div>
+    <div class="nice-loading-message" v-if="props.message">{{ props.message }}</div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "NiceLoading",
+  name: "NiceLoading"
+};
+</script>
 
-  props: {
-    message: {
-      type: String,
-      default: null,
-    },
-    fullDiv: {
-      type: Boolean,
-      default: false,
-    },
-    size: {
-      type: String,
-      default: null,
-      validator(value) {
-        return ["mini", "small", "large"].includes(value);
-      },
+<script setup>
+import { defineProps } from "vue";
+
+const props = defineProps({
+  message: {
+    type: String,
+    default: null,
+  },
+  fullDiv: {
+    type: Boolean,
+    default: false,
+  },
+  size: {
+    type: String,
+    default: null,
+    validator(value) {
+      return ["mini", "small", "large"].includes(value);
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

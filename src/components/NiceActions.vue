@@ -2,13 +2,13 @@
   <div class="nice-actions">
     <!-- Delete -->
     <NiceButton
-      v-if="showDelete"
+      v-if="props.showDelete"
       plain
       type="danger"
       @click="askToDelete"
       :text="$t('Nice', 'Delete')"
-      :form="form"
-      :disabled="loading"
+      :form="props.form"
+      :disabled="props.loading"
       icon="icon-trash-2"
     />
     <slot name="left"></slot>
@@ -22,8 +22,8 @@
       type="default"
       @click="cancel"
       :text="$t('Nice', 'Cancel')"
-      :form="form"
-      :disabled="loading"
+      :form="props.form"
+      :disabled="props.loading"
       icon="icon-x"
     />
 
@@ -31,9 +31,9 @@
     <NiceButton
       native-type="submit"
       @click="submit"
-      :text="submitText ? submitText : $t('Nice', 'Submit')"
-      :form="form"
-      :disabled="loading"
+      :text="props.submitText ? props.submitText : $t('Nice', 'Submit')"
+      :form="props.form"
+      :disabled="props.loading"
       icon="icon-save"
     />
   </div>
@@ -43,47 +43,48 @@
     name="delete-prompt"
     @confirm="confirmDelete"
     :title="$t('Nice', 'Delete')"
-    :subtitle="deleteText ? deleteText : $t('Nice', 'Are you sure you want to delete?')"
+    :subtitle="props.deleteText ? props.deleteText : $t('Nice', 'Are you sure you want to delete?')"
   />
 </template>
 
 <script>
+export default {
+  name: "NiceActions"
+}
+</script>
+
+<script setup>
+import { defineProps, inject } from "vue";
 import NiceConfirmModal from "./NiceConfirmModal.vue";
 
-export default {
-  name: "NiceActions",
+const props = defineProps({
+  form: String,
+  loading: Boolean,
+  showDelete: Boolean,
+  submitText: String,
+  deleteText: String,
+})
+const $nice = inject("nice");
+const emit = defineEmits(["submit", "cancel", "delete"]);
 
-  components: {
-    NiceConfirmModal,
-  },
+function submit() {
+  emit("submit");
+}
 
-  props: {
-    form: String,
-    loading: Boolean,
-    showDelete: Boolean,
-    submitText: String,
-    deleteText: String,
-  },
+function askToDelete() {
+  $nice.modal("delete-prompt", true);
+}
 
-  emits: ["submit", "cancel", "delete"],
+function confirmDelete() {
+  $nice.modal("delete-prompt", false);
+  emit("delete");
+}
 
-  methods: {
-    submit() {
-      this.$emit("submit");
-    },
-    askToDelete() {
-      this.$nice.modal("delete-prompt", true);
-    },
-    confirmDelete() {
-      this.$nice.modal("delete-prompt", false);
-      this.$emit("delete");
-    },
-    cancel() {
-      this.$emit("cancel");
-    },
-  },
-};
+function cancel() {
+  emit("cancel");
+}
 </script>
+
 
 <style lang="scss">
 .nice-actions {
