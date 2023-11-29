@@ -102,6 +102,10 @@ const filtersList = [
   }, 
 ];
 const actions = [
+  {
+    icon: "icon-target",
+    function: (v) => console.log(v),
+  },
   // {
   //   icon: "icon-arrow-right",
   //   to: (row) => ({
@@ -184,7 +188,7 @@ onMounted(() => {
 <template>
   <div class="main-view">
     <aside>
-      <div class="py-2">
+      <div class="top-bar">
         <h1 class="m-0">Vue3 - Nice elements</h1>
         <h3 class="m-0">v0.1.8</h3>
       </div>
@@ -354,43 +358,49 @@ onMounted(() => {
 
       <!-- Nice avatar -->
       <NiceWrapper title="Nice avatar" id="nice-avatar" collapsable>
-        <NiceAvatar text="KK" size="mini" />
+        <!-- <NiceAvatar text="KK" size="mini" />
         <NiceAvatar text="KK" size="small" />
         <NiceAvatar text="KK" size="default" />
         <NiceAvatar text="KK" size="medium" />
-        <NiceAvatar text="KK" size="large" />
+        <NiceAvatar text="KK" size="large" /> -->
 
-        <!-- <div v-for="t in types" :key="t">
-          <NiceAvatar :type="t" text="KK" size="mini" />
-          <NiceAvatar :type="t" text="KK" size="small" />
-          <NiceAvatar :type="t" text="KK" size="default" />
-          <NiceAvatar :type="t" text="KK" size="medium" />
-          <NiceAvatar :type="t" text="KK" size="large" />
+        <div v-for="t in types" :key="t">
+          <NiceAvatar :type="t" text="Nice avatar" size="mini" />
+          <NiceAvatar :type="t" text="Nice avatar" size="small" />
+          <NiceAvatar :type="t" text="Nice avatar" size="default" />
+          <NiceAvatar :type="t" text="Nice avatar" size="medium" />
+          <NiceAvatar :type="t" text="Nice avatar" size="large" />
 
-          <NiceAvatar :type="t" gradient text="KK" size="mini" />
-          <NiceAvatar :type="t" gradient text="KK" size="small" />
-          <NiceAvatar :type="t" gradient text="KK" size="default" />
-          <NiceAvatar :type="t" gradient text="KK" size="medium" />
-          <NiceAvatar :type="t" gradient text="KK" size="large" />
+          <NiceAvatar :type="t" gradient text="Nice avatar" size="mini" />
+          <NiceAvatar :type="t" gradient text="Nice avatar" size="small" />
+          <NiceAvatar :type="t" gradient text="Nice avatar" size="default" />
+          <NiceAvatar :type="t" gradient text="Nice avatar" size="medium" />
+          <NiceAvatar :type="t" gradient text="Nice avatar" size="large" />
 
-          <NiceAvatar :type="t" plain text="KK" size="mini" />
-          <NiceAvatar :type="t" plain text="KK" size="small" />
-          <NiceAvatar :type="t" plain text="KK" size="default" />
-          <NiceAvatar :type="t" plain text="KK" size="medium" />
-          <NiceAvatar :type="t" plain text="KK" size="large" />
+          <NiceAvatar :type="t" plain text="Nice avatar" size="mini" />
+          <NiceAvatar :type="t" plain text="Nice avatar" size="small" />
+          <NiceAvatar :type="t" plain text="Nice avatar" size="default" />
+          <NiceAvatar :type="t" plain text="Nice avatar" size="medium" />
+          <NiceAvatar :type="t" plain text="Nice avatar" size="large" />
 
-          <NiceAvatar :type="t" shape="square" text="KK" size="mini" />
-          <NiceAvatar :type="t" shape="square" text="KK" size="small" />
-          <NiceAvatar :type="t" shape="square" text="KK" size="default" />
-          <NiceAvatar :type="t" shape="square" text="KK" size="medium" />
-          <NiceAvatar :type="t" shape="square" text="KK" size="large" />
+          <NiceAvatar :type="t" shape="square" text="Nice avatar" size="mini" />
+          <NiceAvatar :type="t" shape="square" text="Nice avatar" size="small" />
+          <NiceAvatar :type="t" shape="square" text="Nice avatar" size="default" />
+          <NiceAvatar :type="t" shape="square" text="Nice avatar" size="medium" />
+          <NiceAvatar :type="t" shape="square" text="Nice avatar" size="large" />
 
-          <NiceAvatar :status="t" text="KK" size="mini" />
-          <NiceAvatar :status="t" text="KK" size="small" />
-          <NiceAvatar :status="t" text="KK" size="default" />
-          <NiceAvatar :status="t" text="KK" size="medium" />
-          <NiceAvatar :status="t" text="KK" size="large" />
-        </div> -->
+          <NiceAvatar :status="t" text="Nice avatar" size="mini" />
+          <NiceAvatar :status="t" text="Nice avatar" size="small" />
+          <NiceAvatar :status="t" text="Nice avatar" size="default" />
+          <NiceAvatar :status="t" text="Nice avatar" size="medium" />
+          <NiceAvatar :status="t" text="Nice avatar" size="large" />
+
+          <NiceAvatar gavatar="info@olaii.com" size="mini" />
+          <NiceAvatar gavatar="info@olaii.com" size="small" />
+          <NiceAvatar gavatar="info@olaii.com" size="default" />
+          <NiceAvatar gavatar="info@olaii.com" size="medium" />
+          <NiceAvatar gavatar="info@olaii.com" size="large" />
+        </div>
 
         <pre>&lt;NiceAvatar /></pre>
       </NiceWrapper>
@@ -503,67 +513,67 @@ onMounted(() => {
       <NiceWrapper title="Nice button" id="nice-button" collapsable>
         <div class="buttons">
           <div class="buttons-wrap" v-for="t in types" :key="t">
-            <NiceButton :icon="selectedIcon" :type="t" size="large">{{ t }} large</NiceButton>
-            <NiceButton :icon="selectedIcon" :type="t">{{ t }} medium</NiceButton>
-            <NiceButton :icon="selectedIcon" :type="t" size="small">{{ t }} small</NiceButton>
-            <NiceButton :icon="selectedIcon" :type="t" size="mini">{{ t }} mini</NiceButton>
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" size="large">{{ t }} large</NiceButton>
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t">{{ t }} medium</NiceButton>
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" size="small">{{ t }} small</NiceButton>
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" size="mini">{{ t }} mini</NiceButton>
           </div>
           
           <div class="buttons-wrap" v-for="t in types" :key="t">
-            <NiceButton :icon="selectedIcon" :type="t" size="large"></NiceButton>
-            <NiceButton :icon="selectedIcon" :type="t"></NiceButton>
-            <NiceButton :icon="selectedIcon" :type="t" size="small"></NiceButton>
-            <NiceButton :icon="selectedIcon" :type="t" size="mini"></NiceButton>
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" size="large"></NiceButton>
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t"></NiceButton>
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" size="small"></NiceButton>
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" size="mini"></NiceButton>
           </div>
 
           <div class="buttons-wrap" v-for="t in types" :key="t">
-            <NiceButton :icon="selectedIcon" :type="t" plain size="large">
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" plain size="large">
               {{ t }} large plain
             </NiceButton>
-            <NiceButton :icon="selectedIcon" :type="t" plain>{{ t }} medium plain</NiceButton>
-            <NiceButton :icon="selectedIcon" :type="t" plain size="small">
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" plain>{{ t }} medium plain</NiceButton>
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" plain size="small">
               {{ t }} small plain
             </NiceButton>
-            <NiceButton :icon="selectedIcon" :type="t" plain size="mini">
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" plain size="mini">
               {{ t }} small mini
             </NiceButton>
           </div>
 
           <div class="buttons-wrap" v-for="t in types" :key="t">
-            <NiceButton :icon="selectedIcon" :type="t" naked size="large">
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" naked size="large">
               {{ t }} large naked
             </NiceButton>
-            <NiceButton :icon="selectedIcon" :type="t" naked>{{ t }} medium naked</NiceButton>
-            <NiceButton :icon="selectedIcon" :type="t" naked size="small">
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" naked>{{ t }} medium naked</NiceButton>
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" naked size="small">
               {{ t }} small naked
             </NiceButton>
-            <NiceButton :icon="selectedIcon" :type="t" naked size="mini">
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" naked size="mini">
               {{ t }} mini naked
             </NiceButton>
           </div>
 
           <div class="buttons-wrap" v-for="t in types" :key="t">
-            <NiceButton :icon="selectedIcon" :type="t" rounded size="large">
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" rounded size="large">
               {{ t }} large rounded
             </NiceButton>
-            <NiceButton :icon="selectedIcon" :type="t" rounded>{{ t }} medium rounded</NiceButton>
-            <NiceButton :icon="selectedIcon" :type="t" rounded size="small">
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" rounded>{{ t }} medium rounded</NiceButton>
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" rounded size="small">
               {{ t }} small rounded
             </NiceButton>
-            <NiceButton :icon="selectedIcon" :type="t" rounded size="mini">
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" rounded size="mini">
               {{ t }} mini rounded
             </NiceButton>
           </div>
 
           <div class="buttons-wrap" v-for="t in types" :key="t">
-            <NiceButton :icon="selectedIcon" :type="t" outline size="large">
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" outline size="large">
               {{ t }} large outline
             </NiceButton>
-            <NiceButton :icon="selectedIcon" :type="t" outline>{{ t }} medium outline</NiceButton>
-            <NiceButton :icon="selectedIcon" :type="t" outline size="small">
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" outline>{{ t }} medium outline</NiceButton>
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" outline size="small">
               {{ t }} small outline
             </NiceButton>
-            <NiceButton :icon="selectedIcon" :type="t" outline size="mini">
+            <NiceButton :disabled="isDisabled" :icon="selectedIcon" :type="t" outline size="mini">
               {{ t }} mini outline
             </NiceButton>
           </div>
@@ -790,10 +800,25 @@ aside {
   height: 100vh;
   background: var(--nice-card-bg);
   border-right: 1px solid var(--nice-border-color);
-  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+
+  .top-bar {
+    background: var(--nice-primary-color);
+    color: white;
+    padding: 1.5rem;
+    flex-shrink: 0;
+
+    h3 {
+      font-size: 0.8em;
+    }
+  }
 
   .links {
-    margin-top: 1rem;
+    flex-grow: 1;
+    overflow: auto;
+    padding: 1rem;
+
     .link {
       display: block;
       padding: 0.8rem;
