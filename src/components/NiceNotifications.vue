@@ -21,10 +21,9 @@ export default {
 <script setup>
 import NiceNotification from "./NiceNotification.vue";
 import { ref, inject, onMounted } from "vue";
-import { useGettext } from "vue3-gettext";
-const { $gettext } = useGettext();
 
-const nice = inject('nice')
+const $t = inject('$t');
+const nice = inject('nice');
 const timeoutTime = 3000;
 const notifications = ref([]);
 
@@ -43,13 +42,13 @@ function createNotification({ message, type, title, icon }) {
   // Set default title
   if (!title) {
     if (type == "danger") {
-      notification.title = $gettext("Nice", "Error");
+      notification.title = $t("Nice", "Error");
       notification.icon = "icon-alert-triangle";
     } else if (type == "success") {
-      notification.title = $gettext("Nice", "Success");
+      notification.title = $t("Nice", "Success");
       notification.icon = "icon-smile";
     } else if (type == "warning") {
-      notification.title = $gettext("Nice", "Warning");
+      notification.title = $t("Nice", "Warning");
       notification.icon = "icon-alert-circle";
     }
   }

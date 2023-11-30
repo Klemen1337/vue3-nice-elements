@@ -68,7 +68,7 @@ const plugin = {
     app.provide('clone', clone);
 
     app.config.globalProperties.$t = options.gettext.$pgettext;
-    app.provide('$t', options.gettext.$pgettext);
+    app.provide('$t', options.gettext.$pgettext);    
   }
 }
 
