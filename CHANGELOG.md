@@ -1,5 +1,13 @@
 # Changelog
 
+## **v0.1.9** - 30.11.2023
+
+- removed toggle columns until its fixed,
+- rewrote nice table to composition api,
+- rewrote NiceCheckbox, NiceNotification, NiceNotifications, NicePanel, NicePopup and NiceSwitch to composition api,
+- rewrote NiceActions, NiceAvatar, NiceButton, NiceCheckbox, NiceIcon, NiceLoading and NiceSlot to composition api,
+- worked on demo view
+
 ## **v0.1.8** - 25.10.2023
 
 - fixed nice filters wrap,
