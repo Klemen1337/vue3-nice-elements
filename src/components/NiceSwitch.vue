@@ -2,95 +2,90 @@
   <div
     class="nice-component nice-switch"
     :class="[
-      'nice-switch-' + type,
-      size ? 'nice-switch-' + size : '',
-      { 'no-margin': noMargin, active: localValue, disabled },
+      'nice-switch-' + props.type,
+      props.size ? 'nice-switch-' + props.size : '',
+      { 'no-margin': props.noMargin, active: localValue, disabled: props.disabled },
     ]"
     @click="toggleValue"
   >
     <div class="nice-switch-box">
       <div class="nice-switch-handle"></div>
     </div>
-    <div class="nice-switch-title" :for="'nice-switch' + key" v-if="title">
-      {{ title }}
+    <div class="nice-switch-title" :for="'nice-switch' + key" v-if="props.title">
+      {{ props.title }}
     </div>
-    <input type="checkbox" :id="'nice-switch' + key" :disabled="disabled" />
+    <input type="checkbox" :id="'nice-switch' + key" :disabled="props.disabled" />
   </div>
 </template>
 
 <script>
 export default {
-  name: "NiceSwitch",
-
-  props: {
-    modelValue: {
-      type: [Boolean, null],
-      required: true,
-    },
-    title: {
-      type: String,
-      default: null,
-    },
-    noMargin: {
-      type: Boolean,
-      default: false,
-    },
-    size: {
-      type: String,
-      default: null,
-      validator(value) {
-        return ["small", "large"].includes(value);
-      },
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    type: {
-      type: String,
-      default: "primary",
-      validator(value) {
-        return [
-          "primary",
-          "default",
-          "success",
-          "warning",
-          "danger",
-          "info",
-          "dark",
-        ].includes(value);
-      },
-    },
-  },
-
-  emits: ["change", "update:modelValue"],
-
-  data() {
-    return {
-      key: Math.random().toString(36).slice(2, 7),
-    };
-  },
-
-  computed: {
-    localValue: {
-      get() {
-        return this.modelValue;
-      },
-      set(value) {
-        this.$emit("update:modelValue", value);
-        this.$emit("change", value);
-      },
-    },
-  },
-
-  methods: {
-    toggleValue() {
-      if (this.disabled) return
-      this.localValue = !this.localValue;
-    },
-  },
-};
+  name: 'NiceSwitch'
+}
 </script>
+
+<script setup>
+import { computed, defineProps } from "vue";
+
+const props = defineProps({
+  modelValue: {
+    type: [Boolean, null],
+    required: true,
+  },
+  title: {
+    type: String,
+    default: null,
+  },
+  noMargin: {
+    type: Boolean,
+    default: false,
+  },
+  size: {
+    type: String,
+    default: null,
+    validator(value) {
+      return ["small", "large"].includes(value);
+    },
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  type: {
+    type: String,
+    default: "primary",
+    validator(value) {
+      return [
+        "primary",
+        "default",
+        "success",
+        "warning",
+        "danger",
+        "info",
+        "dark",
+      ].includes(value);
+    },
+  },
+})
+
+const emit = defineEmits(["change", "update:modelValue"]);
+const key = Math.random().toString(36).slice(2, 7);
+const localValue = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    emit("update:modelValue", value);
+    emit("change", value);
+  },
+});
+
+function toggleValue() {
+  if (props.disabled) return;
+  localValue.value = !localValue.value;
+}
+</script>
+
 
 <style lang="scss" scoped>
 .nice-switch {

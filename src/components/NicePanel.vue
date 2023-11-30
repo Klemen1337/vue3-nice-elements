@@ -54,7 +54,7 @@ export default {
   },
 
   mounted() {
-    // Emmit keyboard listener
+    // Emit keyboard listener
     document.addEventListener("keyup", this.handleKeyboard);
 
     // Listen to the broadcast

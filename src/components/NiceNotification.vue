@@ -1,66 +1,66 @@
 <template>
   <div
     class="nice-notification"
-    :class="['nice-notification-' + notification.type]"
+    :class="['nice-notification-' + props.notification.type]"
     @mouseover="stopTimeout"
     @mouseleave="startTimeout"
   >
     <NiceIcon
       class="notification-icon"
-      :icon="notification.icon"
-      v-if="notification.icon"
+      :icon="props.notification.icon"
+      v-if="props.notification.icon"
     />
     <div class="notification-info">
-      <div class="notification-title" v-if="notification.title">
-        {{ notification.title }}
+      <div class="notification-title" v-if="props.notification.title">
+        {{ props.notification.title }}
       </div>
-      <div class="notification.message" v-if="notification.message">
-        {{ notification.message }}
+      <div class="notification.message" v-if="props.notification.message">
+        {{ props.notification.message }}
       </div>
     </div>
   </div>
 </template>
 
+
 <script>
 export default {
-  name: "NiceNotification",
-
-  props: {
-    notification: {
-      type: Object,
-      required: true,
-    },
-    timeoutTime: {
-      type: Number,
-      default: 3000,
-    },
-  },
-
-  emits: ["remove"],
-
-  data() {
-    return {
-      removeTimeout: null,
-    };
-  },
-
-  mounted() {
-    this.startTimeout();
-  },
-
-  methods: {
-    startTimeout() {
-      this.removeTimeout = setTimeout(() => {
-        this.$emit("remove", this.notification);
-      }, this.timeoutTime);
-    },
-
-    stopTimeout() {
-      clearTimeout(this.removeTimeout);
-    },
-  },
-};
+  name: 'NiceNotification'
+}
 </script>
+
+
+<script setup>
+import { defineProps, onMounted } from "vue";
+
+const props = defineProps({
+  notification: {
+    type: Object,
+    required: true,
+  },
+  timeoutTime: {
+    type: Number,
+    default: 3000,
+  },
+})
+
+const emit = defineEmits(["remove"]);
+let removeTimeout = null;
+
+function startTimeout() {
+  removeTimeout = setTimeout(() => {
+    emit("remove", props.notification);
+  }, props.timeoutTime);
+}
+
+function stopTimeout() {
+  clearTimeout(removeTimeout);
+}
+
+onMounted(() => {
+  startTimeout();
+})
+</script>
+
 
 <style lang="scss" scoped>
 .nice-notification {

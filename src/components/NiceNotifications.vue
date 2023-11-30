@@ -13,67 +13,62 @@
 </template>
 
 <script>
-import NiceNotification from "./NiceNotification.vue";
-
 export default {
-  name: "NiceNotifications",
+  name: 'NiceNotifications',
+}
+</script>
 
-  components: {
-    NiceNotification,
-  },
+<script setup>
+import NiceNotification from "./NiceNotification.vue";
+import { ref, inject, onMounted } from "vue";
+import { useGettext } from "vue3-gettext";
+const { $gettext } = useGettext();
 
-  data() {
-    return {
-      timeoutTime: 3000,
-      notifications: [],
-    };
-  },
+const nice = inject('nice')
+const timeoutTime = 3000;
+const notifications = ref([]);
 
-  mounted() {
-    this.$nice.onNotification((message, type, title) => {
-      this.createNotification(message, type, title);
-    });
-  },
+function createNotification({ message, type, title, icon }) {
+  // Create object with random id
+  var notification = {
+    id: Math.random()
+      .toString(36)
+      .replace(/[^a-z]+/g, "")
+      .substr(2, 10),
+    type,
+    title,
+    message,
+    icon,
+  };
+  // Set default title
+  if (!title) {
+    if (type == "danger") {
+      notification.title = $gettext("Nice", "Error");
+      notification.icon = "icon-alert-triangle";
+    } else if (type == "success") {
+      notification.title = $gettext("Nice", "Success");
+      notification.icon = "icon-smile";
+    } else if (type == "warning") {
+      notification.title = $gettext("Nice", "Warning");
+      notification.icon = "icon-alert-circle";
+    }
+  }
+  // Append notification
+  notifications.value.unshift(notification);
+}
 
-  methods: {
-    createNotification({ message, type, title, icon }) {
-      // Create object with random id
-      var notification = {
-        id: Math.random()
-          .toString(36)
-          .replace(/[^a-z]+/g, "")
-          .substr(2, 10),
-        type,
-        title,
-        message,
-        icon,
-      };
-      // Set default title
-      if (!title) {
-        if (type == "danger") {
-          notification.title = this.$t("Nice", "Error");
-          notification.icon = "icon-alert-triangle";
-        } else if (type == "success") {
-          notification.title = this.$t("Nice", "Success");
-          notification.icon = "icon-smile";
-        } else if (type == "warning") {
-          notification.title = this.$t("Nice", "Warning");
-          notification.icon = "icon-alert-circle";
-        }
-      }
-      // Append notification
-      this.notifications.unshift(notification);
-    },
-    removeNotification(notification) {
-      let notificationIndex = this.notifications.findIndex((a) => {
-        return a.id == notification.id;
-      });
-      if (notificationIndex >= 0) {
-        this.notifications.splice(notificationIndex, 1);
-      }
-    },
-  },
-};
+function removeNotification(notification) {
+  let notificationIndex = notifications.value.findIndex((a) => a.id == notification.id);
+  if (notificationIndex >= 0) {
+    notifications.value.splice(notificationIndex, 1);
+  }
+}
+
+onMounted(() => {
+  nice.onNotification((message, type, title) => {
+    createNotification(message, type, title);
+  });
+});
 </script>
 
 <style lang="scss" scoped>

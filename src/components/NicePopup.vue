@@ -1,11 +1,12 @@
 <template>
   <div
     class="nice-popup"
-    :class="{ 'nice-popup-open': isOpen, 'nice-popup-focused': isFocused, disabled }"
+    ref="$el"
+    :class="{ 'nice-popup-open': isOpen, 'nice-popup-focused': isFocused, disabled: props.disabled }"
   >
     <div
       class="nice-popup-trigger"
-      ref="trigger"
+      ref="$trigger"
       @click="toggle"
       @mouseover="handleFocus"
       @mouseleave="handleBlur"
@@ -13,14 +14,14 @@
       <slot name="trigger"></slot>
     </div>
     <!-- <Transition> -->
-    <div class="nice-popup-content-wrapper" ref="content" v-show="isOpen">
+    <div class="nice-popup-content-wrapper" ref="$content" v-show="isOpen">
       <div
         data-popper-arrow
         class="nice-popup-arrow"
-        ref="arrow"
-        v-show="showArrow"
+        ref="$arrow"
+        v-show="props.showArrow"
       ></div>
-      <div class="nice-popup-content" :class="{ 'no-padding': noPadding }">
+      <div class="nice-popup-content" :class="{ 'no-padding': props.noPadding }">
         <slot name="content"></slot>
       </div>
     </div>
@@ -28,148 +29,151 @@
   </div>
 </template>
 
+
 <script>
-import { createPopper } from "@popperjs/core";
-
 export default {
-  name: "NicePopup",
-
-  props: {
-    noPadding: {
-      type: Boolean,
-      default: false,
-    },
-    showArrow: {
-      type: Boolean,
-      default: false,
-    },
-    openOnHover: {
-      type: Boolean,
-      default: false,
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    offset: {
-      type: Number,
-      default: 10,
-    },
-    placement: {
-      type: String,
-      default: "bottom",
-      validator(value) {
-        return [
-          "auto",
-          "auto-start",
-          "auto-end",
-          "top",
-          "top-start",
-          "top-end",
-          "bottom",
-          "bottom-start",
-          "bottom-end",
-          "right",
-          "right-start",
-          "right-end",
-          "left",
-          "left-start",
-          "left-end",
-        ].includes(value);
-      },
-    },
-  },
-
-  emits: ["change"],
-
-  data() {
-    return {
-      isOpen: false,
-      isFocused: false,
-      popper: null,
-    };
-  },
-
-  mounted() {
-    const modifiers = [
-      {
-        name: "preventOverflow",
-        options: {
-          rootBoundary: "body",
-        },
-      },
-      {
-        name: "offset",
-        options: {
-          offset: [0, this.offset],
-        },
-      },
-    ];
-
-    if (this.showArrow) {
-      modifiers.push({
-        name: "arrow",
-        options: {
-          element: this.$refs.arrow,
-          padding: 5,
-        },
-      });
-    }
-
-    this.popper = createPopper(this.$refs.trigger, this.$refs.content, {
-      strategy: "fixed",
-      placement: this.placement,
-      modifiers,
-    });
-
-    document.addEventListener("click", this.handleClick);
-    document.addEventListener("touchend", this.handleClick);
-  },
-
-  beforeUnmount() {
-    document.removeEventListener("click", this.handleClick);
-    document.removeEventListener("touchend", this.handleClick);
-  },
-
-  methods: {
-    toggle() {
-      if (this.disabled) return;
-      this.isOpen = !this.isOpen;
-      this.popper.update();
-      this.$emit("change", this.isOpen);
-    },
-
-    close() {
-      this.isOpen = false;
-      this.$emit("change", this.isOpen);
-    },
-
-    handleFocus() {
-      if (!this.openOnHover || this.disabled) return;
-      this.isFocused = true;
-      this.isOpen = true;
-      this.popper.update();
-    },
-
-    handleBlur() {
-      if (!this.openOnHover || this.disabled) return;
-      this.isFocused = false;
-      this.isOpen = false;
-    },
-
-    handleClick(e) {
-      if (this.openOnHover || this.disabled) return;
-      if (
-        this.isOpen &&
-        !e.composedPath().includes(this.$el) &&
-        !e.composedPath().includes(this.$refs.trigger)
-      ) {
-        this.close();
-      }
-    },
-  },
-};
+  name: 'NicePopup',
+}
 </script>
+
+
+<script setup>
+import { createPopper } from "@popperjs/core";
+import { defineEmits, defineProps, onMounted, onBeforeUnmount, ref } from "vue";
+
+const props = defineProps({
+  noPadding: {
+    type: Boolean,
+    default: false,
+  },
+  showArrow: {
+    type: Boolean,
+    default: false,
+  },
+  openOnHover: {
+    type: Boolean,
+    default: false,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  offset: {
+    type: Number,
+    default: 10,
+  },
+  placement: {
+    type: String,
+    default: "bottom",
+    validator(value) {
+      return [
+        "auto",
+        "auto-start",
+        "auto-end",
+        "top",
+        "top-start",
+        "top-end",
+        "bottom",
+        "bottom-start",
+        "bottom-end",
+        "right",
+        "right-start",
+        "right-end",
+        "left",
+        "left-start",
+        "left-end",
+      ].includes(value);
+    },
+  },
+})
+
+const emit = defineEmits(["change"]);
+const isOpen = ref(false);
+const isFocused = ref(false);
+let popper = null;
+const $arrow = ref(null)
+const $trigger = ref(null)
+const $content = ref(null)
+const $el = ref(null)
+
+onMounted(() => {
+  const modifiers = [
+    {
+      name: "preventOverflow",
+      options: {
+        rootBoundary: "body",
+      },
+    },
+    {
+      name: "offset",
+      options: {
+        offset: [0, props.offset],
+      },
+    },
+  ];
+
+  if (props.showArrow) {
+    modifiers.push({
+      name: "arrow",
+      options: {
+        element: $arrow.value,
+        padding: 5,
+      },
+    });
+  }
+
+  popper = createPopper($trigger.value, $content.value, {
+    strategy: "fixed",
+    placement: props.placement,
+    modifiers,
+  });
+
+  document.addEventListener("click", handleClick);
+  document.addEventListener("touchend", handleClick);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", handleClick);
+  document.removeEventListener("touchend", handleClick);
+});
+
+function toggle() {
+  if (props.disabled) return;
+  isOpen.value = !isOpen.value;
+  popper.update();
+  emit("change", isOpen);
+}
+
+function close() {
+  isOpen.value = false;
+  emit("change", isOpen);
+}
+
+function handleFocus() {
+  if (!props.openOnHover || props.disabled) return;
+  isFocused.value = true;
+  isOpen.value = true;
+  popper.update();
+}
+
+function handleBlur() {
+  if (!props.openOnHover || props.disabled) return;
+  isFocused.value = false;
+  isOpen.value = false;
+}
+
+function handleClick(e) {
+  if (props.openOnHover || props.disabled) return;
+  if (
+    isOpen.value &&
+    !e.composedPath().includes($el.value) &&
+    !e.composedPath().includes($trigger.value)
+  ) {
+    close();
+  }
+}
+</script>
+
 
 <style lang="scss" scoped>
 .nice-popup {

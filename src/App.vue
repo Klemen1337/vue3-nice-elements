@@ -178,6 +178,15 @@ function openNotification() {
   nice.notification('This is a test')
 }
 
+function notification(type) {
+  nice.notification(
+    "Fruitcake chodolate bar tooties roll gummies gummies jelly beans cake.",
+    type,
+    "Notification " + type,
+    "icon-life-buoy"
+  );
+}
+
 onMounted(() => {
   icons.value = Array.from(document.getElementsByTagName('symbol')).map((element) => element.id)
   selectedIcon.value = icons.value[Math.floor(Math.random()*icons.value.length)];
@@ -225,6 +234,38 @@ onMounted(() => {
         <NiceDropdownSimple title="List simple" v-model="testForm.listSimple" keyOnly :values="list" nullable :disabled="isDisabled" />
         <NiceButton @click="randomShit" :disabled="isDisabled">Random</NiceButton>
         <pre class="mt-3">{{ testForm }}</pre>
+
+        <!-- Popup -->
+        <h5 class="mt-4">Popup</h5>
+        <NicePopup>
+          <template #trigger>
+            <NiceButton type="primary" icon="icon-more-vertical" />
+          </template>
+          <template #content>This is the content</template>
+        </NicePopup>
+
+        <!-- Notifications -->
+        <h5 class="mt-4">Notification</h5>
+        <NiceButton
+          type="primary"
+          @click="notification('primary')"
+          text="Primary"
+        />
+
+        <NiceButton type="default" @click="notification()" text="Default" />
+        <NiceButton
+          type="success"
+          @click="notification('success')"
+          text="Success"
+        />
+        <NiceButton type="danger" @click="notification('danger')" text="Danger" />
+        <NiceButton
+          type="warning"
+          @click="notification('warning')"
+          text="Warning"
+        />
+        <NiceButton type="info" @click="notification('info')" text="Info" />
+        <NiceButton type="dark" @click="notification('dark')" text="Dark" />
       </NiceWrapper>
 
       <!-- Nice upload -->

@@ -61,7 +61,7 @@ const localValue = computed({
 
 function toggleValue() {
   if (props.disabled) return;
-  localValue.value = !localValue.value;
+  localValue.value = !localValue.value;  
 }
 </script>
 
