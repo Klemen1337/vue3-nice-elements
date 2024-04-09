@@ -118,7 +118,6 @@ export default {
 
   methods: {
     fileChanged(event) {
-      console.log(event.target.files)
       this.isDragging = false;
       this.isOnTarget = false;
       // this.loading = true;

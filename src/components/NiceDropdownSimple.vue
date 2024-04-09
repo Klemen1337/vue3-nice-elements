@@ -9,14 +9,14 @@
       :caption="caption"
     />
     <div class="input-group">
-      <div class="select-wrapper" :class="{ 'no-value': localValue == null }">
+      <div class="select-wrapper" :class="{ 'no-value': localValue.value == null }">
         <select
           :required="required"
           :disabled="disabled"
-          :modelValue="localValue"
+          :modelValue="localValue.value"
           @change="handleChange"
         >
-          <option v-if="nullable" :value="null" :selected="!localValue">
+          <option v-if="nullable" :value="null" :selected="!localValue.value">
             {{ nullText || $t('Nice', 'None') }}
           </option>
           <option
@@ -51,109 +51,104 @@
 </template>
 
 <script>
+export default {
+  name: "NiceDropdownSimple"
+}
+</script>
+
+<script setup>
+import { computed, watch, onMounted, inject } from "vue";
 import NiceComponentHeader from "./NiceComponentHeader.vue";
 
-export default {
-  name: "NiceDropdownSimple",
-
-  components: {
-    NiceComponentHeader,
+const props = defineProps({
+  modelValue: {
+    type: [Object, String, Number, null],
+    required: true,
   },
-
-  props: {
-    modelValue: {
-      type: [Object, String, Number, null],
-      required: true,
-    },
-    values: Array,
-    title: String,
-    noMargin: Boolean,
-    nullable: Boolean,
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    loading: Boolean,
-    keyOnly: Boolean,
-    required: {
-      type: Boolean,
-      default: false,
-    },
-    addFunction: {
-      type: Function,
-      default: null,
-    },
-    nullText: String,
-    caption: {
-      type: String,
-      default: null,
-    },
-    keyName: {
-      type: String,
-      default: "id",
-    },
-    valueName: {
-      type: String,
-      default: "value",
-    },
+  values: Array,
+  title: String,
+  noMargin: Boolean,
+  nullable: Boolean,
+  disabled: {
+    type: Boolean,
+    default: false,
   },
+  loading: Boolean,
+  keyOnly: Boolean,
+  required: {
+    type: Boolean,
+    default: false,
+  },
+  addFunction: {
+    type: Function,
+    default: null,
+  },
+  nullText: String,
+  caption: {
+    type: String,
+    default: null,
+  },
+  keyName: {
+    type: String,
+    default: "id",
+  },
+  valueName: {
+    type: String,
+    default: "value",
+  },
+})
 
-  emits: ["change", "update:modelValue"],
+const $t = inject("$t")
+const emits = defineEmits(["change", "update:modelValue"])
+const localValue = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(val) {
+    emits("update:modelValue", val);
+    emits("change", val);
+  },
+})
 
-  computed: {
-    localValue: {
-      get() {
-        return this.modelValue;
-      },
-      set(val) {
-        this.$emit("update:modelValue", val);
-        this.$emit("change", val);
-      },
+watch(() => props.values, () => {
+  handleDefault();
+})
+
+onMounted(() => {
+  handleDefault();
+})
+
+function handleChange(e) {
+  const selected = props.values.find((item) => {
+    return item[props.keyName] == e.target.value;
+  });
+  if (selected) {
+    changeValue(selected);
+  } else {
+    changeValue(undefined);
+  }
+}
+
+function handleDefault() {
+  // Select default value
+  setTimeout(() => {
+    if (!localValue.value && props.values.length > 0 && !props.nullable) {
+      changeValue(props.values[0]);
     }
-  },
+  });
+}
 
-  watch: {
-    values() {
-      this.handleDefault();
-    },
-  },
-
-  mounted() {
-    this.handleDefault();
-  },
-
-  methods: {
-    handleChange(e) {
-      let selected = this.values.find((item) => {
-        return item[this.keyName] == e.target.value;
-      });
-      if (selected) {
-        this.changeValue(selected);
-      } else {
-        this.changeValue(undefined);
-      }
-    },
-    handleDefault() {
-      // Select default value
-      setTimeout(() => {
-        if (!this.localValue && this.values.length > 0 && !this.nullable) {
-          this.changeValue(this.values[0]);
-        }
-      });
-    },
-    changeValue(value) {
-      if (value) {
-        if (this.keyOnly) {
-          this.localValue = value[this.keyName];
-        } else {
-          this.localValue = value;
-        }
-      } else {
-        this.localValue = undefined;
-      }
-    },
-  },
-};
+function changeValue(value) {
+  if (value) {
+    if (props.keyOnly) {
+      localValue.value = value[props.keyName];
+    } else {
+      localValue.value = value;
+    }
+  } else {
+    localValue.value = undefined;
+  }
+}
 </script>
 
 <style lang="scss" scoped>

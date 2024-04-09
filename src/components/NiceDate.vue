@@ -121,270 +121,281 @@
 </template>
 
 <script>
+export default {
+  name: "NiceDate"
+}
+</script>
+
+<script setup>
+import { ref, watch, onMounted, inject } from "vue";
 import NiceComponentHeader from "./NiceComponentHeader.vue";
 import NicePopup from "./NicePopup.vue";
 
-export default {
-  name: "NiceDate",
-
-  components: {
-    NicePopup,
-    NiceComponentHeader,
+const props = defineProps({
+  modelValue: {
+    type: [String, Date, null],
+    required: false
   },
-
-  props: {
-    modelValue: [String, Date, null],
-    title: String,
-    caption: String,
-    noMargin: Boolean,
-    required: Boolean,
-    disabled: Boolean,
-    loading: Boolean,
-    placeholder: String,
-    time: {
-      default: true,
-      type: Boolean,
-    },
+  title: String,
+  caption: String,
+  noMargin: Boolean,
+  required: Boolean,
+  disabled: Boolean,
+  loading: Boolean,
+  placeholder: String,
+  time: {
+    default: true,
+    type: Boolean,
   },
+})
 
-  emits: ["change", "update:modelValue"],
+const $t = inject('$t');
+const emits = defineEmits(["change", "update:modelValue"]);
+const innerDate = ref(null)
+const inputVal = ref("")
+const selected = ref(new Date())
+const days = ref([])
+const popup = ref(null)
+const hours = [
+  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+  20, 21, 22, 23, 24,
+]
+const minutes = [
+  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+  20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37,
+  38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55,
+  56, 57, 58, 59,
+]
+const dayNames = {
+  1: $t("Nice", "Mon"),
+  2: $t("Nice", "Tue"),
+  3: $t("Nice", "Wed"),
+  4: $t("Nice", "Thu"),
+  5: $t("Nice", "Fri"),
+  6: $t("Nice", "Sat"),
+  7: $t("Nice", "Sun"),
+}
+const monthNames = {
+  1: $t("Nice", "January"),
+  2: $t("Nice", "February"),
+  3: $t("Nice", "March"),
+  4: $t("Nice", "April"),
+  5: $t("Nice", "May"),
+  6: $t("Nice", "June"),
+  7: $t("Nice", "July"),
+  8: $t("Nice", "August"),
+  9: $t("Nice", "September"),
+  10: $t("Nice", "October"),
+  11: $t("Nice", "November"),
+  12: $t("Nice", "December"),
+}
+const data = {
+  month: null,
+  year: null,
+  day: null,
+  hour: null,
+  minute: null,
+}
 
-  data() {
-    return {
-      innerDate: null,
-      inputVal: "",
-      hours: [
-        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-        20, 21, 22, 23, 24,
-      ],
-      minutes: [
-        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-        20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37,
-        38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55,
-        56, 57, 58, 59,
-      ],
-      dayNames: {
-        1: "Mon",
-        2: "Tue",
-        3: "Wed",
-        4: "Thu",
-        5: "Fri",
-        6: "Sat",
-        7: "Sun",
-      },
-      monthNames: {
-        1: "January",
-        2: "February",
-        3: "March",
-        4: "April",
-        5: "May",
-        6: "June",
-        7: "July",
-        8: "August",
-        9: "September",
-        10: "October",
-        11: "November",
-        12: "December",
-      },
-      data: {
-        month: null,
-        year: null,
-        day: null,
-        hour: null,
-        minute: null,
-      },
-      selected: new Date(),
-      days: null,
-    };
-  },
 
-  watch: {
-    modelValue() {
-      if (this.modelValue && this.isDateValid(this.modelValue)) {
-        this.innerDate = new Date(this.modelValue);
-        this.selected = new Date(this.modelValue);
-        this._extractData();
-      }
-    },
-  },
+watch(() => props.modelValue, () => {
+  if (props.modelValue && isDateValid(props.modelValue)) {
+    innerDate.value = new Date(props.modelValue);
+    selected.value = new Date(props.modelValue);
+    _extractData();
+  }
+})
 
-  mounted() {
-    this.handleDefault();
-  },
+onMounted(() => {
+  handleDefault();
+})
 
-  methods: {
-    isDateValid(dateStr) {
-      return !isNaN(new Date(dateStr));
-    },
-    close() {
-      this.$refs.popup?.close();
-    },
-    clear() {
-      this.inputVal = "";
-      this.$emit("update:modelValue", null);
-      this.$emit("change", null);
-      setTimeout(() => {
-        this.close();
-      });
-    },
-    popupChanged(isOpen) {
-      if (isOpen) this._buildMonth();
-    },
-    handleChange() {
-      this._extractData();
-      this.$emit("update:modelValue", this.innerDate);
-      this.$emit("change", this.innerDate);
-    },
-    inputChanged() {
-      if (this.inputVal && this.inputVal != "") {
-        let inputSplit = this.inputVal.split(" • ");
-        let date = new Date();
-        let dateSplit = inputSplit[0].split(".");
-        date.setDate(dateSplit[0]);
-        date.setMonth(dateSplit[1] - 1);
-        date.setFullYear(dateSplit[2]);
-        if (this.time) {
-          let timeSplit = inputSplit[1].split(":");
-          date.setHours(timeSplit[0]);
-          date.setMinutes(timeSplit[1]);
-          date.setSeconds(0, 0);
-        } else {
-          date.setHours(12);
-          date.setMinutes(0);
-          date.setSeconds(0, 0);
-        }
-        this.innerDate = date;
-        this.handleChange();
-      }
-    },
-    hourChanged(e) {
-      let hour = e.target.value;
-      this.selected.setHours(hour);
-      this.innerDate.setHours(hour);
-      this.handleChange();
-    },
-    minuteChanged(e) {
-      let minutes = e.target.value;
-      this.selected.setMinutes(minutes);
-      this.innerDate.setMinutes(minutes);
-      this.handleChange();
-    },
-    dayChanged(day) {
-      this.innerDate.setYear(day.year);
-      this.innerDate.setMonth(day.month);
-      this.innerDate.setDate(day.day);
-      this.handleChange();
-    },
-    handleDefault() {
-      if (!this.modelValue) {
-        this.innerDate = new Date();
-        this.innerDate.setSeconds(0, 0);
-        // this.inputVal = this._formatDate(this.innerDate)
-      }
-      
-      if (this.modelValue && this.isDateValid(this.modelValue)) {
-        this.innerDate = new Date(this.modelValue);
-        this.innerDate.setSeconds(0, 0);
-        this.inputVal = this._formatDate(this.innerDate);
-      }
-      // this.handleChange()
-    },
-    changeYear(add) {
-      let year = this.selected.getFullYear();
-      if (add) {
-        year += 1;
-      } else {
-        year -= 1;
-      }
-      this.selected.setFullYear(year);
-      this._buildMonth();
-    },
-    changeMonth(add) {
-      let month = this.selected.getMonth();
-      if (add) {
-        month += 1;
-      } else {
-        month -= 1;
-      }
-      this.selected.setMonth(month);
-      this._buildMonth();
-    },
-    _buildMonth() {
-      this.days = [];
-      let offset =
-        new Date(
-          this.selected.getFullYear(),
-          this.selected.getMonth(),
-          1
-        ).getDay() - 1;
-      let daysInMonth = new Date(
-        this.selected.getFullYear(),
-        this.selected.getMonth(),
-        0
-      ).getDate();
-      let append = 42 - daysInMonth - offset;
-      for (var d = 1 - offset; d <= daysInMonth + append; d++) {
-        this.days.push(
-          this._buildDay(
-            this.selected.getFullYear(),
-            this.selected.getMonth(),
-            d
-          )
-        );
-      }
-    },
-    _buildDay(year, month, day) {
-      let today = new Date();
-      let date = new Date(year, month, day);
-      return {
-        id: date.toString(),
-        date: date,
-        year: date.getFullYear(),
-        month: date.getMonth(),
-        day: date.getDate(),
-        dayInWeek: date.getDay(),
-        currentMonth: date.getMonth() == this.selected.getMonth(),
-        selected: this._isSameDay(this.innerDate, date),
-        today: this._isSameDay(today, date),
-        text: this._formatDate(date),
-      };
-    },
-    _isSameDay(date1, date2) {
-      return (
-        date1.getDate() == date2.getDate() &&
-        date1.getMonth() == date2.getMonth() &&
-        date1.getFullYear() == date2.getFullYear()
-      );
-    },
-    _formatDate(date) {
-      let day = date.getDate();
-      let month = date.getMonth() + 1;
-      let year = date.getFullYear();
-      let hour = date.getHours();
-      let minute = date.getMinutes();
-      if (minute < 10) {
-        minute = "0" + minute;
-      }
-      if (this.time) {
-        return `${day}.${month}.${year} • ${hour}:${minute}`;
-      } else {
-        return `${day}.${month}.${year}`;
-      }
-    },
-    _extractData() {
-      if (!this.innerDate) this.innerDate = new Date();
-      this.data.day = this.innerDate.getDate();
-      this.data.month = this.innerDate.getMonth();
-      this.data.year = this.innerDate.getFullYear();
-      this.data.hour = this.innerDate.getHours();
-      this.data.minute = this.innerDate.getMinutes();
-      this.inputVal = this._formatDate(this.innerDate);
-      this.selected.year = this.data.year;
-      this.selected.month = this.data.month;
-      this._buildMonth();
-    },
-  },
-};
+function isDateValid(dateStr) {
+  return !isNaN(new Date(dateStr));
+}
+
+function close() {
+  popup?.value.close();
+}
+
+function clear() {
+  inputVal.value = "";
+  emits("update:modelValue", null);
+  emits("change", null);
+  setTimeout(() => {
+    close();
+  });
+}
+
+function popupChanged(isOpen) {
+  if (isOpen) _buildMonth();
+}
+
+function handleChange() {
+  _extractData();
+  emits("update:modelValue", innerDate.value);
+  emits("change", innerDate.value);
+}
+
+function inputChanged() {
+  if (inputVal.value && inputVal.value != "") {
+    let inputSplit = inputVal.value.split(" • ");
+    let date = new Date();
+    let dateSplit = inputSplit[0].split(".");
+    date.setDate(dateSplit[0]);
+    date.setMonth(dateSplit[1] - 1);
+    date.setFullYear(dateSplit[2]);
+    if (props.time) {
+      let timeSplit = inputSplit[1].split(":");
+      date.setHours(timeSplit[0]);
+      date.setMinutes(timeSplit[1]);
+      date.setSeconds(0, 0);
+    } else {
+      date.setHours(12);
+      date.setMinutes(0);
+      date.setSeconds(0, 0);
+    }
+    innerDate.value = date;
+    handleChange();
+  }
+}
+
+function hourChanged(e) {
+  let hour = e.target.value;
+  selected.value.setHours(hour);
+  innerDate.value.setHours(hour);
+  handleChange();
+}
+
+function minuteChanged(e) {
+  let minutes = e.target.value;
+  selected.value.setMinutes(minutes);
+  innerDate.value.setMinutes(minutes);
+  handleChange();
+}
+
+function dayChanged(day) {
+  innerDate.value.setYear(day.year);
+  innerDate.value.setMonth(day.month);
+  innerDate.value.setDate(day.day);
+  handleChange();
+}
+
+function handleDefault() {
+  if (!props.modelValue) {
+    innerDate.value = new Date();
+    innerDate.value.setSeconds(0, 0);
+    // inputVal = _formatDate(innerDate.value)
+  }
+  
+  if (props.modelValue && isDateValid(props.modelValue)) {
+    innerDate.value = new Date(props.modelValue);
+    innerDate.value.setSeconds(0, 0);
+    inputVal.value = _formatDate(innerDate.value);
+  }
+  // handleChange()
+}
+
+// function changeYear(add) {
+//   let year = selected.value.getFullYear();
+//   if (add) {
+//     year += 1;
+//   } else {
+//     year -= 1;
+//   }
+//   selected.value.setFullYear(year);
+//   _buildMonth();
+// }
+
+function changeMonth(add) {
+  let month = selected.value.getMonth();
+  if (add) {
+    month += 1;
+  } else {
+    month -= 1;
+  }
+  selected.value.setMonth(month);
+  _buildMonth();
+}
+
+function _buildMonth() {
+  days.value = [];
+  let offset =
+    new Date(
+      selected.value.getFullYear(),
+      selected.value.getMonth(),
+      1
+    ).getDay() - 1;
+  let daysInMonth = new Date(
+    selected.value.getFullYear(),
+    selected.value.getMonth(),
+    0
+  ).getDate();
+  let append = 42 - daysInMonth - offset;
+  for (var d = 1 - offset; d <= daysInMonth + append; d++) {
+    days.value.push(
+      _buildDay(
+        selected.value.getFullYear(),
+        selected.value.getMonth(),
+        d
+      )
+    );
+  }
+}
+
+function _buildDay(year, month, day) {
+  const today = new Date();
+  const date = new Date(year, month, day);
+  return {
+    id: date.toString(),
+    date: date,
+    year: date.getFullYear(),
+    month: date.getMonth(),
+    day: date.getDate(),
+    dayInWeek: date.getDay(),
+    currentMonth: date.getMonth() == selected.value.getMonth(),
+    selected: _isSameDay(innerDate.value, date),
+    today: _isSameDay(today, date),
+    text: _formatDate(date),
+  };
+}
+
+function _isSameDay(date1, date2) {
+  return (
+    date1.getDate() == date2.getDate() &&
+    date1.getMonth() == date2.getMonth() &&
+    date1.getFullYear() == date2.getFullYear()
+  );
+}
+
+function _formatDate(date) {
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+  let hour = date.getHours();
+  let minute = date.getMinutes();
+  if (minute < 10) {
+    minute = "0" + minute;
+  }
+  if (props.time) {
+    return `${day}.${month}.${year} • ${hour}:${minute}`;
+  } else {
+    return `${day}.${month}.${year}`;
+  }
+}
+
+function _extractData() {
+  if (!innerDate.value) innerDate.value = new Date();
+  data.day = innerDate.value.getDate();
+  data.month = innerDate.value.getMonth();
+  data.year = innerDate.value.getFullYear();
+  data.hour = innerDate.value.getHours();
+  data.minute = innerDate.value.getMinutes();
+  inputVal.value = _formatDate(innerDate.value);
+  selected.value.year = data.year;
+  selected.value.month = data.month;
+  _buildMonth();
+}
 </script>
 
 <style lang="scss" scoped>

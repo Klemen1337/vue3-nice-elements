@@ -33,80 +33,76 @@
 </template>
 
 <script>
-import NiceIcon from "./NiceIcon.vue";
-
 export default {
   name: "NiceTextarea",
+}
+</script>
 
-  components: {
-    NiceIcon,
+<script setup>
+import { computed } from "vue";
+import NiceIcon from "./NiceIcon.vue";
+
+const props = defineProps({
+  modelValue: {
+    type: [String, Number, null],
+    required: true,
   },
-
-  props: {
-    modelValue: {
-      type: [String, Number, null],
-      required: true,
-    },
-    title: {
-      type: String,
-      default: null,
-    },
-    placeholder: {
-      type: String,
-      default: null,
-    },
-    caption: {
-      type: String,
-      default: null,
-    },
-    message: {
-      type: String,
-      default: null,
-    },
-    rows: {
-      type: Number,
-      default: 2,
-    },
-    autocomplete: {
-      type: String,
-      default: null,
-    },
-    type: {
-      type: String,
-      default: null,
-    },
-    icon: {
-      type: String,
-      default: null,
-    },
-    required: {
-      type: Boolean,
-      default: false,
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    noMargin: {
-      type: Boolean,
-      default: false,
-    },
+  title: {
+    type: String,
+    default: null,
   },
-
-  emits: ["change", "update:modelValue"],
-
-  computed: {
-    localValue: {
-      get() {
-        return this.modelValue;
-      },
-      set(value) {
-        this.$emit("update:modelValue", value);
-        this.$emit("change", value);
-      },
-    },
+  placeholder: {
+    type: String,
+    default: null,
   },
-};
+  caption: {
+    type: String,
+    default: null,
+  },
+  message: {
+    type: String,
+    default: null,
+  },
+  rows: {
+    type: Number,
+    default: 2,
+  },
+  autocomplete: {
+    type: String,
+    default: null,
+  },
+  type: {
+    type: String,
+    default: null,
+  },
+  icon: {
+    type: String,
+    default: null,
+  },
+  required: {
+    type: Boolean,
+    default: false,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  noMargin: {
+    type: Boolean,
+    default: false,
+  },
+})
+
+const emits = defineEmits(["change", "update:modelValue"])
+const localValue = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    emits("update:modelValue", value);
+    emits("change", value);
+  },
+})
 </script>
 
 <style lang="scss" scoped>

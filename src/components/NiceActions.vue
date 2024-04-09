@@ -54,7 +54,7 @@ export default {
 </script>
 
 <script setup>
-import { defineProps, inject } from "vue";
+import { inject } from "vue";
 import NiceConfirmModal from "./NiceConfirmModal.vue";
 
 const props = defineProps({
@@ -64,7 +64,7 @@ const props = defineProps({
   submitText: String,
   deleteText: String,
 })
-const $nice = inject("nice");
+const nice = inject("nice");
 const emit = defineEmits(["submit", "cancel", "delete"]);
 
 function submit() {
@@ -72,11 +72,11 @@ function submit() {
 }
 
 function askToDelete() {
-  $nice.modal("delete-prompt", true);
+  nice.modal("delete-prompt", true);
 }
 
 function confirmDelete() {
-  $nice.modal("delete-prompt", false);
+  nice.modal("delete-prompt", false);
   emit("delete");
 }
 

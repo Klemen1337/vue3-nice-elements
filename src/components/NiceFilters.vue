@@ -107,184 +107,190 @@
 </template>
 
 <script>
-
 export default {
-  name: "NiceFilters",
+  name: "NiceFilters"
+}
+</script>
 
-  props: {
-    // filters: {
-    //   type: Object,
-    //   required: false,
-    // },
-    modelValue: {
-      type: Object,
-      required: true,
-    },
-    showCreateButton: {
-      type: Boolean,
-      default: true,
-    },
-    showPills: {
-      type: Boolean,
-      default: false,
-    },
+<script setup>
+import { onMounted, computed, inject, ref } from "vue"
+import { useRoute, useRouter } from "vue-router"
+
+const props = defineProps({
+  // filters: {
+  //   type: Object,
+  //   required: false,
+  // },
+  modelValue: {
+    type: Object,
+    required: true,
   },
+  showCreateButton: {
+    type: Boolean,
+    default: true,
+  },
+  showPills: {
+    type: Boolean,
+    default: false,
+  },
+})
 
-  emits: ["create", "change", "update:modelValue"],
+const $clone = inject("clone")
+const $t = inject("$t")
+const route = useRoute();
+const router = useRouter();
+const emits = defineEmits(["create", "change", "update:modelValue"])
+const search = ref("")
+const filters = ref(props.modelValue)
+const yesNo = [
+  { id: "true", name: $t('Nice', "Yes") },
+  { id: "false", name: $t('Nice', "No") },
+]
+const searchYesNo = (search) => {
+  if (!search) return yesNo;
+  return yesNo.filter((s) =>
+    s.name.toLowerCase().includes(search.toLowerCase())
+  );
+}
 
-  data() {
-    return {
-      search: "",
-      filters: this.modelValue,
-      yesNo: [
-        { id: "true", name: this.$t('Nice', "Yes") },
-        { id: "false", name: this.$t('Nice', "No") },
-      ],
-      searchYesNo: (search) => {
-        if (!search) return this.yesNo;
-        return this.yesNo.filter((s) =>
-          s.name.toLowerCase().includes(search.toLowerCase())
-        );
-      },
+// const filters = computed(() => {
+//   get() {
+//     return props.modelValue;
+//   },
+//   set(value) {
+//     emits("update:modelValue", value);
+//     emits("change", value);
+//   }
+// })
+
+const pills = computed(() => {
+  if (!filters.value) return [];
+  return filters.value.filter((f) => f.value != null);
+})
+
+const rawValues = computed(() => {
+  if (!filters.value) return {};
+  const map = {};
+  filters.value.forEach((f) => {
+    map[f.key] = getFilterValue(f) || null;
+  });
+  return map;
+})
+
+onMounted(async () => {
+  getQuery();
+})
+
+function _formatDateWithTime(filter) {
+  const date = new Date(filter.value);
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  return `${day}.${month}.${year} ${hour}:${minute}`;
+}
+
+function getFormattedValue(filter) {
+  if (filter.formatter) {
+    return filter.formatter(filter.value);
+  }
+  if (filter.type == "date") {
+    return _formatDateWithTime(filter);
+  }
+  if (filter.type == "boolean") {
+    return filter.value ? $t('Nice', "Yes") : $t('Nice', "No");
+  }
+  if (filter.valueName) return filter.value[filter.valueName];
+  if (filter.value?.name) return filter.value.name;
+  if (filter.value?.value) return filter.value.value;
+  return filter.value;
+}
+
+function getFilterValue(f) {
+  if (!f) return null
+  if (f.type == "date") {
+    if (!f.value) return null;
+    if (isNaN(new Date(f.value))) return null;
+    return f.value ? new Date(f.value).toISOString() : null;
+  }
+  return (
+    f.valueRaw ||
+    (f.getKey ? f.getKey(f.value) : null) ||
+    f.value?.id ||
+    f.value
+  );
+}
+
+async function getQuery() {
+  await router.isReady();
+  const query = $clone(route.query);
+  filters.value.forEach(async filter => {
+    const value = query[filter.key]
+    if (filter.type == "yesno") {
+      let p = yesNo.find(
+        (y) => y.id == query[filter.key]
+      )
+      if (!query[filter.key]) p = null;
+      filter.value = p;
+    }
+    else if (filter.type == "date") {
+      filter.value = new Date(value);
+    }
+    else if (filter.type == "boolean") {
+      filter.value = value == "true";
+    }
+    else if (filter.type == "select" && filter.fetch) {
+      const p = await filter.fetch(value);
+      filter.value = p;
+    } else {
+      console.log("[NiceFilters] Query not handled: ", filter.key, value)
+    }
+  });
+  // emits("change", { ...rawValues.value, search: search.value });
+
+  setTimeout(() => {
+    emits("update:modelValue", filters);
+    emits("change", filters);
+  })
+}
+
+async function updateQuery() {
+  // console.log("updateQuery", filters[0].value)
+  setTimeout(async() => {
+    await router.isReady();
+    const query = {
+      ...route.query,
+      ...rawValues.value,
+      search: search.value,
     };
-  },
+    filters.value.forEach(f => {
+      const filterValue = getFilterValue(f)
+      query[f.key] = filterValue
+    })
+    const cleanQuery = Object.keys(query).filter((k) => query[k] != null && query[k] != "")
+      .reduce((a, k) => ({ ...a, [k]: query[k] }), {})
+    router.push({ query: cleanQuery });
+    await router.isReady();
+    // emits("change", { ...rawValues.value, search: search.value });
+    setTimeout(() => {
+      emits("update:modelValue", filters.value);
+      emits("change", filters.value);
+    })
+  });
+}
 
-  computed: {
-    // filters: {
-    //   get() {
-    //     console.log("filters", this.modelValue)
-    //     return this.modelValue;
-    //   },
-    //   set(value) {
-    //     console.log("filters updated", value)
-    //     this.$emit("update:modelValue", value);
-    //     this.$emit("change", value);
-    //   }
-    // },
+async function create() {
+  const query = { ...route.query, id: "new" };
+  router.push({ query });
+  await router.isReady();
+  emits("create");
+}
 
-    pills() {
-      if (!this.filters) return [];
-      return this.filters.filter((f) => f.value != null);
-    },
-
-    rawValues() {
-      if (!this.filters) return {};
-      const map = {};
-      this.filters.forEach((f) => {
-        map[f.key] = this.getFilterValue(f) || null;
-      });
-      return map;
-    },
-  },
-
-  async mounted() {
-    this.getQuery();
-  },
-
-  methods: {
-    getFormattedValue(filter) {
-      if (filter.formatter) {
-        return filter.formatter(filter.value);
-      }
-      if (filter.type == "date") {
-        return this.$formatDateWithTime(filter.value);
-      }
-      if (filter.type == "boolean") {
-        return filter.value ? this.$t('Nice', "Yes") : this.$t('Nice', "No");
-      }
-      if (filter.valueName) return filter.value[filter.valueName];
-      if (filter.value?.name) return filter.value.name;
-      if (filter.value?.value) return filter.value.value;
-      return filter.value;
-    },
-
-    getFilterValue(f) {
-      if (!f) return null
-      if (f.type == "date") {
-        if (!f.value) return null;
-        if (isNaN(new Date(f.value))) return null;
-        return f.value ? new Date(f.value).toISOString() : null;
-      }
-      return (
-        f.valueRaw ||
-        (f.getKey ? f.getKey(f.value) : null) ||
-        f.value?.id ||
-        f.value
-      );
-    },
-
-    async getQuery() {
-      await this.$router.isReady();
-      const query = this.$clone(this.$route.query);
-      this.filters.forEach(async filter => {
-        // console.log(filter, query[filter.key]);
-        const value = query[filter.key]
-        if (filter.type == "yesno") {
-          let p = this.yesNo.find(
-            (y) => y.id == query[filter.key]
-          )
-          if (!query[filter.key]) p = null;
-          filter.value = p;
-        }
-        else if (filter.type == "date") {
-          filter.value = new Date(value);
-        }
-        else if (filter.type == "boolean") {
-          filter.value = value == "true";
-        }
-        else if (filter.type == "select" && filter.fetch) {
-          const p = await filter.fetch(value);
-          filter.value = p;
-        } else {
-          console.log("[NiceFilters] Query not handled: ", filter.key, value)
-        }
-      });
-      // this.$emit("change", { ...this.rawValues, search: this.search });
-
-      setTimeout(() => {
-        this.$emit("update:modelValue", this.filters);
-        this.$emit("change", this.filters);
-      })
-    },
-
-    async updateQuery() {
-      // console.log("updateQuery", this.filters[0].value)
-      setTimeout(async() => {
-        await this.$router.isReady();
-        const query = {
-          ...this.$route.query,
-          ...this.rawValues,
-          search: this.search,
-        };
-        this.filters.forEach(f => {
-          const filterValue = this.getFilterValue(f)
-          query[f.key] = filterValue
-        })
-        let cleanQuery = Object.keys(query).filter((k) => query[k] != null && query[k] != "")
-          .reduce((a, k) => ({ ...a, [k]: query[k] }), {})
-        this.$router.push({ query: cleanQuery });
-        await this.$router.isReady();
-        // this.$emit("change", { ...this.rawValues, search: this.search });
-        setTimeout(() => {
-          this.$emit("update:modelValue", this.filters);
-          this.$emit("change", this.filters);
-        })
-      });
-    },
-
-    async create() {
-      const query = { ...this.$route.query, id: "new" };
-      this.$router.push({ query });
-      await this.$router.isReady();
-      this.$emit("create");
-    },
-
-    clearFilter(filter) {
-      filter.value = null;
-      this.updateQuery();
-    },
-  },
-};
+function clearFilter(filter) {
+  filter.value = null;
+  updateQuery();
+}
 </script>
 
 <style lang="scss" scoped>

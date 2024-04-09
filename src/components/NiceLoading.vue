@@ -3,7 +3,6 @@
     class="nice-loading"
     :class="[props.size ? 'nice-loading-' + props.size : '', { 'full-div': props.fullDiv }]"
   >
-    <!-- <NiceIcon icon="icon-loading" /> -->
     <div class="nice-loading-wrapper">
       <NiceIcon icon="icon-half-loading" />
       <NiceIcon icon="icon-half-loading" />
@@ -19,8 +18,6 @@ export default {
 </script>
 
 <script setup>
-import { defineProps } from "vue";
-
 const props = defineProps({
   message: {
     type: String,

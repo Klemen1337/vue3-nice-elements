@@ -172,6 +172,8 @@ function handleClick(e) {
     close();
   }
 }
+
+defineExpose({ close })
 </script>
 
 

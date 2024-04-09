@@ -149,6 +149,7 @@ export default {
   .nice-modal-header {
     flex-shrink: 0;
     padding: var(--nice-modal-padding);
+    padding-bottom: 1rem;
     position: relative;
 
     .nice-modal-title {
@@ -169,7 +170,7 @@ export default {
   .nice-modal-body {
     overflow: auto;
     flex-grow: 1;
-    padding: 0 var(--nice-modal-padding);
+    padding: 1rem var(--nice-modal-padding);
 
     &.no-header {
       padding-top: var(--nice-modal-padding);
@@ -182,6 +183,7 @@ export default {
   .nice-modal-footer {
     flex-shrink: 0;
     padding: var(--nice-modal-padding);
+    padding-top: 1rem;
     display: flex;
     justify-content: flex-end;
     align-items: center;

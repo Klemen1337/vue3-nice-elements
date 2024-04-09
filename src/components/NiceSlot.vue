@@ -6,13 +6,12 @@
 </template>
 
 <script>
-  export default {
-    name: 'NiceSlot',
-  }
+export default {
+  name: 'NiceSlot',
+}
 </script>
 
 <script setup>
-import { defineProps } from "vue";
 import NiceComponentHeader from "./NiceComponentHeader.vue";
 
 const props = defineProps({

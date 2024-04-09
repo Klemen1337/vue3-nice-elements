@@ -167,11 +167,11 @@ export default {
   props: {
     modelValue: {
       type: [Object, String, Number, null],
-      required: true,
+      required: false,
     },
     values: {
       type: Array,
-      retured: false
+      required: false
     },
     title: String,
     noMargin: Boolean,

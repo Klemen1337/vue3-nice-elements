@@ -30,7 +30,7 @@ export default {
 
 
 <script setup>
-import { defineProps, onMounted } from "vue";
+import { onMounted } from "vue";
 
 const props = defineProps({
   notification: {

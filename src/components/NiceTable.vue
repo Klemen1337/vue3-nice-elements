@@ -209,7 +209,7 @@ import NiceCheckbox from './NiceCheckbox.vue'
 import NiceLoading from './NiceLoading.vue'
 import NiceButton from './NiceButton.vue'
 import NicePopup from './NicePopup.vue'
-import { computed, defineProps, onMounted, inject} from "vue";
+import { computed, onMounted, inject} from "vue";
 import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
 const router = useRouter();
@@ -364,7 +364,7 @@ function setOrder(column) {
   })
 
   emit('orderChange', order)
-  emit('filtersChange')
+  emit('filterChange')
 }
 
 function getPageList() {

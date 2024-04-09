@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref, inject } from 'vue'
-const nice = inject('nice')
+import { useNice } from "./lib"
+const nice = useNice()
 const getQuery = inject('getQuery')
 
 
@@ -36,6 +37,7 @@ const icons = ref([])
 const testForm = ref({
   name: "",
   email: "",
+  comment: "",
   list: {
     "id": 4,
     "value": "List 4"
@@ -54,7 +56,8 @@ const form = ref({
     "id": 3,
     "value": "List 3"
   },
-  niceSwitch: false
+  niceSwitch: false,
+  niceDate: null,
 })
 
 const data = ref([])
@@ -375,6 +378,7 @@ onMounted(() => {
       <NiceWrapper title="Nice date" id="nice-date" collapsable>
         <NiceDate title="Birthday" v-model="form.niceDate" :disabled="isDisabled" />
         <pre>&lt;NiceDate title="Birthday" v-model="form.niceDate" /></pre>
+        <pre>{{ form.niceDate }}</pre>
       </NiceWrapper>
 
       <!-- Nice checkbox -->
@@ -553,7 +557,7 @@ onMounted(() => {
         <NiceButton @click="openModal">Open modal</NiceButton>
         <NiceButton @click="openModal2">Open modal 2</NiceButton>
         <NiceButton @click="openPanel">Open panel</NiceButton>
-        <NiceButton @click="openToast">Open toast</NiceButton>
+        <NiceButton @click="openToast('This is a test')">Open toast</NiceButton>
         <NiceButton @click="openNotification">Open notification</NiceButton>
       </NiceWrapper>
 
@@ -653,7 +657,12 @@ onMounted(() => {
     </NiceView>
   </div>
 
-  <NiceSvgs />
+  <NiceSvgs>
+    <!-- Custom icons go here -->
+    <symbol id="icon-hard-drive-2" viewBox="0 0 20 20">
+      <path d="M2 2c0-1.1 0.9-2 2-2h12c1.105 0 2 0.895 2 2v0 16c0 1.105-0.895 2-2 2v0h-12c-1.105 0-2-0.895-2-2v0-16zM12.4 7.6c-0.693-0.386-1.52-0.614-2.4-0.614-2.761 0-5 2.239-5 5s2.239 5 5 5c2.757 0 4.992-2.231 5-4.986v-7.001l-2.6 2.6zM10 14c-1.105 0-2-0.895-2-2s0.895-2 2-2v0c1.105 0 2 0.895 2 2s-0.895 2-2 2v0zM6 3v2h4v-2h-4zM4 3c0.552 0 1-0.448 1-1s-0.448-1-1-1v0c-0.552 0-1 0.448-1 1s0.448 1 1 1v0zM4 19c0.552 0 1-0.448 1-1s-0.448-1-1-1v0c-0.552 0-1 0.448-1 1s0.448 1 1 1v0zM16 19c0.552 0 1-0.448 1-1s-0.448-1-1-1v0c-0.552 0-1 0.448-1 1s0.448 1 1 1v0zM16 3c0.552 0 1-0.448 1-1s-0.448-1-1-1v0c-0.552 0-1 0.448-1 1s0.448 1 1 1v0z"></path>
+    </symbol>
+  </NiceSvgs>
   <NiceToast />
   <NiceNotifications />
 </template>

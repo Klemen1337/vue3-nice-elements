@@ -11,14 +11,14 @@
         'btn-rounded': props.rounded,
         'btn-plain': props.plain,
         'btn-outline': props.outline,
-        'btn-icon': !$slots.default && !props.text && (props.icon || props.appendIcon),
+        'btn-icon': !slots.default && !props.text && (props.icon || props.appendIcon),
       },
     ]"
     :disabled="props.disabled || props.loading"
   >
     <NiceLoading v-if="props.loading" fullDiv />
     <NiceIcon v-if="props.icon" :icon="props.icon" />
-    <span v-if="$slots.default"><slot /></span>
+    <span v-if="slots.default"><slot /></span>
     <span v-if="props.text">{{ props.text }}</span>
     <NiceIcon v-if="props.appendIcon" :icon="props.appendIcon" />
   </button>
@@ -31,7 +31,9 @@
 </script>
 
 <script setup>
-import { defineProps } from "vue";
+import { useSlots } from "vue";
+
+const slots = useSlots()
 
 const props = defineProps({
   addClass: {

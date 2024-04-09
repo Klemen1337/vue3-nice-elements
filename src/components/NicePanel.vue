@@ -4,6 +4,7 @@
     @mousemove="mouseMove"
     @mouseup="dragging = false"
     :class="{ 'no-select': dragging }"
+    ref="panelElement"
   >
     <transition name="side-view">
       <div
@@ -31,79 +32,79 @@
 <script>
 export default {
   name: "NicePanel",
+}
+</script>
 
-  props: {
-    name: {
-      type: String,
-      required: true,
-    },
-    noPadding: {
-      type: Boolean,
-      default: false,
-    },
+<script setup>
+import { onMounted, inject, onUnmounted, ref } from 'vue'
+
+const nice = inject("nice")
+const isOpen = ref(false)
+const dragging = ref(false)
+const sideViewWidth = ref(500)
+const panelElement = ref(null)
+const emits = defineEmits(["close"])
+const props = defineProps({
+  name: {
+    type: String,
+    required: true,
   },
-
-  emits: ["close"],
-
-  data() {
-    return {
-      isOpen: false,
-      dragging: false,
-      sideViewWidth: 500
-    };
+  noPadding: {
+    type: Boolean,
+    default: false,
   },
+})
 
-  mounted() {
-    // Emit keyboard listener
-    document.addEventListener("keyup", this.handleKeyboard);
+onMounted(() => {
+  // Emit keyboard listener
+  document.addEventListener("keyup", handleKeyboard);
 
-    // Listen to the broadcast
-    this.$nice.onPanel(({ name, isOpen }) => {
-      if (name == this.name) this.isOpen = isOpen;
-      if (this.isOpen) this.focusOnInput();
-    });
-  },
+  // Listen to the broadcast
+  nice.onPanel((data) => {
+    if (props.name == data.name) isOpen.value = data.isOpen;
+    if (data.isOpen) focusOnInput();
+  });
+})
 
-  unmounted() {
-    // Remove keyboard listener
-    document.removeEventListener("keyup", this.handleKeyboard);
-  },
+onUnmounted(() => {
+  // Remove keyboard listener
+  document.removeEventListener("keyup", handleKeyboard);
+})
 
-  methods: {
-    changeSideViewWidth(value) {
-      this.sideViewWidth = value
-    },
+function changeSideViewWidth(value) {
+  sideViewWidth.value = value
+}
 
-    focusOnInput() {
-      setTimeout(() => {
-        const inputs = this.$el.querySelectorAll("input");
-        if (inputs && inputs[0] && inputs[0].focus) {
-          inputs[0].focus();
-        }
-      });
-    },
+function focusOnInput() {
+  setTimeout(() => {
+    const inputs = panelElement.value.querySelectorAll("input");
+    if (inputs && inputs[0] && inputs[0].focus) {
+      inputs[0].focus();
+    }
+  });
+}
 
-    close() {
-      this.$emit("close");
-      this.$nice.panel(this.name, false);
-    },
+function close() {
+  emits("close");
+  nice.panel(props.name, false);
+}
 
-    mouseMove(e) {
-      if (this.dragging) {
-        let width = document.body.clientWidth - e.clientX;
-        if (width >= 300 && width <= document.body.clientWidth - 100) {
-          this.changeSideViewWidth(width);
-        }
-      }
-    },
+function mouseMove(e) {
+  if (dragging.value) {
+    let width = document.body.clientWidth - e.clientX;
+    if (width >= 300 && width <= document.body.clientWidth - 100) {
+      changeSideViewWidth(width);
+    }
+  }
+}
 
-    handleKeyboard(e) {
-      if (e.key == "Escape") {
-        this.close();
-      }
-    },
-  },
-};
+function handleKeyboard(e) {
+  if (e.key == "Escape") {
+    close();
+  }
+}
+
+defineExpose({ close })
 </script>
 
 <style lang="scss">

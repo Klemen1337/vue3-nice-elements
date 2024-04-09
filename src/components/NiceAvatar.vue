@@ -27,7 +27,7 @@ export default {
 </script>
 
 <script setup>
-import { computed, defineProps } from "vue";
+import { computed } from "vue";
 import avatar from "gradient-avatar";
 import md5 from "md5";
 

@@ -3,14 +3,14 @@
     <div class="nice-view-header" v-if="showHeader">
       <NiceIcon :icon="icon" class="view-header-icon" v-if="icon && !loading" />
       <NiceLoading class="view-header-icon" v-if="loading" />
-      <div class="view-title" v-if="$slots.title || title">
+      <div class="view-title" v-if="slots.title || title">
         <slot name="title">{{ title }}</slot>
       </div>
     </div>
     <div class="nice-view-body" :class="{ 'nice-view-body-flex': flexBody }">
       <slot></slot>
     </div>
-    <div class="nice-view-footer" v-if="$slots.footer">
+    <div class="nice-view-footer" v-if="slots.footer">
       <slot name="footer"></slot>
     </div>
   </div>
@@ -19,32 +19,33 @@
 <script>
 export default {
   name: "NiceView",
+}
+</script>
 
-  props: {
-    title: {
-      type: String,
-      required: false,
-    },
-    icon: {
-      type: String,
-      required: false,
-    },
-    loading: {
-      type: Boolean,
-      default: false,
-    },
-    flexBody: {
-      type: Boolean,
-      default: false,
-    },
-  },
+<script setup>
+import { useSlots, computed } from 'vue';
+const slots = useSlots();
 
-  computed: {
-    showHeader() {
-      return this.$slots.title || this.title || this.icon;
-    },
+const props = defineProps({
+  title: {
+    type: String,
+    required: false,
   },
-};
+  icon: {
+    type: String,
+    required: false,
+  },
+  loading: {
+    type: Boolean,
+    default: false,
+  },
+  flexBody: {
+    type: Boolean,
+    default: false,
+  },
+})
+
+const showHeader = computed(() => slots.title || props.title || props.icon);
 </script>
 
 <style lang="scss" scoped>

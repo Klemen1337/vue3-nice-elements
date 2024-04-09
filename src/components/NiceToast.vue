@@ -15,52 +15,52 @@
 
 <script>
 export default {
-  name: "NiceToast",
+  name: "NiceToast"
+}
+</script>
 
-  data() {
-    return {
-      timeoutTime: 3000,
-      toasts: [],
-    };
-  },
+<script setup>
+import { onMounted, ref, inject } from "vue"
+const timeoutTime = 3000
+const toasts = ref([])
+const nice = inject("nice");
 
-  mounted() {
-    this.$nice.onToast(({ message, type }) => {
-      this.createToast(message, type);
-    });
-  },
+onMounted(() => {
+  nice.onToast(({ message, type }) => {
+    createToast(message, type);
+  });
+})
 
-  methods: {
-    createToast(message, type) {
-      // Create new toast
-      var toast = {
-        id: Math.random()
-          .toString(36)
-          .replace(/[^a-z]+/g, "")
-          .substr(2, 10),
-        message,
-        type,
-      };
+function createToast(message, type) {
+  // Create new toast
+  const toast = {
+    id: Math.random()
+      .toString(36)
+      .replace(/[^a-z]+/g, "")
+      .substr(2, 10),
+    message,
+    type,
+  };
 
-      // Append toast
-      this.toasts.unshift(toast);
+  // Append toast
+  toasts.value.unshift(toast);
 
-      // Remove after some time
-      setTimeout(() => {
-        this.removeToast(toast);
-      }, this.timeoutTime);
-    },
+  // Remove after some time
+  setTimeout(() => {
+    removeToast(toast);
+  }, timeoutTime);
+}
 
-    removeToast(toast) {
-      let toastIndex = this.toasts.findIndex((a) => {
-        return a.id == toast.id;
-      });
-      if (toastIndex >= 0) {
-        this.toasts.splice(toastIndex, 1);
-      }
-    },
-  },
-};
+function removeToast(toast) {
+  const toastIndex = toasts.value.findIndex((a) => {
+    return a.id == toast.id;
+  });
+
+  if (toastIndex >= 0) {
+    toasts.value.splice(toastIndex, 1);
+  }
+}
+
 </script>
 
 <style lang="scss" scoped>

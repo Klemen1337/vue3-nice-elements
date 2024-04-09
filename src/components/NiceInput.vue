@@ -37,101 +37,91 @@
 </template>
 
 <script>
+export default {
+  name: "NiceInput"
+}
+</script>
+
+<script setup>
+import { computed } from "vue";
 import SafeGet from "just-safe-get";
 import NiceComponentHeader from "./NiceComponentHeader.vue";
 
-export default {
-  name: "NiceInput",
-
-  components: {
-    NiceComponentHeader,
+const props = defineProps({
+  modelValue: {
+    type: [String, Number, null],
+    required: true,
   },
-
-  props: {
-    modelValue: {
-      type: [String, Number, null],
-      required: true,
-    },
-    title: {
-      type: String,
-      default: null,
-    },
-    placeholder: {
-      type: String,
-      default: null,
-    },
-    caption: {
-      type: String,
-      default: null,
-    },
-    message: {
-      type: String,
-      default: null,
-    },
-    autocomplete: {
-      type: String,
-      default: null,
-    },
-    type: {
-      type: String,
-      default: null,
-    },
-    icon: {
-      type: String,
-      default: null,
-    },
-    required: {
-      type: Boolean,
-      default: false,
-    },
-    noMargin: {
-      type: Boolean,
-      default: false,
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    prop: String,
-    error: [Object, String, null],
+  title: {
+    type: String,
+    default: null,
   },
-
-  emits: ["change", "debounce", "update:modelValue"],
-
-  data() {
-    return {
-      debounce: null,
-    };
+  placeholder: {
+    type: String,
+    default: null,
   },
-
-  computed: {
-    localValue: {
-      get() {
-        return this.modelValue;
-      },
-      set(value) {
-        this.$emit("update:modelValue", value);
-        this.$emit("change", value);
-        clearTimeout(this.debounce);
-        this.debounce = setTimeout(() => {
-          this.$emit("debounce", value);
-        }, 500);
-      },
-    },
-
-    errorMessage() {
-      if (typeof this.error == "string") return this.error;
-      const err = SafeGet(this.error, ["response", "data", this.prop]);
-      return typeof err == "object" ? err.join("-") : err;
-    },
+  caption: {
+    type: String,
+    default: null,
   },
-
-  methods: {
-    clearInput() {
-      this.localValue = "";
-    },
+  message: {
+    type: String,
+    default: null,
   },
-};
+  autocomplete: {
+    type: String,
+    default: null,
+  },
+  type: {
+    type: String,
+    default: null,
+  },
+  icon: {
+    type: String,
+    default: null,
+  },
+  required: {
+    type: Boolean,
+    default: false,
+  },
+  noMargin: {
+    type: Boolean,
+    default: false,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  prop: String,
+  error: [Object, String, null],
+})
+
+let debounce = null
+const emits = defineEmits(["change", "debounce", "update:modelValue"])
+
+const localValue = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    emits("update:modelValue", value);
+    emits("change", value);
+    clearTimeout(debounce);
+    debounce = setTimeout(() => {
+      emits("debounce", value);
+    }, 500);
+  },
+})
+
+const errorMessage = computed(() => {
+  if (typeof props.error == "string") return props.error;
+  const err = SafeGet(props.error, ["response", "data", props.prop]);
+  return typeof err == "object" ? err.join("-") : err;
+})
+
+function clearInput() {
+  localValue.value = "";
+}
 </script>
 
 <style lang="scss" scoped>

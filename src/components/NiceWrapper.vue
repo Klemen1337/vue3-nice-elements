@@ -41,52 +41,47 @@
 </template>
 
 <script>
+export default {
+  name: "NiceWrapper"
+}
+</script>
+
+<script setup>
+import { ref } from 'vue';
 import NiceButton from './NiceButton.vue';
 
-export default {
-  name: "NiceWrapper",
-  
-  components: { NiceButton },
-
-  props: {
-    title: {
-      type: String,
-      required: false,
-    },
-    subtitle: {
-      type: String,
-      required: false,
-    },
-    collapsable: {
-      type: Boolean,
-      required: false,
-    },
-    collapsed: {
-      type: Boolean,
-      default: false
-    },
-    noBodyPadding: {
-      type: Boolean,
-      default: false,
-    },
-    noMargin: {
-      type: Boolean,
-      required: false,
-    },
+const props = defineProps({
+  title: {
+    type: String,
+    required: false,
   },
-
-  data() {
-    return {
-      isOpen: !this.collapsed,
-    };
+  subtitle: {
+    type: String,
+    required: false,
   },
-
-  methods: {
-    toggleOpen() {
-      this.isOpen = !this.isOpen;
-    },
+  collapsable: {
+    type: Boolean,
+    required: false,
   },
-};
+  collapsed: {
+    type: Boolean,
+    default: false
+  },
+  noBodyPadding: {
+    type: Boolean,
+    default: false,
+  },
+  noMargin: {
+    type: Boolean,
+    required: false,
+  },
+})
+
+const isOpen = ref(!props.collapsed)
+
+function toggleOpen() {
+  isOpen.value = !isOpen.value;
+}
 </script>
 
 <style lang="scss" scoped>
