@@ -1,9 +1,10 @@
+import { inject } from "vue";
 import mitt from "mitt";
-import components from'./components'
+import components from './components'
 import './styles/main.scss'
 
 const plugin = {
-  install (app, options) {
+  install(app, options) {
     for (const prop in components) {
       const component = components[prop]
       app.component(component.name, component)
@@ -57,7 +58,7 @@ const plugin = {
     //   delete query.id;
     //   return query
     // }
-    
+
     function clone(o) {
       return Object.assign({}, o);
     }
@@ -68,8 +69,24 @@ const plugin = {
     app.provide('clone', clone);
 
     app.config.globalProperties.$t = options.gettext.$pgettext;
-    app.provide('$t', options.gettext.$pgettext);    
+    app.provide('$t', options.gettext.$pgettext);
   }
+}
+
+export function useNice() {
+  return inject('nice');
+}
+
+export function getQuery() {
+  return inject('getQuery');
+}
+
+export function useClone() {
+  return inject('clone');
+}
+
+export function useT() {
+  return inject('$t');
 }
 
 export default plugin
