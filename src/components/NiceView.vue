@@ -50,6 +50,7 @@ const showHeader = computed(() => slots.title || props.title || props.icon);
 
 <style lang="scss" scoped>
 .nice-view {
+  position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;

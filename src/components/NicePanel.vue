@@ -3,7 +3,7 @@
     class="nice-side-view"
     @mousemove="mouseMove"
     @mouseup="dragging = false"
-    :class="{ 'no-select': dragging }"
+    :class="[position, { 'no-select': dragging }]"
     ref="panelElement"
   >
     <transition name="side-view">
@@ -53,6 +53,13 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  position: {
+    type: String,
+    default: "right",
+    validator(value) {
+      return ["top", "left", "bottom", "right"].includes(value);
+    },
+  },
 })
 
 onMounted(() => {
@@ -91,8 +98,17 @@ function close() {
 
 function mouseMove(e) {
   if (dragging.value) {
-    let width = document.body.clientWidth - e.clientX;
-    if (width >= 300 && width <= document.body.clientWidth - 100) {
+    let width = 300;
+    if (props.position == 'right') {
+      width = document.body.clientWidth - e.clientX;
+    } else if (props.position == 'left') {
+      width = e.clientX;
+    } else if (props.position == 'top') {
+      width = e.clientY;
+    } else if (props.position == 'bottom') {
+      width = document.body.clientHeight - e.clientY;
+    }
+    if (width >= 300) {
       changeSideViewWidth(width);
     }
   }
@@ -115,6 +131,82 @@ defineExpose({ close })
   z-index: 2000;
   --side-view-width: 500px;
 
+  &.right, &.left {
+    .side-view-body {
+      top: 0;
+      max-width: 90%;
+      height: 100%;
+      width: var(--side-view-width);
+    }
+  }
+
+  &.right {
+    .side-view-body {
+      right: 0;
+    }
+  }
+
+  &.left {
+    .side-view-body {
+      left: 0;
+    }
+
+    .handle {
+      left: unset;
+      right: 0;
+    }
+
+    .side-view-enter-active, .side-view-leave-active {
+      animation-name: side-view-left;
+    }
+  }
+
+  &.top, &.bottom {
+    .side-view-body {
+      left: 0;
+      max-height: 90%;
+      width: 100%;
+      height: var(--side-view-width);
+    }
+
+    .handle {
+      top: unset;
+      bottom: 0;
+      width: 100%;
+      height: 2px;
+      cursor: row-resize;
+    }
+  }
+
+  &.top {
+    .side-view-body {
+      top: 0;
+    }
+
+    .side-view-enter-active, .side-view-leave-active {
+      animation-name: side-view-top;
+    }
+  }
+
+  &.bottom {
+    .side-view-body {
+      bottom: 0;
+    }
+
+    .handle {
+      top: 0;
+      bottom: unset;
+    }
+
+    .side-view-enter-active, .side-view-leave-active {
+      animation-name: side-view-bottom;
+    }
+  }
+
+  .nice-view {
+    z-index: 1;
+  }
+
   .handle {
     position: absolute;
     top: 0;
@@ -124,6 +216,7 @@ defineExpose({ close })
     background: transparent;
     cursor: col-resize;
     user-select: none;
+    z-index: 2;
 
     &:hover,
     &.active {
@@ -133,11 +226,6 @@ defineExpose({ close })
 
   .side-view-body {
     position: fixed;
-    top: 0;
-    right: 0;
-    width: var(--side-view-width);
-    max-width: 90%;
-    height: 100%;
     background: var(--nice-background-color);
     padding: 2rem;
     box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
@@ -196,14 +284,48 @@ defineExpose({ close })
 }
 
 .side-view-enter-active {
-  animation: side-view 0.3s;
+  animation: side-view-right 0.3s;
 }
 .side-view-leave-active {
-  animation: side-view 0.3s reverse;
+  animation: side-view-right 0.3s reverse;
 }
-@keyframes side-view {
+
+@keyframes side-view-right {
   from {
     transform: translateX(100%);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes side-view-left {
+  from {
+    transform: translateX(-100%);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes side-view-top {
+  from {
+    transform: translateY(-100%);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes side-view-bottom {
+  from {
+    transform: translateY(100%);
     opacity: 1;
   }
   to {
@@ -218,6 +340,7 @@ defineExpose({ close })
 .side-overlay-leave-active {
   animation: side-overlay 0.3s reverse;
 }
+
 @keyframes side-overlay {
   from {
     opacity: 0;

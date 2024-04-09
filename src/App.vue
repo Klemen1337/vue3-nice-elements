@@ -173,8 +173,20 @@ function openModal2() {
   nice.modal('modal', true)
 }
 
-function openPanel() {
-  nice.panel('panel', true)
+function openPanelRight() {
+  nice.panel('panel-right', true)
+}
+
+function openPanelLeft() {
+  nice.panel('panel-left', true)
+}
+
+function openPanelTop() {
+  nice.panel('panel-top', true)
+}
+
+function openPanelBottom() {
+  nice.panel('panel-bottom', true)
 }
 
 function openToast(text) {
@@ -512,9 +524,10 @@ onMounted(() => {
         </NiceModal>
         <pre class="mb-2">&lt;NiceModal name="modal">This is a test modal&lt;/NiceModal></pre>
 
-        <NicePanel name="panel" noPadding>
-          <NiceView flexView title="Panel test" class="h-auto">
+        <NicePanel name="panel-right" noPadding>
+          <NiceView flexView title="Panel right">
             <div>
+              <p>This is a right panel</p>
               <p>This is a panel test</p>
               <p>This is a panel test</p>
               <p>This is a panel test</p>
@@ -552,11 +565,38 @@ onMounted(() => {
             </template>
           </NiceView>
         </NicePanel>
-        <pre class="mb-2">&lt;NicePanel name="panel">This is a test panel&lt;/NicePanel></pre>
+        <NicePanel name="panel-left" position="left" noPadding>
+          <NiceView flexView title="Panel left">
+            <p>This is a left panel</p>
+            <template #footer>
+              <NiceActions @cancel="openToast('cancel')" @submit="openToast('submit')" @delete="openToast('delete')"></NiceActions>
+            </template>
+          </NiceView>
+        </NicePanel>
+        <NicePanel name="panel-top" position="top" noPadding>
+          <NiceView flexView title="Panel top">
+            <p>This is a top panel</p>
+            <template #footer>
+              <NiceActions @cancel="openToast('cancel')" @submit="openToast('submit')" @delete="openToast('delete')"></NiceActions>
+            </template>
+          </NiceView>
+        </NicePanel>
+        <NicePanel name="panel-bottom" position="bottom" noPadding>
+          <NiceView flexView title="Panel bottom">
+            <p>This is a bottom panel</p>
+            <template #footer>
+              <NiceActions @cancel="openToast('cancel')" @submit="openToast('submit')" @delete="openToast('delete')"></NiceActions>
+            </template>
+          </NiceView>
+        </NicePanel>
+        <pre class="mb-2">&lt;NicePanel name="panel" position="right">This is a test panel&lt;/NicePanel></pre>
 
         <NiceButton @click="openModal">Open modal</NiceButton>
         <NiceButton @click="openModal2">Open modal 2</NiceButton>
-        <NiceButton @click="openPanel">Open panel</NiceButton>
+        <NiceButton @click="openPanelRight">Open panel right</NiceButton>
+        <NiceButton @click="openPanelLeft">Open panel left</NiceButton>
+        <NiceButton @click="openPanelTop">Open panel top</NiceButton>
+        <NiceButton @click="openPanelBottom">Open panel bottom</NiceButton>
         <NiceButton @click="openToast('This is a test')">Open toast</NiceButton>
         <NiceButton @click="openNotification">Open notification</NiceButton>
       </NiceWrapper>
