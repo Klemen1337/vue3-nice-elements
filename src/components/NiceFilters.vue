@@ -25,6 +25,8 @@
             v-if="filter.type == 'boolean'"
             v-model="filter.value"
             :title="filter.name"
+            isInline
+            isBlock
             @change="updateQuery"
             noMargin
           />

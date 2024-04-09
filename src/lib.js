@@ -34,8 +34,8 @@ const plugin = {
 
       // Modal
       onModal: (cb) => emitter.on("modal", cb),
-      modal: (name, isOpen) => {
-        emitter.emit("modal", { name, isOpen });
+      modal: (name, isOpen, event) => {
+        emitter.emit("modal", { name, isOpen, event });
       },
     };
 

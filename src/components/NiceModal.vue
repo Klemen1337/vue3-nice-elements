@@ -5,7 +5,7 @@
     </Transition>
 
     <Transition name="flyin">
-      <div v-if="isOpen" class="nice-modal" :style="{ width, height }">
+      <div v-if="isOpen" class="nice-modal" :style="[{ width, height }, startingPosition]">
         <!-- Header -->
         <div
           v-if="$slots.title || title || $slots.subtitle || subtitle"
@@ -81,6 +81,7 @@ export default {
     return {
       debug: false,
       isOpen: false,
+      startingPosition: { "--x": "50%", "--y": "50%" }
     };
   },
 
@@ -102,10 +103,12 @@ export default {
       this.$nice.modal(this.name, false);
     },
 
-    onToggle({ name, isOpen }) {
+    onToggle({ name, isOpen, event }) {
       if (this.name === name) {
         const newState = isOpen == null ? !this.isOpen : isOpen;
         if (newState) {
+          if (event) this.startingPosition = { "--x": event.clientX + "px", "--y": event.clientY + "px" }
+          else this.startingPosition = { "--x": "50%", "--y": "50%" }
           this.isOpen = true;
         } else {
           this.isOpen = false;
@@ -208,7 +211,10 @@ export default {
 .flyin-enter-from,
 .flyin-leave-to {
   opacity: 0;
+  top: var(--y);
+  left: var(--x);
   /* transform: scale(0.9) translateY(-1rem) translateZ(0) rotateX(90deg); */
-  transform: scale(0.9) translate(-50%, -50%) rotateX(45deg);
+  transform: scale(0.8) translate(-50%, -50%) rotateX(45deg);
+  // transform: scale(0.9) translate(var(--x), var(--y)) rotateX(45deg); 
 }
 </style>

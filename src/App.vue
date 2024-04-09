@@ -162,7 +162,11 @@ function filterChanged() {
   getData()
 }
 
-function openModal() {
+function openModal(e) {
+  nice.modal('modal', true, e)
+}
+
+function openModal2() {
   nice.modal('modal', true)
 }
 
@@ -381,7 +385,9 @@ onMounted(() => {
 
       <!-- Nice switch -->
       <NiceWrapper title="Nice switch" id="nice-switch" collapsable>
+        <NiceSwitch title="I like pizza" v-model="form.niceSwitch" :disabled="isDisabled" isInline />
         <NiceSwitch title="I like pizza" v-model="form.niceSwitch" :disabled="isDisabled" />
+        <NiceSwitch title="I like pizza" v-model="form.niceSwitch" :disabled="isDisabled" titleLeft />
         <pre>&lt;NiceSwitch title="I like pizza" v-model="form.niceSwitch" /></pre>
       </NiceWrapper>
 
@@ -545,6 +551,7 @@ onMounted(() => {
         <pre class="mb-2">&lt;NicePanel name="panel">This is a test panel&lt;/NicePanel></pre>
 
         <NiceButton @click="openModal">Open modal</NiceButton>
+        <NiceButton @click="openModal2">Open modal 2</NiceButton>
         <NiceButton @click="openPanel">Open panel</NiceButton>
         <NiceButton @click="openToast">Open toast</NiceButton>
         <NiceButton @click="openNotification">Open notification</NiceButton>

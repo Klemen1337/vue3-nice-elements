@@ -4,16 +4,24 @@
     :class="[
       'nice-switch-' + props.type,
       props.size ? 'nice-switch-' + props.size : '',
-      { 'no-margin': props.noMargin, active: localValue, disabled: props.disabled },
+      { 'no-margin': props.noMargin, active: localValue, disabled: props.disabled, 'nice-is-inline': props.isInline, 'nice-is-block': props.isBlock, 'nice-is-title-left': titleLeft },
     ]"
-    @click="toggleValue"
   >
-    <div class="nice-switch-box">
-      <div class="nice-switch-handle"></div>
+    <NiceComponentHeader
+      v-if="props.isInline"
+      :title="title"
+    />
+
+    <div class="nice-switch-box-wrapper">
+      <button class="nice-switch-box" @click="toggleValue" :disabled="props.disabled">
+        <div class="nice-switch-handle"></div>
+      </button>
     </div>
+
     <div class="nice-switch-title" :for="'nice-switch' + key" v-if="props.title">
       {{ props.title }}
     </div>
+
     <input type="checkbox" :id="'nice-switch' + key" :disabled="props.disabled" />
   </div>
 </template>
@@ -50,6 +58,18 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false,
+  },
+  isInline: {
+    type: Boolean,
+    default: false
+  },
+  isBlock: {
+    type: Boolean,
+    default: false
+  },
+  titleLeft: {
+    type: Boolean,
+    default: false
   },
   type: {
     type: String,
@@ -89,7 +109,6 @@ function toggleValue() {
 
 <style lang="scss" scoped>
 .nice-switch {
-  cursor: pointer;
   position: relative;
   display: flex;
   align-items: center;
@@ -102,6 +121,35 @@ function toggleValue() {
     left: 0;
   }
 
+  &.nice-is-title-left {
+    .nice-switch-title {
+      order: 1;
+      margin-left: 0;
+      margin-right: 0.5rem;
+    }
+
+    .nice-switch-box-wrapper {
+      order: 2;
+    }
+  }
+
+  &.nice-is-inline {
+    flex-direction: column;
+    align-items: unset;
+
+    .nice-switch-title {
+      display: none;
+    }
+  }
+
+  &.nice-is-block {
+    .nice-switch-box-wrapper {
+      display: flex;
+      align-items: center;
+      height: var(--nice-height);
+    }
+  }
+
   &:focus-within {
     .nice-switch-box {
       outline-offset: 2px;
@@ -111,7 +159,7 @@ function toggleValue() {
 
   &.active {
     .nice-switch-box {
-      background: var(--nice-primary-color);
+      background-color: var(--nice-primary-color);
 
       .nice-switch-handle {
         transform: translateX(100%);
@@ -123,10 +171,15 @@ function toggleValue() {
     height: calc(var(--size) + 8px);
     width: calc(calc(2 * var(--size)) + 8px);
     border: 1px solid var(--nice-border-color);
-    background: var(--nice-border-color);
+    background-color: var(--nice-border-color);
     border-radius: 20px;
     position: relative;
-    transition: all 0.3s;
+    transition: background-color all 0.3s;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
 
     .nice-switch-handle {
       position: absolute;

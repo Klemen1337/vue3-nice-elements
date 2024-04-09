@@ -39,7 +39,7 @@ export default {
 
 <script setup>
 import { createPopper } from "@popperjs/core";
-import { defineEmits, defineProps, onMounted, onBeforeUnmount, ref } from "vue";
+import { onMounted, onBeforeUnmount, ref } from "vue";
 
 const props = defineProps({
   noPadding: {
