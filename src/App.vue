@@ -568,6 +568,12 @@ onMounted(() => {
         <NicePanel name="panel-left" position="left" noPadding>
           <NiceView flexView title="Panel left">
             <p>This is a left panel</p>
+            <NiceInput title="Name" v-model="testForm.name" :disabled="isDisabled" />
+            <NiceInput title="Email" type="email" v-model="testForm.email" :disabled="isDisabled" />
+            <NiceTextarea title="Comment" v-model="testForm.comment" :disabled="isDisabled" />
+            <NiceDropdown v-if="show" title="List" v-model="testForm.list" :search-function="searchList" nullable :disabled="isDisabled" />
+            <NiceDropdownSimple title="List simple" v-model="testForm.listSimple" keyOnly :values="list" nullable :disabled="isDisabled" />
+            <NiceButton @click="randomShit" :disabled="isDisabled">Random</NiceButton>
             <template #footer>
               <NiceActions @cancel="openToast('cancel')" @submit="openToast('submit')" @delete="openToast('delete')"></NiceActions>
             </template>
@@ -576,6 +582,12 @@ onMounted(() => {
         <NicePanel name="panel-top" position="top" noPadding>
           <NiceView flexView title="Panel top">
             <p>This is a top panel</p>
+            <NiceInput title="Name" v-model="testForm.name" :disabled="isDisabled" />
+            <NiceInput title="Email" type="email" v-model="testForm.email" :disabled="isDisabled" />
+            <NiceTextarea title="Comment" v-model="testForm.comment" :disabled="isDisabled" />
+            <NiceDropdown v-if="show" title="List" v-model="testForm.list" :search-function="searchList" nullable :disabled="isDisabled" />
+            <NiceDropdownSimple title="List simple" v-model="testForm.listSimple" keyOnly :values="list" nullable :disabled="isDisabled" />
+            <NiceButton @click="randomShit" :disabled="isDisabled">Random</NiceButton>
             <template #footer>
               <NiceActions @cancel="openToast('cancel')" @submit="openToast('submit')" @delete="openToast('delete')"></NiceActions>
             </template>
@@ -584,6 +596,12 @@ onMounted(() => {
         <NicePanel name="panel-bottom" position="bottom" noPadding>
           <NiceView flexView title="Panel bottom">
             <p>This is a bottom panel</p>
+            <NiceInput title="Name" v-model="testForm.name" :disabled="isDisabled" />
+            <NiceInput title="Email" type="email" v-model="testForm.email" :disabled="isDisabled" />
+            <NiceTextarea title="Comment" v-model="testForm.comment" :disabled="isDisabled" />
+            <NiceDropdown v-if="show" title="List" v-model="testForm.list" :search-function="searchList" nullable :disabled="isDisabled" />
+            <NiceDropdownSimple title="List simple" v-model="testForm.listSimple" keyOnly :values="list" nullable :disabled="isDisabled" />
+            <NiceButton @click="randomShit" :disabled="isDisabled">Random</NiceButton>
             <template #footer>
               <NiceActions @cancel="openToast('cancel')" @submit="openToast('submit')" @delete="openToast('delete')"></NiceActions>
             </template>
