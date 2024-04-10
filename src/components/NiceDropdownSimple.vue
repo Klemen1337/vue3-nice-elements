@@ -9,14 +9,14 @@
       :caption="caption"
     />
     <div class="input-group">
-      <div class="select-wrapper" :class="{ 'no-value': localValue.value == null }">
+      <div class="select-wrapper" :class="{ 'no-value': localValue == null }">
         <select
           :required="required"
           :disabled="disabled"
-          :modelValue="localValue.value"
+          :modelValue="localValue"
           @change="handleChange"
         >
-          <option v-if="nullable" :value="null" :selected="!localValue.value">
+          <option v-if="nullable" :value="null" :selected="!localValue">
             {{ nullText || $t('Nice', 'None') }}
           </option>
           <option

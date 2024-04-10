@@ -173,7 +173,7 @@ function handleClick(e) {
   }
 }
 
-defineExpose({ close })
+defineExpose({ close, toggle })
 </script>
 
 
