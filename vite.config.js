@@ -27,6 +27,7 @@ export default defineConfig({
         // for externalized deps
         globals: {
           vue: 'Vue',
+          "vue-router": 'vueRouter',
         },
       },
     },
