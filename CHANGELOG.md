@@ -1,5 +1,16 @@
 # Changelog
 
+## **v0.2.0** - 10.4.2024
+
+- added useNice, getQuery, useClone and useT export functions
+- added nice panel positions prop,
+- added slot to NiceSvg component,
+- changed components to use script setup,
+- changed no-unused-wars rule to warn,
+- worked on nice switch label positions,
+- worked on nice popup open animation,
+- fixes
+
 ## **v0.1.9** - 30.11.2023
 
 - removed toggle columns until its fixed,
