@@ -94,7 +94,7 @@
                 :placeholder="$t('Nice', 'Search...')"
                 :name="$t('Nice', 'Search')"
                 @input="handleSearch"
-                ref="search"
+                ref="searchElement"
                 :disabled="disabled"
               />
               <NiceLoading class="loading" v-if="innerLoading" />
@@ -149,239 +149,231 @@
 </template>
 
 <script>
+export default {
+  name: "NiceDropdown"
+}
+</script>
+
+<script setup>
+import { onMounted, ref, computed, inject } from "vue";
 import NicePopup from "./NicePopup.vue";
 import NiceLoading from "./NiceLoading.vue";
 import NiceButton from "./NiceButton.vue";
 import NiceComponentHeader from "./NiceComponentHeader.vue";
 
-export default {
-  name: "NiceDropdown",
-
-  components: {
-    NicePopup,
-    NiceLoading,
-    NiceButton,
-    NiceComponentHeader,
+const props = defineProps({
+  modelValue: {
+    type: [Object, String, Number, null],
+    required: false,
   },
-
-  props: {
-    modelValue: {
-      type: [Object, String, Number, null],
-      required: false,
-    },
-    values: {
-      type: Array,
-      required: false
-    },
-    title: String,
-    noMargin: Boolean,
-    nullable: Boolean,
-    disabled: Boolean,
-    loading: Boolean,
-    keyOnly: Boolean,
-    noSearch: Boolean,
-    required: {
-      type: Boolean,
-      default: false,
-    },
-    searchFunction: {
-      type: Function,
-      default: null,
-    },
-    formatFunction: {
-      type: Function,
-      default: null,
-    },
-    addFunction: {
-      type: Function,
-      default: null,
-    },
-    nullText: String,
-    caption: {
-      type: String,
-      default: null,
-    },
-    keyName: {
-      type: String,
-      default: "id",
-    },
-    valueName: {
-      type: String,
-      default: "value",
-    },
+  values: {
+    type: Array,
+    required: false
   },
-
-  emits: ["change", "update:modelValue"],
-
-  data() {
-    return {
-      focus: false,
-      search: null,
-      innerIndex: null,
-      debounceTimeout: null,
-      debounce: 500,
-      innerLoading: false,
-      innerValues: null,
-    };
+  title: String,
+  noMargin: Boolean,
+  nullable: Boolean,
+  disabled: Boolean,
+  loading: Boolean,
+  keyOnly: Boolean,
+  noSearch: Boolean,
+  required: {
+    type: Boolean,
+    default: false,
   },
+  searchFunction: {
+    type: Function,
+    default: null,
+  },
+  formatFunction: {
+    type: Function,
+    default: null,
+  },
+  addFunction: {
+    type: Function,
+    default: null,
+  },
+  nullText: String,
+  caption: {
+    type: String,
+    default: null,
+  },
+  keyName: {
+    type: String,
+    default: "id",
+  },
+  valueName: {
+    type: String,
+    default: "value",
+  },
+})
 
-  computed: {
-    localValue() {
-      if (this.keyOnly) {
-        if (!this.innerValues) return {};
-        return this.innerValues.find((v) => v[this.keyName] == this.modelValue);
-      }
-      return this.modelValue;
-    },
+const $t = inject("$t")
+const emits = defineEmits(["change", "update:modelValue"])
+let debounceTimeout = null
+const debounce = 500
+const focus = ref(false)
+const search = ref(null)
+const searchElement = ref(null)
+const popup = ref(null)
+const innerIndex = ref(null)
+const innerLoading = ref(false)
+const innerValues = ref(null)
+const value = ref(null)
 
-    canClear () {
-      if (this.disabled) return false
-      return !!this.modelValue && !!this.nullable
+const localValue = computed(() => {
+  if (props.keyOnly) {
+    if (!innerValues.value) return {};
+    return innerValues.value.find((v) => v[props.keyName] == props.modelValue);
+  }
+  return props.modelValue;
+})
+
+const canClear = computed(() => {
+  if (props.disabled) return false
+  return !!props.modelValue && !!props.nullable
+})
+
+onMounted(async () => {
+  await fetchSearch();
+  handleDefault();
+})
+
+function onKeypress(e) {
+  if (e.code == "Enter" || e.code == "Space") {
+    e.preventDefault();
+    popup.value?.toggle();
+  }
+}
+
+function close() {
+  popup.value?.close();
+}
+
+function clear() {
+  handleChange(null);
+  setTimeout(() => {
+    close();
+  });
+}
+
+async function popupChanged(isOpen) {
+  if (isOpen) {
+    // Fetch default items
+    if (!innerValues.value) {
+      await fetchSearch();
     }
-  },
 
-  async mounted() {
-    await this.fetchSearch();
-    this.handleDefault();
-  },
+    // Find current selected index
+    if (value.value != null) {
+      innerIndex.value = innerValues.value.findIndex(
+        (i) => i[props.keyName] == value.value[props.keyName]
+      );
+    } else {
+      // handleDefault()
+      innerIndex.value = -1;
+    }
+    // Focus on search input
+    setTimeout(() => {
+      searchElement.value?.focus();
+    }, 100);
+    // Emit keyboard listener
+    document.addEventListener("keydown", handleKeyboard);
+  } else {
+    search.value = null;
+    innerLoading.value = false;
+    // Remove keyboard listener
+    document.removeEventListener("keydown", handleKeyboard);
+  }
+}
 
-  methods: {
-    onKeypress(e) {
-      if (e.code == "Enter" || e.code == "Space") {
-        e.preventDefault();
-        this.$refs.popup.toggle();
-      }
-    },
+function handleChange(item) {
+  if (item) {
+    const value = item[props.keyName];
+    const selected = innerValues.value.find((item) => {
+      return item[props.keyName] == value;
+    });
+    if (selected) {
+      changeValue(selected);
+    } else {
+      changeValue(null);
+    }
+  } else {
+    changeValue(null);
+  }
+  close();
+}
 
-    close() {
-      this.$refs.popup?.close();
-    },
+function handleDefault() {
+  // Select default value
+  if (
+    innerValues.value &&
+    innerValues.value.length > 0 &&
+    !props.nullable &&
+    !props.modelValue
+  ) {
+    changeValue(innerValues.value[0]);
+  }
+}
 
-    clear() {
-      this.handleChange(null);
-      setTimeout(() => {
-        this.close();
-      });
-    },
+function changeValue(value) {
+  if (value) {
+    if (props.keyOnly) {
+      emits("update:modelValue", value[props.keyName]);
+      emits("change", value[props.keyName]);
+    } else {
+      emits("update:modelValue", value);
+      emits("change", value);
+    }
+  } else {
+    emits("update:modelValue", null);
+    emits("change", null);
+  }
+}
 
-    async popupChanged(isOpen) {
-      if (isOpen) {
-        // Fetch default items
-        if (!this.innerValues) {
-          await this.fetchSearch();
-        }
+function handleSearch() {
+  clearTimeout(debounceTimeout);
+  return (debounceTimeout = setTimeout(async () => {
+    await fetchSearch();
+  }, debounce));
+}
 
-        // Find current selected index
-        if (this.value != null) {
-          this.innerIndex = this.innerValues.findIndex(
-            (i) => i[this.keyName] == this.value[this.keyName]
-          );
-        } else {
-          // this.handleDefault()
-          this.innerIndex = -1;
-        }
-        // Focus on search input
-        setTimeout(() => {
-          if (this.$refs.search) this.$refs.search.focus();
-        }, 100);
-        // Emmit keyboard listener
-        document.addEventListener("keydown", this.handleKeyboard);
-      } else {
-        this.search = null;
-        this.innerLoading = false;
-        // Remove keyboard listener
-        document.removeEventListener("keydown", this.handleKeyboard);
-      }
-    },
+async function fetchSearch() {
+  if (props.values) {
+    innerValues.value = props.values
+  }
+  if (props.searchFunction) {
+    innerLoading.value = true;
+    const response = await props.searchFunction(search.value);
+    innerIndex.value = 0;
+    innerLoading.value = false;
+    innerValues.value = response;
+    return response;
+  } else {
+    return null;
+  }
+}
 
-    handleChange(item) {
-      if (item) {
-        let value = item[this.keyName];
-        let selected = this.innerValues.find((item) => {
-          return item[this.keyName] == value;
-        });
-        if (selected) {
-          this.changeValue(selected);
-        } else {
-          this.changeValue(null);
-        }
-      } else {
-        this.changeValue(null);
-      }
-      this.close();
-    },
-
-    handleDefault() {
-      // Select default value
-      if (
-        this.innerValues &&
-        this.innerValues.length > 0 &&
-        !this.nullable &&
-        !this.modelValue
-      ) {
-        this.changeValue(this.innerValues[0]);
-      }
-    },
-
-    changeValue(value) {
-      if (value) {
-        if (this.keyOnly) {
-          this.$emit("update:modelValue", value[this.keyName]);
-          this.$emit("change", value[this.keyName]);
-        } else {
-          this.$emit("update:modelValue", value);
-          this.$emit("change", value);
-        }
-      } else {
-        this.$emit("update:modelValue", null);
-        this.$emit("change", null);
-      }
-    },
-
-    handleSearch() {
-      clearTimeout(this.debounceTimeout);
-      return (this.debounceTimeout = setTimeout(async () => {
-        await this.fetchSearch();
-      }, this.debounce));
-    },
-
-    async fetchSearch() {
-      if (this.values) {
-        this.innerValues = this.values
-      }
-      if (this.searchFunction) {
-        this.innerLoading = true;
-        let response = await this.searchFunction(this.search);
-        this.innerIndex = 0;
-        this.innerLoading = false;
-        this.innerValues = response;
-        return response;
-      } else {
-        return null;
-      }
-    },
-    handleKeyboard(e) {
-      if (e.key == "ArrowDown") {
-        if (this.innerIndex < this.innerValues.length - 1) {
-          this.innerIndex += 1;
-        }
-        e.preventDefault();
-      } else if (e.key == "ArrowUp") {
-        if (this.innerIndex > 0) {
-          this.innerIndex -= 1;
-        }
-        e.preventDefault();
-      } else if (e.key == "Escape") {
-        this.close();
-        e.preventDefault();
-      } else if (e.key == "Enter") {
-        this.changeValue(this.innerValues[this.innerIndex]);
-        this.close();
-        e.preventDefault();
-      }
-    },
-  },
-};
+function handleKeyboard(e) {
+  if (e.key == "ArrowDown") {
+    if (innerIndex.value < innerValues.value.length - 1) {
+      innerIndex.value += 1;
+    }
+    e.preventDefault();
+  } else if (e.key == "ArrowUp") {
+    if (innerIndex.value > 0) {
+      innerIndex.value -= 1;
+    }
+    e.preventDefault();
+  } else if (e.key == "Escape") {
+    close();
+    e.preventDefault();
+  } else if (e.key == "Enter") {
+    changeValue(innerValues.value[innerIndex.value]);
+    close();
+    e.preventDefault();
+  }
+}
 </script>
 
 <style lang="scss" scoped>
