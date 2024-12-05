@@ -1,5 +1,9 @@
 # Changelog
 
+## **v0.2.1** - 5.12.2024
+
+- added no data component
+
 ## **v0.2.0** - 10.4.2024
 
 - added useNice, getQuery, useClone and useT export functions

@@ -218,7 +218,7 @@ onMounted(() => {
     <aside>
       <div class="top-bar">
         <h1 class="m-0">Vue3 - Nice elements</h1>
-        <h3 class="m-0">v0.2.0</h3>
+        <h3 class="m-0">v0.2.1</h3>
       </div>
 
       <div class="links">
