@@ -124,9 +124,7 @@
     <NiceLoading v-if="loading" />
 
     <!-- No data -->
-    <div class="no-data" v-if="!loading && props.data.length == 0">
-      {{ $t('Nice', 'No data.') }}
-    </div>
+    <NiceNoData v-if="!loading && props.data.length == 0" />
 
     <!-- Footer -->
     <div class="nice-table-footer" v-if="props.showFooter">
@@ -617,16 +615,14 @@ onMounted(async () => {
     }
   }
 
-  .no-data,
   .nice-loading {
     border-top: 1px solid var(--nice-border-color);
     padding: 2rem;
     text-align: center;
   }
 
-  .no-data {
-    color: var(--nice-border-color);
-    font-size: 0.8em;
+  .nice-no-data {
+    border-top: 1px solid var(--nice-border-color);
   }
 
   .nice-table-footer {

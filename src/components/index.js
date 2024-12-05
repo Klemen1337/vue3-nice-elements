@@ -25,6 +25,7 @@ import NiceToast from "./NiceToast.vue";
 import NiceUpload from "./NiceUpload.vue";
 import NiceView from "./NiceView.vue";
 import NiceWrapper from "./NiceWrapper.vue";
+import NiceNoData from "./NiceNoData.vue";
 
 export default {
   NiceActions,
@@ -54,4 +55,5 @@ export default {
   NiceUpload,
   NiceView,
   NiceWrapper,
+  NiceNoData,
 }

@@ -29,3 +29,4 @@ List of components:
 - NiceUpload,
 - NiceView,
 - NiceWrapper
+- NiceNoData

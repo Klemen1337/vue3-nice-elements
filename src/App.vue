@@ -235,6 +235,7 @@ onMounted(() => {
         <a href="#nice-modal" class="link">Nice modal</a>
         <a href="#nice-button" class="link">Nice button</a>
         <a href="#nice-icon" class="link">Nice icon</a>
+        <a href="#nice-no-data" class="link">Nice no data</a>
       </div>
     </aside>
     <NiceView :flexBody="true" class="f-grow">
@@ -710,6 +711,11 @@ onMounted(() => {
         </div>
       </NiceWrapper>
 
+      <!-- Nice no data -->
+      <NiceWrapper title="Nice no data" id="nice-no-data" collapsable>
+        <NiceNoData />
+        <NiceNoData message="This is a test" icon="icon-wind" />
+      </NiceWrapper>
       <!-- <pre>{{  form  }}</pre> -->
       </div>
     </NiceView>
