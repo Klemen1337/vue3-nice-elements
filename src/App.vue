@@ -19,6 +19,25 @@ async function searchList(search) {
   );
 }
 
+function formatCurrency (amount) {
+  const numberFormat = new Intl.NumberFormat("sl-SI", {
+    style: "currency",
+    currency: "EUR",
+  })
+  const value = numberFormat.format(amount);
+  return value;
+}
+
+function _formatDateWithTime(dateString) {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  return `${day}.${month}.${year} ${hour}:${minute<10 ? "0" : ""}${minute}`;
+}
+
 async function getFromList(id) {
   return list.find((s) =>
     s.id == id
@@ -38,6 +57,7 @@ const testForm = ref({
   name: "",
   email: "",
   comment: "",
+  price: 10,
   list: {
     "id": 4,
     "value": "List 4"
@@ -107,7 +127,7 @@ const filtersList = [
 const actions = [
   {
     icon: "icon-target",
-    function: (v) => console.log(v),
+    function: (v) => window.open(v.url, '_blank').focus()
   },
   // {
   //   icon: "icon-arrow-right",
@@ -118,13 +138,33 @@ const actions = [
   // },
 ]
 const columns = [
-  {
-    name: "Site",
-    key: "news_site",
-  },
+  // {
+  //   name: "Image",
+  //   key: "image_url",
+  //   html: (v) => `<img class='table-image' src="${v}" />`
+  // },
+  // {
+  //   name: "Site",
+  //   key: "news_site",
+  // },
   {
     name: "Title",
     key: "title",
+    html: (v, row) => `<div>
+      <small>${row.news_site}</small>
+      <div>${v}</div>
+    </div>`
+  },
+  {
+    name: "Summary",
+    key: "summary",
+    class: "text-italic text-small"
+  },
+  {
+    name: "Published",
+    class: "text-right",
+    key: "published_at",
+    formatter: (v) => _formatDateWithTime(v)
   },  
 ]
        
@@ -246,10 +286,11 @@ onMounted(() => {
       </template>
       <div class="demo">
       <!-- Nice test -->
-      <NiceWrapper title="Form test" id="nice-test" collapsable collapsed>
-        <NiceInput title="Name" v-model="testForm.name" :disabled="isDisabled" />
-        <NiceInput title="Email" type="email" v-model="testForm.email" :disabled="isDisabled" />
-        <NiceTextarea title="Comment" v-model="testForm.comment" :disabled="isDisabled" />
+      <NiceWrapper title="Form test" id="nice-test" collapsable :collapsed="false">
+        <NiceInput title="Name" placeholder="Janez Novak" v-model="testForm.name" :disabled="isDisabled" autocomplete="name" />
+        <NiceInput title="Email" placeholder="info@olaii.com" type="email" v-model="testForm.email" autocomplete="email" :disabled="isDisabled" appendText="@" />
+        <NiceInput title="Price" v-model="testForm.price" textRight :disabled="isDisabled" :formatter="formatCurrency" />
+        <NiceTextarea title="Comment" placeholder="This is my comment..." v-model="testForm.comment" :disabled="isDisabled" />
         <NiceDropdown v-if="show" title="List" v-model="testForm.list" :search-function="searchList" nullable :disabled="isDisabled" />
         <NiceDropdownSimple title="List simple" v-model="testForm.listSimple" keyOnly :values="list" nullable :disabled="isDisabled" />
         <NiceButton @click="randomShit" :disabled="isDisabled">Random</NiceButton>
@@ -829,6 +870,25 @@ body {
   background: var(--nice-background-color);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
     Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+.text-small {
+  font-size: 0.8em;
+}
+
+.table-image {
+  height: 50px;
+  width: 50px;
+  object-fit: cover;
+  border-radius: 3px;
 }
 
 .demo {

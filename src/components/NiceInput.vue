@@ -10,11 +10,14 @@
     />
 
     <div class="input-group">
-      <div class="input-group-suffix" v-if="$slots.suffix">
-        <slot name="suffix"></slot>
+      <div class="input-group-suffix" :class="{ 'input-group-suffix-text': props.suffixText }" v-if="slots.suffix || props.suffixText">
+        <slot name="suffix">{{ props.suffixText }}</slot>
       </div>
       <input
+        @blur="toggleBlurred(true)"
+        @focus="toggleBlurred(false)"
         v-model="localValue"
+        :class="{ 'text-right': textRight }"
         :placeholder="placeholder"
         :autocomplete="autocomplete"
         :type="type"
@@ -25,8 +28,8 @@
         <NiceIcon :icon="icon" />
         <NiceIcon icon="icon-x" class="clear-input" @click="clearInput" />
       </div>
-      <div class="input-group-append" v-if="$slots.append">
-        <slot name="append"></slot>
+      <div class="input-group-append" :class="{ 'input-group-append-text': props.appendText }" v-if="slots.append || props.appendText">
+        <slot name="append">{{ props.appendText }}</slot>
       </div>
     </div>
     <div class="nice-component-message" v-if="message">{{ message }}</div>
@@ -43,9 +46,10 @@ export default {
 </script>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref, defineProps, useSlots } from "vue";
 import SafeGet from "just-safe-get";
 import NiceComponentHeader from "./NiceComponentHeader.vue";
+const slots = useSlots();
 
 const props = defineProps({
   modelValue: {
@@ -72,6 +76,14 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  suffixText: {
+    type: String,
+    default: null,
+  },
+  appendText: {
+    type: String,
+    default: null,
+  },
   type: {
     type: String,
     default: null,
@@ -88,10 +100,15 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  textRight: {
+    type: Boolean,
+    default: false,
+  },
   disabled: {
     type: Boolean,
     default: false,
   },
+  formatter: Function,
   prop: String,
   error: [Object, String, null],
 })
@@ -101,7 +118,10 @@ const emits = defineEmits(["change", "debounce", "update:modelValue"])
 
 const localValue = computed({
   get() {
-    return props.modelValue;
+    // return props.modelValue;
+    if (!isBlurred.value) return props.modelValue
+    if (!props.formatter) return props.modelValue
+    return props.formatter(props.modelValue);
   },
   set(value) {
     emits("update:modelValue", value);
@@ -112,6 +132,11 @@ const localValue = computed({
     }, 500);
   },
 })
+
+const isBlurred = ref(true);
+function toggleBlurred (value) {
+  isBlurred.value = value;
+}
 
 const errorMessage = computed(() => {
   if (typeof props.error == "string") return props.error;
@@ -172,6 +197,20 @@ function clearInput() {
     .input-group-suffix,
     .input-group-append {
       display: flex;
+    }
+
+    .input-group-suffix-text, .input-group-append-text {
+      padding: 8px;
+      align-items: center;
+      justify-content: center;  
+    }
+
+    .input-group-suffix-text {
+      border-right: 1px solid var(--nice-border-color);
+    }
+
+    .input-group-append-text {
+      border-left: 1px solid var(--nice-border-color);
     }
 
     .input-group-suffix + input {

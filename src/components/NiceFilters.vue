@@ -188,7 +188,7 @@ function _formatDateWithTime(filter) {
   const year = date.getFullYear();
   const hour = date.getHours();
   const minute = date.getMinutes();
-  return `${day}.${month}.${year} ${hour}:${minute}`;
+  return `${day}.${month}.${year} ${hour}:${minute<10 ? "0": ""}${minute}`;
 }
 
 function getFormattedValue(filter) {
@@ -297,6 +297,7 @@ function clearFilter(filter) {
 // .nice-filters {
 //   margin-bottom: 1rem;
 // }
+
 .nice-filters-btn {
   border: 1px solid var(--nice-border-color);
 }
