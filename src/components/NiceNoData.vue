@@ -39,6 +39,7 @@ const innerMessage = ref(props.message || $t("Nice", "No data"))
 
   .nice-no-data-icon {
     height: 30px;
+    width: 30px;
   }
 
   .nice-no-data-message {
