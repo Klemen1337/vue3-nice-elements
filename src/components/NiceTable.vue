@@ -69,11 +69,10 @@
             <!-- Column -->
             <td v-for="column in enabledColumns" :key="column.key" :class="column.class">
               <!-- Component -->
-              <component
-                v-if="column.component"
-                :is="column.component().instance"
-                v-bind="column.component(row[column.key], row).props"
-              />
+              <component v-if="column.component"
+                :is="column.component()?.instance"
+                v-bind="column.component(row[column.key], row)?.props"
+              ></component>
 
               <!-- Html -->
               <span
@@ -183,7 +182,7 @@
       <NiceDropdown
         v-if="props.showLimit"
         v-model="limit"
-        :class="{ 'dropdown-small': pages > 1 && pages < 5}"
+        :class="{ 'dropdown-small': (pages > 1 && pages < 5) }"
         :values="limits"
         keyOnly
         noMargin
