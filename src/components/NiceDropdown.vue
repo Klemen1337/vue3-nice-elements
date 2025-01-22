@@ -36,14 +36,18 @@
                   @keypress="onKeypress"
                   :disabled="disabled"
                 />
-                <div class="option" v-if="!loading && modelValue">
+                <div class="option" v-if="!loading && modelValue && !props.multiple">
                   <slot name="selected-option" :item="modelValue">
-                    {{
-                      formatFunction
-                        ? formatFunction(modelValue)
-                        : localValue[valueName]
-                    }}
+                    <span>{{ formatFunction ? formatFunction(modelValue) : localValue[valueName] }}</span>
                   </slot>
+                </div>
+                <div class="options" v-if="props.multiple">
+                  <div class="option" v-for="value in selectedInnerValues" :key="value">
+                    <slot name="selected-option" :item="value" v-bind="value">
+                      <span>{{ formatFunction ? formatFunction(value) : value[props.valueName] }}</span>
+                    </slot>
+                    <button class="btn btn-primary btn-sm" @click="removeValue(value)"><nice-icon icon="icon-x"></nice-icon></button>
+                  </div>
                 </div>
                 <!-- <div
                   class="no-options"
@@ -69,7 +73,7 @@
                 >
                   {{ $t('Nice', "Not Selected") }}
                 </div> -->
-                <div class="no-options" v-if="!loading && !modelValue">
+                <div class="no-options" v-if="!loading && !modelValue || (props.multiple && !selectedInnerValues.length)">
                   {{ nullText || $t('Nice', 'None') }}
                 </div>
                 <div class="no-options" v-if="loading">{{ $t('Nice', 'Loading') }}</div>
@@ -116,20 +120,16 @@
                 :key="item[keyName]"
                 :class="{
                   hover: innerIndex == index,
-                  selected: modelValue && item[keyName] == localValue[keyName],
+                  selected: modelValue && ((!props.multiple && item[keyName] == localValue[keyName]) || item._selected),
                 }"
                 @click="handleChange(item)"
               >
+                <NiceCheckbox v-if="multiple" :modelValue="item._selected" :noMargin="true" class="nice-dropdown-item-checkbox"></NiceCheckbox>
                 <slot name="option" :item="item">
                   {{ formatFunction ? formatFunction(item) : item[valueName] }}
                 </slot>
               </div>
-              <div
-                class="element no-options"
-                v-if="
-                  !innerLoading && (!innerValues || innerValues.length == 0)
-                "
-              >
+              <div class="element no-options" v-if="!innerLoading && (!innerValues || innerValues.length == 0)">
                 {{ $t('Nice', "No options") }}
               </div>
             </div>
@@ -160,10 +160,11 @@ import NicePopup from "./NicePopup.vue";
 import NiceLoading from "./NiceLoading.vue";
 import NiceButton from "./NiceButton.vue";
 import NiceComponentHeader from "./NiceComponentHeader.vue";
+import NiceCheckbox from "./NiceCheckbox.vue";
 
 const props = defineProps({
   modelValue: {
-    type: [Object, String, Number, null],
+    type: [Object, String, Number, null, Array],
     required: false,
   },
   values: {
@@ -177,6 +178,7 @@ const props = defineProps({
   loading: Boolean,
   keyOnly: Boolean,
   noSearch: Boolean,
+  multiple: Boolean,
   required: {
     type: Boolean,
     default: false,
@@ -222,10 +224,11 @@ const innerValues = ref(null)
 const value = ref(null)
 
 const localValue = computed(() => {
-  if (props.keyOnly) {
+  if (props.keyOnly && !props.multiple) {
     if (!innerValues.value) return {};
     return innerValues.value.find((v) => v[props.keyName] == props.modelValue);
   }
+  if (props.multiple) handleSelectedValue();
   return props.modelValue;
 })
 
@@ -233,6 +236,19 @@ const canClear = computed(() => {
   if (props.disabled) return false
   return !!props.modelValue && !!props.nullable
 })
+
+const selectedInnerValues = computed(() => {
+  return innerValues.value != null ? innerValues.value.filter(v => v._selected) : [];
+})
+
+const handleSelectedValue = function() {
+  if (!innerValues.value) return;
+  if (props.modelValue == null) return;
+  if (!props.multiple) return;
+  innerValues.value.forEach((i) => {
+    i._selected = !!props.modelValue.find(v => v[props.keyName] == i[props.keyName])
+  });
+}
 
 onMounted(async () => {
   await fetchSearch();
@@ -252,6 +268,13 @@ function close() {
 
 function clear() {
   handleChange(null);
+  setTimeout(() => {
+    close();
+  });
+}
+
+function removeValue(value) {
+  handleChange(value);
   setTimeout(() => {
     close();
   });
@@ -301,7 +324,7 @@ function handleChange(item) {
   } else {
     changeValue(null);
   }
-  close();
+  if (!props.multiple) close();
 }
 
 function handleDefault() {
@@ -313,17 +336,30 @@ function handleDefault() {
     !props.modelValue
   ) {
     changeValue(innerValues.value[0]);
+  } else {
+    handleSelectedValue();
   }
 }
 
 function changeValue(value) {
   if (value) {
-    if (props.keyOnly) {
-      emits("update:modelValue", value[props.keyName]);
-      emits("change", value[props.keyName]);
+    if (props.multiple) {
+      value._selected = !value._selected
+      if (props.keyOnly) {
+        emits("update:modelValue", selectedInnerValues.value.filter.map(v => v[props.keyName]));
+        emits("change", selectedInnerValues.value.map(v => v[props.keyName]));
+      } else {
+        emits("update:modelValue", selectedInnerValues.value);
+        emits("change", selectedInnerValues.value);
+      }
     } else {
-      emits("update:modelValue", value);
-      emits("change", value);
+      if (props.keyOnly) {
+        emits("update:modelValue", value[props.keyName]);
+        emits("change", value[props.keyName]);
+      } else {
+        emits("update:modelValue", value);
+        emits("change", value);
+      }
     }
   } else {
     emits("update:modelValue", null);
@@ -469,9 +505,35 @@ function handleKeyboard(e) {
       display: flex;
       align-items: center;
 
-      .option {
+      .option, .options {
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
+        gap: 0.2rem;
+      }
+
+      .options {
+        .option {
+          background: var(--nice-primary-color);
+          color: white;
+          padding: 4px 12px;
+          font-size: 0.8em;
+          line-height: 1.33333;
+          border-radius: var(--nice-border-radius);
+
+          .btn {
+            padding: 0;
+            height: auto;
+            border: 0 none;
+            box-shadow: 0 0 0;
+            margin-left: 0px;
+            margin-right: -5px;
+            svg {
+              height: 12px;
+              width: 12px;
+            }
+          }
+        }
       }
 
       &:focus,
@@ -563,6 +625,14 @@ function handleKeyboard(e) {
         align-items: center;
         padding: 0.8rem 1rem;
         color: var(--nice-font-color);
+
+        .nice-dropdown-item-checkbox {
+          margin-right: 0.5rem;
+
+          .nice-checkbox-box {
+            box-shadow: 0 0 0 !important;
+          }
+        }
 
         &.no-options {
           text-align: center;

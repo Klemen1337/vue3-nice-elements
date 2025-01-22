@@ -19,6 +19,21 @@ async function searchList(search) {
   );
 }
 
+async function searchEvents(search) {
+  try {
+    const q = {
+      limit: 10
+    };
+    if (search) q.search = search;
+    const response = await fetch("https://ticketing.dev.olaii.com/api/v2/events?" + new URLSearchParams(q));
+    const json = await response.json();
+    return json.results;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 function formatCurrency (amount) {
   const numberFormat = new Intl.NumberFormat("sl-SI", {
     style: "currency",
@@ -75,7 +90,26 @@ const form = ref({
   niceDropdownSimple: {
     "id": 3,
     "value": "List 3"
-  },
+  }, 
+  niceDropdownArray: [
+    {
+      "id": 1280,
+      "name": "Mladinsko gledališče Ljubljana",
+      "type": "NORMAL",
+      "thumbnail_photo": "https://olaii-static.s3.amazonaws.com/media/public/3850_1661161400_mladinsko_predstavitev65.jpg",
+      "cover_photo": null,
+      "thumbnail_video": null,
+      "cover_video": null,
+      "start_time": "2024-12-12T18:00:00Z",
+      "end_time": "2025-12-13T02:00:00Z",
+      "timezone": "Europe/Ljubljana",
+      "venue_name": "The Mladinsko Theatre",
+      "hide_end_time": false,
+      "i18n": {
+        "name": {}
+      }
+    }
+  ],
   niceSwitch: false,
   niceDate: null,
 })
@@ -409,6 +443,43 @@ onMounted(() => {
 
       <!-- Nice dropdown -->
       <NiceWrapper title="Nice dropdown" id="nice-dropdown" collapsable>
+
+        <NiceDropdown 
+          title="Dropdown multiple" 
+          v-model="form.niceDropdownArray" 
+          :search-function="searchEvents" 
+          :disabled="isDisabled" 
+          :multiple="true"
+          valueName="name"
+        />
+
+        <NiceDropdown 
+          title="Dropdown multiple slot" 
+          v-model="form.niceDropdownArray" 
+          :search-function="searchEvents" 
+          :disabled="isDisabled" 
+          :multiple="true"
+          valueName="name"
+        >
+          <template #selected-option="item">
+            <div class="event-option">
+              <div>{{ item.name }}</div>
+              <small>{{ item.start_time }}</small>
+            </div>
+          </template>
+        </NiceDropdown>
+
+        <pre class="mb-2">
+&lt;NiceDropdown 
+  title="Dropdown multiple" 
+  v-model="form.niceDropdownArray" 
+  :search-function="searchList" 
+  :disabled="isDisabled" 
+  :multiple="true"
+/></pre>
+        <pre class="mb-2">{{ form.niceDropdownArray }}</pre>
+
+
         <NiceDropdown title="Dropdown" v-model="form.niceDropdown" :search-function="searchList" :disabled="isDisabled" />
         <pre class="mb-2">
   &lt;NiceDropdown 
@@ -870,6 +941,11 @@ body {
   background: var(--nice-background-color);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
     Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+.event-option {
+  display: flex;
+  flex-direction: column;
 }
 
 .text-right {
