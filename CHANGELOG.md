@@ -1,5 +1,13 @@
 # Changelog
 
+## **v0.2.2** - 23.1.2025
+
+- added appendText, suffixText, formatter and textRight props to nice input,
+- added support for multiple select in nice dropdown,
+- fixed no data icon width,
+- worked on nice table,
+- worked on demo table
+
 ## **v0.2.1** - 5.12.2024
 
 - added no data component
