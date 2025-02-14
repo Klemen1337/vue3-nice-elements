@@ -1,12 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
+import components from "./components-list";
 
-const routes = [
-  {
-    path: "/",
-    name: "app",
-    component: () => import("@/App.vue")
-  }
-];
+const routes = [];
+components.forEach(c => {
+  routes.push({
+    path: c.path,
+    name: c.name,
+    component: () => c.component
+  })
+})
 
 const router = createRouter({
   history: createWebHistory("/"),
