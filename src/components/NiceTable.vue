@@ -168,13 +168,13 @@
         /> -->
       </div>
       <div class="pagination-dropdown" v-if="props.paginated && pages > 1 && pages > 5">
+      <!-- <div class="pagination-dropdown" v-if="props.paginated"> -->
         <!-- Page -->
         <NiceDropdown
           v-model="currentPageDropdown"
           :values="pagesList"
-          keyOnly
           noMargin
-          @change="setPage"
+          @change="setDropdownPage"
         ></NiceDropdown>
       </div>
 
@@ -388,6 +388,10 @@ function prevPage() {
   if (newPage > 0) setPage(newPage)
 }
 
+async function setDropdownPage(page) {
+  setPage(page.id)
+}
+
 async function setPage(page) {
   currentPage = page
   router.replace({
@@ -426,7 +430,7 @@ onMounted(async () => {
   if (props.paginated) {
     limit = Number(query.limit) || 50
     currentPage = Number(query.page) || 1
-    currentPageDropdown = Number(query.page) || 1
+    currentPageDropdown = pagesList[Number(query.page) || 1]
     setPage(currentPage)
   }
 });
