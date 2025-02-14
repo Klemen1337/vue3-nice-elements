@@ -283,7 +283,7 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(['selected', 'orderChange', 'pageChange', 'filterChange']);
+const emit = defineEmits(['selected', 'orderChange', 'pageChange', 'limitChange', 'filterChange']);
 let order = undefined;
 let limit = 50;
 const limits = [
@@ -360,8 +360,10 @@ function setOrder(column) {
     query: { ...route.query, ordering: order }
   })
 
-  emit('orderChange', order)
-  emit('filterChange')
+  setTimeout(() => {
+    emit('orderChange', order)
+  })
+  filterChange()
 }
 
 function getPageList() {
@@ -392,7 +394,10 @@ async function setPage(page) {
     path: route.path,
     query: { ...route.query, page, offset: ((page-1)*limit), limit: limit }
   })
-  emit('pageChange', page)
+
+  setTimeout(() => {
+    emit('pageChange', page)
+  })
   filterChange()
 }
 
@@ -402,12 +407,17 @@ function setLimit(newLimit) {
     path: route.path,
     query: { ...route.query, limit }
   })
-  emit('pageChange', currentPage)
+
+  setTimeout(() => {
+    emit('limitChange', currentPage)
+  })
   filterChange()
 }
 
 function filterChange() {
-  emit('filterChange', { ordering: order, page: currentPage, offset: ((currentPage-1)*limit), limit: limit })
+  setTimeout(() => {
+    emit('filterChange', { ordering: order, page: currentPage, offset: ((currentPage-1)*limit), limit: limit })
+  })
 }
 
 onMounted(async () => {
@@ -587,6 +597,7 @@ onMounted(async () => {
   }
 
   .actions-td {
+    width: 0;
     padding-top: 6px;
     padding-bottom: 6px;
     text-align: right;
