@@ -1,7 +1,7 @@
 <template>
   <div class="nice-wrapper" :class="{ 'no-margin': noMargin }">
     <!-- Header -->
-    <div class="wrapper-header" v-if="$slots.header || title || subtitle">
+    <div class="wrapper-header" v-if="$slots.header || title || subtitle || collapsable">
       <div class="wrapper-header-title-subtitle" v-if="title || subtitle">
         <div class="wrapper-header-title" v-if="title">{{ title }}</div>
         <div class="wrapper-header-subtitle" v-if="subtitle">
