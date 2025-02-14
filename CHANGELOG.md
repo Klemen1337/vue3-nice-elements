@@ -1,5 +1,12 @@
 # Changelog
 
+## **v0.2.3** - 14.2.2025
+
+- fixed table on page, order, limit change,
+- fixed nice wrapper collapsible without title not showing,
+- worked on pagination dropdown,
+- worked on demo views
+
 ## **v0.2.2** - 23.1.2025
 
 - added appendText, suffixText, formatter and textRight props to nice input,
