@@ -300,7 +300,7 @@ aside {
       border-radius: var(--nice-border-radius);
       background: var(--nice-card-bg);
 
-      &:hover {
+      &.router-link-exact-active, &:hover {
         color: white;
         background: var(--nice-primary-color);
       }
