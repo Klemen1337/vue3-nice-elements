@@ -206,7 +206,7 @@ import NiceCheckbox from './NiceCheckbox.vue'
 import NiceLoading from './NiceLoading.vue'
 import NiceButton from './NiceButton.vue'
 import NicePopup from './NicePopup.vue'
-import { computed, onMounted, inject} from "vue";
+import { computed, onMounted, ref, inject} from "vue";
 import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
 const router = useRouter();
@@ -284,19 +284,20 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['selected', 'orderChange', 'pageChange', 'limitChange', 'filterChange']);
-let order = undefined;
-let limit = 50;
+const order = ref(undefined);
+const limit = ref(50);
 const limits = [
   { id: 10, value: 10 },
   { id: 20, value: 20 },
   { id: 50, value: 50 },
   { id: 100, value: 100 },
 ];
-let currentPage = 1;
+const currentPage = ref(1);
 let currentPageDropdown = null;
 
+const offset = computed(() => ((currentPage.value-1)*limit.value));
 const count = computed(() => props.data?._metadata?.count || 0);
-const pages = computed(() => Math.ceil(count.value / limit) || 1);
+const pages = computed(() => Math.ceil(count.value / limit.value) || 1);
 const pagesList = computed(() => Array.from({ length: pages.value }, (v, i) => ({ id: i + 1, value: i + 1 })));
 const innerColumns = computed(() => props.columns);
 const enabledColumns = computed(() => innerColumns.value.filter((c) => !c.disabled));
@@ -309,10 +310,10 @@ const innerData = computed(() => {
   })
 
   // Order by
-  if (order !== undefined) {
-    const cleanOrder = order.replace('-', '')
+  if (order.value !== undefined) {
+    const cleanOrder = order.value.replace('-', '')
     newData.sort((a, b) => {
-      if (order[0] != '-') {
+      if (order.value[0] != '-') {
         const temp = a
         a = b
         b = temp
@@ -348,20 +349,20 @@ function toggleColumn(column) {
 }
 
 function setOrder(column) {
-  if (column.key == order) {
-    order = '-' + column.key
-  } else if (order && order[0] === '-' && order === '-' + column.key) {
-    order = undefined
+  if (column.key == order.value) {
+    order.value = '-' + column.key
+  } else if (order.value && order.value[0] === '-' && order.value === '-' + column.key) {
+    order.value = undefined
   } else {
-    order = column.key
+    order.value = column.key
   }
   
   router.push({
-    query: { ...route.query, ordering: order }
+    query: { ...route.query, ordering: order.value }
   })
 
   setTimeout(() => {
-    emit('orderChange', order)
+    emit('orderChange', order.value)
   })
   filterChange()
 }
@@ -375,16 +376,16 @@ function firstPage() {
 }
 
 function lastPage() {
-  setPage(pages)
+  setPage(pages.value[-1])
 }
 
 function nextPage() {
-  const newPage = currentPage + 1
+  const newPage = currentPage.value + 1
   if (newPage <= pages.value) setPage(newPage)
 }
 
 function prevPage() {
-  const newPage = currentPage - 1
+  const newPage = currentPage.value - 1
   if (newPage > 0) setPage(newPage)
 }
 
@@ -393,10 +394,12 @@ async function setDropdownPage(page) {
 }
 
 async function setPage(page) {
-  currentPage = page
+  if (route.query.page == page) return
+
+  currentPage.value = page
   router.replace({
     path: route.path,
-    query: { ...route.query, page, offset: ((page-1)*limit), limit: limit }
+    query: { ...route.query, page: currentPage.value, offset: offset.value, limit: limit.value }
   })
 
   setTimeout(() => {
@@ -406,32 +409,34 @@ async function setPage(page) {
 }
 
 function setLimit(newLimit) {
-  limit = newLimit
+  if (route.query.limit == newLimit) return
+
+  limit.value = newLimit
   router.push({
     path: route.path,
-    query: { ...route.query, limit }
+    query: { ...route.query, limit: limit.value }
   })
-
+  
   setTimeout(() => {
-    emit('limitChange', currentPage)
+    emit('limitChange', limit)
   })
   filterChange()
 }
 
 function filterChange() {
   setTimeout(() => {
-    emit('filterChange', { ordering: order, page: currentPage, offset: ((currentPage-1)*limit), limit: limit })
+    emit('filterChange', { ordering: order.value, page: currentPage.value, offset: offset.value, limit: limit.value })
   })
 }
 
 onMounted(async () => {
   const query = await $query()
-  order = query.ordering
+  order.value = query.ordering
   if (props.paginated) {
-    limit = Number(query.limit) || 50
-    currentPage = Number(query.page) || 1
+    limit.value = Number(query.limit) || 50
+    currentPage.value = Number(query.page) || 1
     currentPageDropdown = pagesList[Number(query.page) || 1]
-    setPage(currentPage)
+    setPage(currentPage.value)
   }
 });
 </script>
