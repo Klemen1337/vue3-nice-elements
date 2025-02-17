@@ -5,6 +5,7 @@
       disabled: disabled,
       'no-margin': noMargin,
       'has-value': modelValue,
+      'is-inline': isInline,
     }"
   >
     <NiceComponentHeader
@@ -503,6 +504,13 @@ function _extractData() {
 <style lang="scss" scoped>
 .nice-date {
   position: relative;
+
+  &.is-inline {
+    .nice-dropdown {
+      box-shadow: 0 0 0;
+      border: 1px solid var(--nice-border-color);
+    }
+  }
 
   &.has-value {
     .input-group {
