@@ -13,12 +13,95 @@
       :caption="caption"
     />
 
+    <div class="nice-dropdown" v-if="isInline">
+      <div class="month-wrapper">
+        <NiceButton
+          class="left"
+          @click="changeMonth(false)"
+          icon="icon-chevron-left"
+          naked
+        />
+        <div class="value">
+          <div class="year">{{ selected.getFullYear() }}</div>
+          <div class="month">{{ monthNames[selected.getMonth() + 1] }}</div>
+        </div>
+        <NiceButton
+          class="right"
+          @click="changeMonth(true)"
+          icon="icon-chevron-right"
+          naked
+        />
+      </div>
+
+      <div class="calendar">
+        <div class="header">
+          <div>{{ dayNames[1] }}</div>
+          <div>{{ dayNames[2] }}</div>
+          <div>{{ dayNames[3] }}</div>
+          <div>{{ dayNames[4] }}</div>
+          <div>{{ dayNames[5] }}</div>
+          <div>{{ dayNames[6] }}</div>
+          <div>{{ dayNames[7] }}</div>
+        </div>
+
+        <div class="month">
+          <div
+            class="day"
+            v-for="day in days"
+            @click="dayChanged(day)"
+            :class="{
+              'previous-month': !day.currentMonth,
+              'day-highlighted': day.highlighted,
+              today: day.today,
+              selected: day.selected,
+            }"
+            :title="day.text"
+            :key="day.id"
+          >
+            {{ day.day }}
+          </div>
+        </div>
+      </div>
+
+      <div class="time" v-if="time">
+        <div class="select-wrapper">
+          <div class="arrow-down"></div>
+          <select @change="hourChanged">
+            <option
+              v-for="hour in hours"
+              :value="hour"
+              :key="hour"
+              :selected="hour == selected.getHours()"
+            >
+              {{ hour }}
+            </option>
+          </select>
+        </div>
+        <div>:</div>
+        <div class="select-wrapper">
+          <div class="arrow-down"></div>
+          <select @change="minuteChanged">
+            <option
+              v-for="minute in minutes"
+              :value="minute"
+              :key="minute"
+              :selected="minute == selected.getMinutes()"
+            >
+              {{ minute }}
+            </option>
+          </select>
+        </div>
+        <NiceIcon class="time-icon" icon="icon-clock" />
+      </div>
+    </div>
+
     <NicePopup
       no-padding
       placement="bottom-start"
       ref="popup"
       class="w-full"
       @change="popupChanged"
+      v-if="!isInline"
     >
       <template #trigger>
         <div class="input-group">
@@ -73,6 +156,7 @@
                 @click="dayChanged(day)"
                 :class="{
                   'previous-month': !day.currentMonth,
+                  'day-highlighted': day.highlighted,
                   today: day.today,
                   selected: day.selected,
                 }"
@@ -130,9 +214,14 @@ export default {
 import { ref, watch, onMounted, inject } from "vue";
 import NiceComponentHeader from "./NiceComponentHeader.vue";
 import NicePopup from "./NicePopup.vue";
+import { isWithinInterval } from "date-fns";
 
 const props = defineProps({
   modelValue: {
+    type: [String, Date, null],
+    required: false
+  },
+  highlightTo: {
     type: [String, Date, null],
     required: false
   },
@@ -143,6 +232,7 @@ const props = defineProps({
   disabled: Boolean,
   loading: Boolean,
   placeholder: String,
+  isInline: Boolean,
   time: {
     default: true,
     type: Boolean,
@@ -204,6 +294,10 @@ watch(() => props.modelValue, () => {
     selected.value = new Date(props.modelValue);
     _extractData();
   }
+})
+
+watch(() => props.highlightTo, () => {
+  _buildMonth()
 })
 
 onMounted(() => {
@@ -294,6 +388,8 @@ function handleDefault() {
     inputVal.value = _formatDate(innerDate.value);
   }
   // handleChange()
+
+  if (props.isInline) _buildMonth()
 }
 
 // function changeYear(add) {
@@ -356,8 +452,14 @@ function _buildDay(year, month, day) {
     currentMonth: date.getMonth() == selected.value.getMonth(),
     selected: _isSameDay(innerDate.value, date),
     today: _isSameDay(today, date),
+    highlighted: _isHighlighted(date),
     text: _formatDate(date),
   };
+}
+
+function _isHighlighted(date) {
+  if (props.highlightTo && isWithinInterval(date, { end: props.highlightTo, start: selected.value })) return true;
+  return false
 }
 
 function _isSameDay(date1, date2) {
@@ -513,7 +615,11 @@ function _extractData() {
         }
 
         &.previous-month {
-          opacity: 0.3;
+          color: var(--nice-font-color-lighter);
+        }
+
+        &.day-highlighted {
+          background: var(--nice-primary-color-lighter);
         }
 
         &.selected {
