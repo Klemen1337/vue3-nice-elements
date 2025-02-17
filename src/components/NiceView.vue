@@ -1,5 +1,5 @@
 <template>
-  <div class="nice-view" :class="{ 'nice-view-no-header': !showHeader, 'nice-view-flex-body': flexBody }">
+  <component :is="isForm ? 'form' : 'div'" class="nice-view" :class="{ 'nice-view-no-header': !showHeader, 'nice-view-flex-body': flexBody }">
     <div class="nice-view-header" v-if="showHeader">
       <NiceIcon :icon="icon" class="view-header-icon" v-if="icon && !loading" />
       <NiceLoading class="view-header-icon" v-if="loading" />
@@ -13,7 +13,7 @@
     <div class="nice-view-footer" v-if="slots.footer">
       <slot name="footer"></slot>
     </div>
-  </div>
+  </component>
 </template>
 
 <script>
@@ -40,6 +40,10 @@ const props = defineProps({
     default: false,
   },
   flexBody: {
+    type: Boolean,
+    default: false,
+  },
+  isForm: {
     type: Boolean,
     default: false,
   },
