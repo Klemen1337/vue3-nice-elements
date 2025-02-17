@@ -23,6 +23,11 @@
         :type="type"
         :required="required"
         :disabled="disabled"
+        :min="min"
+        :max="max"
+        :min-length="minLength"
+        :max-length="maxLength"
+        :regex-pattern="regexPattern"
       />
       <div class="input-group-append input-group-icon" v-if="icon">
         <NiceIcon :icon="icon" />
@@ -85,6 +90,26 @@ const props = defineProps({
     default: null,
   },
   type: {
+    type: String,
+    default: null,
+  },
+  min: {
+    type: Number,
+    default: null,
+  },
+  max: {
+    type: Number,
+    default: null,
+  },
+  minLength: {
+    type: Number,
+    default: null,
+  },
+  maxLength: {
+    type: Number,
+    default: null,
+  },
+  regexPattern: {
     type: String,
     default: null,
   },

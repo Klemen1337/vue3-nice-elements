@@ -8,6 +8,12 @@ const components = [
     component: import("@/demo/DemoHome.vue")
   },
   {
+    path: "/nice-input",
+    name: "nice-input",
+    title: "Nice Input",
+    component: import("@/demo/DemoNiceInput.vue")
+  },
+  {
     path: "/nice-table",
     name: "nice-table",
     title: "Nice Table",
