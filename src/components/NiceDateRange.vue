@@ -188,6 +188,11 @@ function updateInputValue () {
     display: flex;
     gap: 1rem;
     padding: 1rem;
+    flex-wrap: wrap;
+
+    @media (max-width: 576px) {
+      flex-direction: column;
+    }
 
     .nice-date {
       .nice-dropdown {
