@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.7",
+    "date-fns": "^4.1.0",
     "gradient-avatar": "^1.0.2",
     "just-safe-get": "^4.2.0",
     "md5": "^2.3.0",
