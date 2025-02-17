@@ -20,6 +20,12 @@ const components = [
     component: import("@/demo/DemoNiceTable.vue")
   },
   {
+    path: "/nice-date-range",
+    name: "nice-date-range",
+    title: "Nice Date Range",
+    component: import("@/demo/DemoNiceDateRange.vue")
+  },
+  {
     path: "/nice-icon",
     name: "nice-icon",
     title: "Nice Icon",

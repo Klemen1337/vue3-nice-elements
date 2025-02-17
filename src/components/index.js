@@ -26,6 +26,7 @@ import NiceUpload from "./NiceUpload.vue";
 import NiceView from "./NiceView.vue";
 import NiceWrapper from "./NiceWrapper.vue";
 import NiceNoData from "./NiceNoData.vue";
+import NiceDateRange from "./NiceDateRange.vue";
 
 export default {
   NiceActions,
@@ -56,4 +57,5 @@ export default {
   NiceView,
   NiceWrapper,
   NiceNoData,
+  NiceDateRange
 }
