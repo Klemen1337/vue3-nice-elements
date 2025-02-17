@@ -1,5 +1,14 @@
 # Changelog
 
+## **v0.2.4** - 17.2.2025
+
+- added min, max, minLength, maxLength and regexPateren to NiceInput,
+- added isForm prop to NiceView,
+- added NiceTable don't navigate if same page or limit,
+- crated nice input demo view,
+- changed NiceTable currentPage, order and limit to ref,
+- moved NiceTable offset to computed
+
 ## **v0.2.3** - 14.2.2025
 
 - fixed table on page, order, limit change,
