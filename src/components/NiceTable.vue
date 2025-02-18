@@ -94,24 +94,20 @@
               v-if="!!props.actions.length"
             >
               <!-- Actions -->
-              <div v-for="action in props.actions" :key="action">
-                <router-link :to="action.to(row)" v-if="action.to">
+              <div class="actions-td-inner">
+                <component 
+                  :is="action.to ? (action.disabled ? 'div' : 'router-link') : 'div'" 
+                  v-for="action in props.actions" :key="action" :to="action.to ? action.to(row) : null"
+                >
                   <NiceButton
                     :icon="action.icon"
                     :type="action.type"
                     :text="action.text"
+                    :disabled="action.disabled"
                     size="small"
-                    @click="action.function"
+                    @click="action.function(row)"
                   />
-                </router-link>
-                <NiceButton
-                  v-else
-                  :icon="action.icon"
-                  :type="action.type"
-                  :text="action.text"
-                  size="small"
-                  @click="action.function(row)"
-                />
+                </component>
               </div>
             </td>
           </tr>
@@ -610,6 +606,11 @@ onMounted(async () => {
     padding-top: 6px;
     padding-bottom: 6px;
     text-align: right;
+
+    .actions-td-inner {
+      display: flex;
+      gap: 3px;
+    }
   }
 
   .actions-columns {

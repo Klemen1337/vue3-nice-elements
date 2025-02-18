@@ -290,7 +290,7 @@ onMounted(() => {
 <template>
     <NiceView title="Home" :flexBody="true" class="f-grow">
       <template #footer>
-        <NiceActions showDelete submitText="Save" deleteText="Please confirm this action" @cancel="openToast('cancel')" @submit="openToast('submit')" @delete="openToast('delete')">
+        <NiceActions showDelete submitText="Save" :disableDelete="isDisabled" :disableCancel="isDisabled" :disableSubmit="isDisabled" deleteText="Please confirm this action" @cancel="openToast('cancel')" @submit="openToast('submit')" @delete="openToast('delete')">
           <NiceButton @click="toggleDisabled">Toggle disabled</NiceButton>
         </NiceActions>
       </template>

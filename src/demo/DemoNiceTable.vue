@@ -3,6 +3,7 @@ import { onMounted, ref, inject } from 'vue'
 import { useNice } from "./../lib"
 const nice = useNice()
 const getQuery = inject('getQuery')
+const isDisabled = ref(false)
 const loading = ref(false)
 const data = ref([])
 const filtersList = [
@@ -18,19 +19,23 @@ function _formatDateWithTime(dateString) {
   return `${day}.${month}.${year} • ${hour}:${minute<10 ? "0" : ""}${minute}`;
 }
 
-const actions = [
+const actions = ref([
   {
     icon: "icon-arrow-right",
-    function: (v) => window.open("https://tickets.dev.olaii.com/event/" + v.id + "/", '_blank').focus()
+    function: (v) => window.open("https://tickets.dev.olaii.com/event/" + v.id + "/", '_blank').focus(),
+    disabled: isDisabled
   },
-  // {
-  //   icon: "icon-arrow-right",
-  //   to: (row) => ({
-  //     name: "app.projects",
-  //     params: { projectId: row.id },
-  //   }),
-  // },
-]
+  {
+    icon: "icon-arrow-up",
+    to: (row) => ({
+      name: "home",
+      params: { projectId: row.id },
+    }),
+    disabled: isDisabled,
+    hidden: true
+  },
+])
+
 const columns = [
   // {
   //   name: "Image",
@@ -101,11 +106,14 @@ async function getData() {
 
 <template>
     <NiceView title="Nice table and filters" :flexBody="true" class="f-grow">
+      <NiceSwitch title="Disabled action" v-model="isDisabled"></NiceSwitch>
+
       <!-- Filters -->
       <NiceFilters
         v-model="filtersList"
         @change="filterChanged"
         :showCreateButton="true"
+        :disableCreateButton="isDisabled"
       >
         <NiceButton type="default" plain>Slot</NiceButton>
       </NiceFilters>

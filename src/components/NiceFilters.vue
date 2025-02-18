@@ -77,6 +77,7 @@
       <!-- Create -->
       <NiceButton
         v-if="showCreateButton"
+        :disabled="disableCreateButton"
         :text="$t('Nice', 'Create')"
         @click="create"
         icon="icon-plus"
@@ -128,6 +129,10 @@ const props = defineProps({
   showCreateButton: {
     type: Boolean,
     default: true,
+  },
+  disableCreateButton: {
+    type: Boolean,
+    default: false,
   },
   showPills: {
     type: Boolean,

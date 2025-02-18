@@ -8,7 +8,7 @@
       @click="askToDelete"
       :text="$t('Nice', 'Delete')"
       :form="props.form"
-      :disabled="props.loading"
+      :disabled="props.loading || props.disableDelete"
       icon="icon-trash-2"
     />
     <slot name="left"></slot>
@@ -23,7 +23,7 @@
       @click="cancel"
       :text="$t('Nice', 'Cancel')"
       :form="props.form"
-      :disabled="props.loading"
+      :disabled="props.loading || props.disableCancel"
       icon="icon-x"
     />
 
@@ -33,7 +33,7 @@
       @click="submit"
       :text="props.submitText ? props.submitText : $t('Nice', 'Submit')"
       :form="props.form"
-      :disabled="props.loading"
+      :disabled="props.loading || props.disableSubmit"
       icon="icon-save"
     />
   </div>
@@ -63,6 +63,9 @@ const props = defineProps({
   showDelete: Boolean,
   submitText: String,
   deleteText: String,
+  disableCancel: Boolean,
+  disableDelete: Boolean,
+  disableSubmit: Boolean,
 })
 const nice = inject("nice");
 const emit = defineEmits(["submit", "cancel", "delete"]);
