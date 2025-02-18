@@ -1,8 +1,19 @@
 # Changelog
 
+## **v0.2.5** - 18.2.2025
+
+- added disabled props for nice actions, filters and table,
+- added nice date to examples,
+- added nice date mobile wrap,
+- added isInline prop to NiceDate,
+- added highlightTo prop to NiceDate,
+- added date fns,
+- created NiceDateRange component,
+- worked on nice date inline style
+
 ## **v0.2.4** - 17.2.2025
 
-- added min, max, minLength, maxLength and regexPateren to NiceInput,
+- added min, max, minLength, maxLength and regexPattern to NiceInput,
 - added isForm prop to NiceView,
 - added NiceTable don't navigate if same page or limit,
 - crated nice input demo view,
