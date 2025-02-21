@@ -4,7 +4,7 @@ import { useNice } from "./../lib"
 const nice = useNice()
 const getQuery = inject('getQuery')
 const isDisabled = ref(false)
-const loading = ref(false)
+const loading = ref(true)
 const data = ref([])
 const filtersList = [
 ];
@@ -84,6 +84,7 @@ function filterChanged() {
 }
        
 async function getData() {
+  loading.value = true;
   try {
     const q = await getQuery();
     console.log("[DEMO] Query:", q)
@@ -100,13 +101,14 @@ async function getData() {
   } catch (error) {
     console.error(error);
     throw error;
+  } finally {
+    loading.value = false
   }
 }
 </script>
 
 <template>
     <NiceView title="Nice table and filters" :flexBody="true" class="f-grow">
-      <NiceSwitch title="Disabled action" v-model="isDisabled"></NiceSwitch>
 
       <!-- Filters -->
       <NiceFilters
@@ -115,7 +117,11 @@ async function getData() {
         :showCreateButton="true"
         :disableCreateButton="isDisabled"
       >
-        <NiceButton type="default" plain>Slot</NiceButton>
+        <div class="d-flex align-center gap-2">
+          <NiceSwitch noMargin title="Disabled action" v-model="isDisabled"></NiceSwitch>
+          <NiceSwitch noMargin title="Loading" v-model="loading"></NiceSwitch>
+          <NiceButton noMargin type="default" plain>Slot</NiceButton>
+        </div>
       </NiceFilters>
 
       <!-- Table -->
@@ -134,7 +140,7 @@ async function getData() {
       <!-- <pre>{{ data }}</pre> -->
       <!-- <pre class="mx-2">{{ filters }}</pre> -->
 
-      <NiceWrapper class="mt-4" collapsable :collapsed="true">
+      <NiceWrapper class="mt-4 mb-0" collapsable :collapsed="true">
         <pre class="mx-2">
 &lt;NiceFilters
   :filters="filtersList"

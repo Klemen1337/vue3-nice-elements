@@ -116,17 +116,23 @@
     </div>
 
     <!-- Loading -->
-    <NiceLoading v-if="loading" />
+    <NiceLoading class="nice-table-loading" v-if="loading" />
 
     <!-- No data -->
     <NiceNoData v-if="!loading && props.data.length == 0" />
 
     <!-- Footer -->
     <div class="nice-table-footer" v-if="props.showFooter">
+      <!-- Loading -->
+      <NiceLoading class="nice-table-footer-loading" v-if="loading" />
+
       <div class="pagination-info">
         <!-- Showing {{ data.length }} of  -->
         {{ count }} {{ $t('Nice', 'total') }}
       </div>
+
+      <div class="f-grow"></div>
+
       <div class="pagination" v-if="props.paginated && pages > 1 && pages < 5">
         <!-- <NiceButton
           size="small"
@@ -490,6 +496,7 @@ onMounted(async () => {
     border-collapse: collapse;
     border-spacing: 0;
     vertical-align: middle;
+    min-height: 41px;
 
     thead {
       position: sticky;
@@ -635,14 +642,16 @@ onMounted(async () => {
     }
   }
 
-  .nice-loading {
+  .nice-table-loading {
+    min-height: 110px;
     border-top: 1px solid var(--nice-border-color);
     padding: 2rem;
     text-align: center;
+    margin-top: -2px;
   }
 
   .nice-no-data {
-    border-top: 1px solid var(--nice-border-color);
+    /* border-top: 1px solid var(--nice-border-color); */
   }
 
   .nice-table-footer {
@@ -652,8 +661,13 @@ onMounted(async () => {
     align-items: center;
     flex-wrap: wrap;
     gap: 0.5rem;
+
+    .nice-table-loading {
+      padding: 0;
+      border: 0 none;
+    }
+
     .pagination-info {
-      flex-grow: 1;
       font-size: 0.8rem;
       opacity: 0.5;
     }
