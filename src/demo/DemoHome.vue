@@ -308,7 +308,7 @@ onMounted(() => {
 
         <!-- Popup -->
         <h5 class="mt-4">Popup</h5>
-        <NicePopup>
+        <NicePopup :disabled="isDisabled">
           <template #trigger>
             <NiceButton type="primary" icon="icon-more-vertical" />
           </template>

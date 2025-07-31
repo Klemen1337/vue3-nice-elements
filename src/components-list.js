@@ -36,6 +36,30 @@ const components = [
     name: "nice-button",
     title: "Nice Button",
     component: import("@/demo/DemoNiceButton.vue")
+  },
+  {
+    path: "/nice-switch",
+    name: "nice-switch",
+    title: "Nice Switch",
+    component: import("@/demo/DemoNiceSwitch.vue")
+  },
+  {
+    path: "/nice-checkbox",
+    name: "nice-checkbox",
+    title: "Nice Checkbox",
+    component: import("@/demo/DemoNiceCheckbox.vue")
+  },
+  {
+    path: "/nice-no-data",
+    name: "nice-no-data",
+    title: "Nice no data",
+    component: import("@/demo/DemoNiceNoData.vue")
+  },
+  {
+    path: "/nice-loading",
+    name: "nice-loading",
+    title: "Nice loading",
+    component: import("@/demo/DemoNiceLoading.vue")
   }
 ];
 
