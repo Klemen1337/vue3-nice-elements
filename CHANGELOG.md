@@ -1,5 +1,12 @@
 # Changelog
 
+## **v0.2.6** - 5.9.2025
+
+- fixed button types,
+- added is development prop to nice svgs,
+- created more demo pages,
+- worked on nice table loading, no data and spacing,
+
 ## **v0.2.5** - 18.2.2025
 
 - added disabled props for nice actions, filters and table,
