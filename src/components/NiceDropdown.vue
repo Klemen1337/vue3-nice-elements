@@ -46,7 +46,7 @@
                     <slot name="selected-option" :item="value" v-bind="value">
                       <span>{{ formatFunction ? formatFunction(value) : value[props.valueName] }}</span>
                     </slot>
-                    <button class="btn btn-primary btn-sm" @click="removeValue(value)"><nice-icon icon="icon-x"></nice-icon></button>
+                    <button type="button" class="btn btn-primary btn-sm" @click="removeValue(value)"><nice-icon icon="icon-x"></nice-icon></button>
                   </div>
                 </div>
                 <!-- <div

@@ -20,7 +20,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .nice-component-header {
   display: flex;
   align-items: flex-end;

@@ -13,7 +13,7 @@
     />
 
     <div class="nice-switch-box-wrapper">
-      <button class="nice-switch-box" @click="toggleValue" :disabled="props.disabled">
+      <button type="button" class="nice-switch-box" @click="toggleValue" :disabled="props.disabled">
         <div class="nice-switch-handle"></div>
       </button>
     </div>
