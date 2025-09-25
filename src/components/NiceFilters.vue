@@ -230,6 +230,9 @@ function getFilterValue(f) {
 async function getQuery() {
   await router.isReady();
   const query = $clone(route.query);
+  if (query.search) {
+    search.value = query.search
+  }
   filters.value.forEach(async filter => {
     const value = query[filter.key]
     if (filter.type == "yesno") {

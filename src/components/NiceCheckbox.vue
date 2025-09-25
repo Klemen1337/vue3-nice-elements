@@ -73,11 +73,19 @@ function toggleValue() {
   align-items: center;
   position: relative;
 
+  &.disabled {
+    cursor: not-allowed;;
+    input {
+      cursor: not-allowed;
+    }
+  }
+
   input {
     opacity: 0;
     position: absolute;
     top: 0;
     left: 0;
+    cursor: pointer;
   }
 
   &.active,

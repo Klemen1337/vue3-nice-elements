@@ -22,7 +22,7 @@
       {{ props.title }}
     </div>
 
-    <input type="checkbox" :id="'nice-switch' + key" :disabled="props.disabled" />
+    <input type="checkbox" tabindex="-1" :id="'nice-switch' + key" :disabled="props.disabled" />
   </div>
 </template>
 
@@ -119,6 +119,7 @@ function toggleValue() {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: -1;
   }
 
   &.nice-is-title-left {

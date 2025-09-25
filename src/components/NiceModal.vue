@@ -5,7 +5,7 @@
     </Transition>
 
     <Transition name="flyin">
-      <div v-if="isOpen" class="nice-modal" :style="[{ width, height }, startingPosition]">
+      <div v-if="isOpen" class="nice-modal" :style="[{ width, height }, startingPosition]" :class="modalClass">
         <!-- Header -->
         <div
           v-if="$slots.title || title || $slots.subtitle || subtitle"
@@ -62,7 +62,8 @@ export default {
     width: {
       type: String,
       default: "500px",
-    },
+    },    
+    modalClass: String,
     title: {
       type: String,
       required: false,
