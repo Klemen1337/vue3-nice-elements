@@ -60,7 +60,7 @@
         </thead>
 
         <!-- Body -->
-        <tbody>
+        <tbody v-if="innerData && innerData.length">
           <tr v-for="row in innerData" :key="row.id">
             <td class="w-0" v-if="props.selectMultiple">
               <!-- Select -->
@@ -100,10 +100,11 @@
                   v-for="action in props.actions" :key="action" :to="action.to ? action.to(row) : null"
                 >
                   <NiceButton
+                    v-if="!(action.hidden && action.hidden(row))"
                     :icon="action.icon"
                     :type="action.type"
                     :text="action.text"
-                    :disabled="action.disabled"
+                    :disabled="action.disabled && action.disabled(row)"
                     size="small"
                     @click="action.function(row)"
                   />
@@ -116,7 +117,7 @@
     </div>
 
     <!-- Loading -->
-    <NiceLoading class="nice-table-loading" v-if="loading" />
+    <NiceLoading class="nice-table-loading" v-if="innerData && !innerData.length && loading" />
 
     <!-- No data -->
     <NiceNoData v-if="!loading && props.data.length == 0" />
@@ -450,7 +451,6 @@ onMounted(async () => {
   border: 1px solid var(--nice-border-color);
   overflow: auto;
   position: relative;
-  min-height: 41px;
 
   display: flex;
   flex-direction: column;
@@ -458,8 +458,8 @@ onMounted(async () => {
   .nice-table-table-wrapper {
     flex-grow: 1;
     overflow: auto;
+    min-height: 42px;
 
-    // Scrollbar
     &::-webkit-scrollbar {
       width: 4px;
       height: 4px;
@@ -616,6 +616,7 @@ onMounted(async () => {
 
     .actions-td-inner {
       display: flex;
+      justify-content: flex-end;
       gap: 3px;
     }
   }
@@ -647,11 +648,12 @@ onMounted(async () => {
     border-top: 1px solid var(--nice-border-color);
     padding: 2rem;
     text-align: center;
-    margin-top: -2px;
+    margin-top: -1px;
   }
 
   .nice-no-data {
-    /* border-top: 1px solid var(--nice-border-color); */
+    border-top: 1px solid var(--nice-border-color);
+    margin-top: -1px;
   }
 
   .nice-table-footer {
