@@ -1,5 +1,19 @@
 # Changelog
 
+## **v0.2.7** - 25.9.2025
+
+- fixed nice filter search from query,
+- fixed nice checkbox disabled style,
+- fixed nice switch input overlay,
+- added modalClass prop to nice modal
+- added clear button to nice upload,
+- added loading prop to nice upload,
+- worked on nice table no data, loading and min height,
+- worked on demo pages
+- worked on nice upload file preview,
+- changed nice table actions disabled and hidden to functions,
+- created nice upload example page
+
 ## **v0.2.6** - 5.9.2025
 
 - fixed button types,
