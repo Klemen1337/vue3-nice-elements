@@ -2,6 +2,10 @@
 import { ref } from 'vue'
 const isDisabled = ref(false);
 
+function toggleDisabled() {
+  isDisabled.value = !isDisabled.value
+}
+
 const form = ref({
   niceSwitch: null
 })
@@ -22,7 +26,8 @@ const form = ref({
   isInline 
 /></pre>
 
-      <pre class="mt-4">{{ form }}</pre>
+      <pre class="mt-2 mb-2">{{ form }}</pre>
+      <NiceButton @click="toggleDisabled">Toggle disabled</NiceButton>
     </NiceWrapper>
   </NiceView>
 </template>

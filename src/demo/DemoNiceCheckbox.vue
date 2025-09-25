@@ -16,11 +16,10 @@ const testForm = ref({
   <NiceView title="Nice checkbox">
     <NiceWrapper>
       <NiceCheckbox title="Checkbox" v-model="testForm.checkbox" :disabled="isDisabled" />
-      <pre>{{ testForm }}</pre>
+      
+      <pre class="mb-2">{{ testForm }}</pre>
+      <NiceButton @click="toggleDisabled">Toggle disabled</NiceButton>
     </NiceWrapper>
 
-    <template #footer>
-      <NiceActions></NiceActions>
-    </template>
   </NiceView>
 </template>

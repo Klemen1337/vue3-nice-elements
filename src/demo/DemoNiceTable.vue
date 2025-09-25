@@ -31,8 +31,8 @@ const actions = ref([
       name: "home",
       params: { projectId: row.id },
     }),
-    disabled: isDisabled,
-    hidden: true
+    disabled: (row) => isDisabled.value || row.id == 1469 ,
+    hidden: (row) => row.id == 1457
   },
 ])
 
