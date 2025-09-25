@@ -27,14 +27,42 @@
         @change="fileChanged"
         :disabled="disabled"
       />
+
+      <!-- No value -->
       <div class="nice-upload-overlay" v-if="!localValue">
         <NiceIcon icon="icon-upload" />
         <div class="nice-upload-overlay-message">{{ placeholder || $t('Nice', 'Upload file') }}</div>
       </div>
-      <div class="nice-upload-overlay" v-else>
+
+      <!-- File list -->
+      <div class="nice-upload-overlay" v-if="localValue && localValueType == 'FileList'">
         <NiceIcon icon="icon-file" />
         <div class="nice-upload-overlay-message" v-for="file in localValue" :key="file.name">{{ file.name }}</div>
       </div>
+
+      <!-- String -->
+      <div class="nice-upload-overlay" v-if="localValue && localValueType == 'string'">
+        <NiceIcon icon="icon-file" />
+        <div class="nice-upload-overlay-message">{{ localValue }}</div>
+      </div>
+
+      <!-- Image -->
+      <div class="nice-upload-overlay" v-if="localValue && localValueType == 'image'">
+        <img class="nice-upload-overlay-image" :src="localValue" />
+      </div>
+
+      <!-- None -->
+      <div class="nice-upload-overlay" v-if="localValue && localValueType == 'none'">
+        <img class="nice-upload-overlay-image" :src="localValue" />
+        <div class="nice-upload-overlay-message">{{ $t('Nice', 'File selected') }}</div>
+      </div>
+
+      <!-- Clear -->
+      <button type="button" class="nice-upload-button btn btn-white btn-plain" @click="clear" :disabled="disabled" v-if="localValue">
+        <NiceIcon icon="icon-x"></NiceIcon>
+      </button>
+      
+      <!-- Loading -->
       <NiceLoading full-div v-if="loading" />
     </div>
   </div>
@@ -83,6 +111,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false,
+    },   
+    loading: {
+      type: Boolean,
+      default: false,
     },
     error: [Object, String, null],
   },
@@ -92,7 +124,6 @@ export default {
   data() {
     return {
       file: null,
-      loading: false,
       isDragging: false,
       isOnTarget: false,
     }
@@ -109,6 +140,27 @@ export default {
       },
     },
 
+    localValueType() {
+      if (!this.localValue) return "None"
+      try {
+        if (this.localValue instanceof FileList) return "FileList"
+        if (this.localValue instanceof File) return "File"
+        if (typeof this.localValue == "string") {
+          try {
+            new URL(this.localValue);
+            if (this.localValue.includes(".png") || this.localValue.includes(".jpg")) return "image"
+            return "string"
+          } catch (e) {
+            console.log(e)
+            return "string"
+          }
+        }
+        return this.localValue ? typeof this.localValue : null
+      } catch (e) {
+        return "None"
+      }
+    },
+
     errorMessage() {
       if (typeof this.error == "string") return this.error;
       const err = SafeGet(this.error, ["response", "data", this.prop]);
@@ -120,7 +172,6 @@ export default {
     fileChanged(event) {
       this.isDragging = false;
       this.isOnTarget = false;
-      // this.loading = true;
       this.localValue = event.target.files
       this.file = null
     },
@@ -128,6 +179,11 @@ export default {
     dragChanged(event) {
       this.isOnTarget = event.type == 'dragover'
     },
+
+    clear () {
+      this.localValue = null
+      this.file = null
+    }
 
     // documentDragChanged(event) {
     //   console.log("documentDragChanged", event, event.type)
@@ -152,6 +208,14 @@ export default {
 
 <style lang="scss" scoped>
 .nice-upload {
+  &.disabled {
+    .input-group {
+      input {
+        cursor: not-allowed;
+      }
+    }
+  }
+
   .input-group {
     position: relative;
     min-height: 120px;
@@ -191,6 +255,15 @@ export default {
       cursor: pointer;
     }
 
+    .nice-upload-button  {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 2;
+      padding: 5px;
+      height: auto;
+    }
+
     .nice-upload-overlay {
       position: absolute;
       top: 0;
@@ -207,6 +280,11 @@ export default {
         height: 22px;
         width: 22px;
         color: currentColor;
+      }
+
+      .nice-upload-overlay-image {
+        max-width: 100%;
+        max-height: 100%;
       }
 
       .nice-upload-overlay-message {
