@@ -75,7 +75,7 @@ const showHeader = computed(() => slots.title || props.title || slots.subTitle |
 
   // Mobile
   @media (max-width: 576px) {
-    --nice-view-padding: 1.5rem;
+    --nice-view-padding: 1rem;
   }
 
   &.nice-view-no-header {
