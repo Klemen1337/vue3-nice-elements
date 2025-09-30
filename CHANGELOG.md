@@ -1,5 +1,12 @@
 # Changelog
 
+## **v0.2.8** - 30.9.2025
+
+- added subTitle and aboveTitle props to nice view component,
+- added filters to demo table view,
+- changed nice view padding for mobile,
+- worked on filters search initial value
+
 ## **v0.2.7** - 25.9.2025
 
 - fixed nice filter search from query,
