@@ -251,6 +251,9 @@ async function getQuery() {
     else if (filter.type == "select" && filter.fetch) {
       const p = await filter.fetch(value);
       filter.value = p;
+    } else if (filter.type == "select" && filter.searchFunction) {
+      const p = await filter.searchFunction();
+      filter.value = p.find(i => i[filter.keyName || 'id'] == value);
     } else {
       console.log("[NiceFilters] Query not handled: ", filter.key, value)
     }

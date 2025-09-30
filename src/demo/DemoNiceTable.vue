@@ -6,8 +6,6 @@ const getQuery = inject('getQuery')
 const isDisabled = ref(false)
 const loading = ref(true)
 const data = ref([])
-const filtersList = [
-];
 
 function _formatDateWithTime(dateString) {
   const date = new Date(dateString);
@@ -19,11 +17,41 @@ function _formatDateWithTime(dateString) {
   return `${day}.${month}.${year} • ${hour}:${minute<10 ? "0" : ""}${minute}`;
 }
 
+async function getTestList() {
+  return [
+    { id: 1, value: "Test 1" },
+    { id: 2, value: "Test 2" },
+    { id: 3, value: "Test 3" },
+    { id: 4, value: "Test 4" },
+    { id: 5, value: "Test 5" },
+  ]
+}
+
+const filtersList = [
+  {
+    name: "Active",
+    type: "yesno",
+    key: 'active'
+  },
+  {
+    name: "Promoted",
+    type: "yesno",
+    key: 'promoted'
+  },
+  {
+    name: "Select test",
+    type: "select",
+    key: 'test',
+    searchFunction: getTestList,
+    formatter: (v) => `${v.id} - ${v.value}`
+  }
+];
+
 const actions = ref([
   {
     icon: "icon-arrow-right",
     function: (v) => window.open("https://tickets.dev.olaii.com/event/" + v.id + "/", '_blank').focus(),
-    disabled: isDisabled
+    disabled: () => isDisabled.value
   },
   {
     icon: "icon-arrow-up",
