@@ -1,10 +1,16 @@
 <template>
-  <component :is="isForm ? 'form' : 'div'" class="nice-view" :class="{ 'nice-view-no-header': !showHeader, 'nice-view-flex-body': flexBody }">
-    <div class="nice-view-header" v-if="showHeader">
+  <component 
+    :is="isForm ? 'form' : 'div'" 
+    class="nice-view"
+    :class="{ 'nice-view-no-header': !showHeader, 'nice-view-flex-body': flexBody }"
+  >
+    <div class="nice-view-header" v-if="showHeader || props.icon">
       <NiceIcon :icon="icon" class="view-header-icon" v-if="icon && !loading" />
       <NiceLoading class="view-header-icon" v-if="loading" />
-      <div class="view-title" v-if="slots.title || title">
-        <slot name="title">{{ title }}</slot>
+      <div class="view-title" v-if="showHeader">
+        <div class="view-title-above-title" v-if="aboveTitle || slots.aboveTitle"><slot name="aboveTitle">{{ aboveTitle }}</slot></div>
+        <div class="view-title-title" v-if="title || slots.title"><slot name="title">{{ title }}</slot></div>
+        <div class="view-title-sub-title" v-if="subTitle || slots.subTitle"><slot name="subTitle">{{ subTitle }}</slot></div>
       </div>
     </div>
     <div class="nice-view-body" :class="{ 'nice-view-body-flex': flexBody }">
@@ -30,6 +36,14 @@ const props = defineProps({
   title: {
     type: String,
     required: false,
+  },  
+  subTitle: {
+    type: String,
+    required: false,
+  },
+  aboveTitle: {
+    type: String,
+    required: false,
   },
   icon: {
     type: String,
@@ -49,7 +63,7 @@ const props = defineProps({
   },
 })
 
-const showHeader = computed(() => slots.title || props.title || props.icon);
+const showHeader = computed(() => slots.title || props.title || slots.subTitle || props.subTitle || slots.aboveTitle || props.aboveTitle);
 </script>
 
 <style lang="scss" scoped>
@@ -80,9 +94,9 @@ const showHeader = computed(() => slots.title || props.title || props.icon);
     top: 0;
     z-index: 100;
     // background: rgba(245, 245, 249, 0.8);
-    background: var(--nice-overlay);
-
     backdrop-filter: blur(5px);
+    background: var(--nice-overlay);
+    // border-bottom: 1px solid transparent;
 
 
     .view-header-icon {
@@ -99,6 +113,18 @@ const showHeader = computed(() => slots.title || props.title || props.icon);
     .view-title {
       font-size: 2em;
       font-weight: 600;
+      line-height: 1.2;
+
+      .view-title-sub-title {
+        font-size: 0.5em;
+        font-weight: normal;
+      }
+
+      .view-title-above-title {
+        font-size: 0.4em;
+        font-style: italic;
+        font-weight: normal;
+      }
     }
   }
 
