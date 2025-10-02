@@ -1,13 +1,17 @@
 <template>
-  <NiceModal :name="name" :title="$t('Nice', 'Delete')" :subtitle="$t('Nice', 'Are you sure you want to delete?')"
-    @close="cancel">
-    <div class="nice-actions">
+  <NiceModal :name="name" :title="title" @close="cancel">
+    <!-- Slot -->
+    <slot>
+      <p class="p-0 m-0">{{ message }}</p>
+    </slot>
+
+    <template #footer>
       <!-- Cancel -->
       <NiceButton :text="$t('Nice', 'Cancel')" @click="cancel" type="default" plain icon="icon-x" />
 
       <!-- Confirm -->
       <NiceButton :text="$t('Nice', 'Confirm')" @click="confirm" icon="icon-check" />
-    </div>
+    </template>
   </NiceModal>
 </template>
 
@@ -26,6 +30,14 @@ const props = defineProps({
   name: {
     type: String,
     default: "confirm-prompt",
+  },
+  message: {
+    type: String,
+    default: ""
+  },
+  title: {
+    type: String,
+    default: ""
   },
 })
 const $t = inject('$t')

@@ -1,4 +1,4 @@
-import { useSlots as B1, resolveComponent as R, openBlock as v, createElementBlock as p, normalizeClass as q, unref as C, createBlock as H, createCommentVNode as g, renderSlot as Z, toDisplayString as k, Teleport as W2, createVNode as D, Transition as n1, withCtx as e0, normalizeStyle as h2, createElementVNode as m, createTextVNode as r0, inject as t0, Fragment as G, computed as X, pushScopeId as P0, popScopeId as F0, ref as A, onMounted as h0, onBeforeUnmount as Y2, withDirectives as _0, vShow as j1, watch as y1, renderList as J, vModelText as r1, mergeProps as v2, isRef as k1, vModelDynamic as j2, TransitionGroup as f2, onUnmounted as H2, createStaticVNode as N1, resolveDynamicComponent as g1, normalizeProps as R2 } from "vue";
+import { useSlots as B1, resolveComponent as R, openBlock as v, createElementBlock as p, normalizeClass as q, unref as C, createBlock as H, createCommentVNode as g, renderSlot as Z, toDisplayString as k, Teleport as W2, createVNode as D, Transition as n1, withCtx as K, normalizeStyle as h2, createElementVNode as m, createTextVNode as r0, inject as t0, Fragment as G, computed as X, pushScopeId as P0, popScopeId as F0, ref as A, onMounted as h0, onBeforeUnmount as Y2, withDirectives as _0, vShow as j1, watch as y1, renderList as J, vModelText as r1, mergeProps as v2, isRef as k1, vModelDynamic as j2, TransitionGroup as f2, onUnmounted as H2, createStaticVNode as N1, resolveDynamicComponent as g1, normalizeProps as R2 } from "vue";
 import { useRoute as p2, useRouter as m2 } from "vue-router";
 function U2(e) {
   return { all: e = e || /* @__PURE__ */ new Map(), on: function(c, t) {
@@ -204,7 +204,7 @@ function n4(e, c, t, s, n, a) {
   const l = R("NiceButton");
   return v(), H(W2, { to: "body" }, [
     D(n1, { name: "fade" }, {
-      default: e0(() => [
+      default: K(() => [
         n.isOpen ? (v(), p("div", {
           key: 0,
           class: "nice-modal-overlay",
@@ -214,7 +214,7 @@ function n4(e, c, t, s, n, a) {
       _: 1
     }),
     D(n1, { name: "flyin" }, {
-      default: e0(() => [
+      default: K(() => [
         n.isOpen ? (v(), p("div", {
           key: 0,
           class: q(["nice-modal", t.modalClass]),
@@ -252,13 +252,21 @@ function n4(e, c, t, s, n, a) {
     })
   ]);
 }
-const y2 = /* @__PURE__ */ Q(K2, [["render", n4], ["__scopeId", "data-v-7ade13ed"]]), a4 = { class: "nice-actions" }, o4 = {
+const y2 = /* @__PURE__ */ Q(K2, [["render", n4], ["__scopeId", "data-v-7ade13ed"]]), a4 = { class: "p-0 m-0" }, o4 = {
   name: "NiceConfirmModal"
 }, g2 = /* @__PURE__ */ Object.assign(o4, {
   props: {
     name: {
       type: String,
       default: "confirm-prompt"
+    },
+    message: {
+      type: String,
+      default: ""
+    },
+    title: {
+      type: String,
+      default: ""
     }
   },
   emits: ["cancel", "confirm"],
@@ -272,28 +280,30 @@ const y2 = /* @__PURE__ */ Q(K2, [["render", n4], ["__scopeId", "data-v-7ade13ed
     }
     return (o, d) => (v(), H(y2, {
       name: e.name,
-      title: C(s)("Nice", "Delete"),
-      subtitle: C(s)("Nice", "Are you sure you want to delete?"),
+      title: e.title || C(s)("Nice", "Delete"),
       onClose: a
     }, {
-      default: e0(() => [
-        m("div", a4, [
-          D(B0, {
-            text: C(s)("Nice", "Cancel"),
-            onClick: a,
-            type: "default",
-            plain: "",
-            icon: "icon-x"
-          }, null, 8, ["text"]),
-          D(B0, {
-            text: C(s)("Nice", "Confirm"),
-            onClick: l,
-            icon: "icon-check"
-          }, null, 8, ["text"])
+      footer: K(() => [
+        D(B0, {
+          text: C(s)("Nice", "Cancel"),
+          onClick: a,
+          type: "default",
+          plain: "",
+          icon: "icon-x"
+        }, null, 8, ["text"]),
+        D(B0, {
+          text: C(s)("Nice", "Confirm"),
+          onClick: l,
+          icon: "icon-check"
+        }, null, 8, ["text"])
+      ]),
+      default: K(() => [
+        Z(o.$slots, "default", {}, () => [
+          m("p", a4, k(e.message || C(s)("Nice", "Are you sure you want to delete?")), 1)
         ])
       ]),
-      _: 1
-    }, 8, ["name", "title", "subtitle"]));
+      _: 3
+    }, 8, ["name", "title"]));
   }
 });
 const l4 = { class: "nice-actions" }, i4 = /* @__PURE__ */ m("div", { class: "f-grow" }, null, -1), r4 = {
@@ -363,8 +373,8 @@ const l4 = { class: "nice-actions" }, i4 = /* @__PURE__ */ m("div", { class: "f-
           name: "delete-prompt",
           onConfirm: l,
           title: d.$t("Nice", "Delete"),
-          subtitle: t.deleteText ? t.deleteText : d.$t("Nice", "Are you sure you want to delete?")
-        }, null, 8, ["title", "subtitle"])
+          message: t.deleteText ? t.deleteText : d.$t("Nice", "Are you sure you want to delete?")
+        }, null, 8, ["title", "message"])
       ], 64);
     };
   }
@@ -1905,7 +1915,7 @@ const s7 = {
 function f0(e, c) {
   return typeof e == "function" ? e(c) : e && typeof e == "object" && n2 in e ? e[n2](c) : e instanceof Date ? new e.constructor(c) : new Date(c);
 }
-function K(e, c) {
+function e0(e, c) {
   return f0(c || e, e);
 }
 let o7 = {};
@@ -1914,14 +1924,14 @@ function J0() {
 }
 function V0(e, c) {
   var o, d, r, i;
-  const t = J0(), s = (c == null ? void 0 : c.weekStartsOn) ?? ((d = (o = c == null ? void 0 : c.locale) == null ? void 0 : o.options) == null ? void 0 : d.weekStartsOn) ?? t.weekStartsOn ?? ((i = (r = t.locale) == null ? void 0 : r.options) == null ? void 0 : i.weekStartsOn) ?? 0, n = K(e, c == null ? void 0 : c.in), a = n.getDay(), l = (a < s ? 7 : 0) + a - s;
+  const t = J0(), s = (c == null ? void 0 : c.weekStartsOn) ?? ((d = (o = c == null ? void 0 : c.locale) == null ? void 0 : o.options) == null ? void 0 : d.weekStartsOn) ?? t.weekStartsOn ?? ((i = (r = t.locale) == null ? void 0 : r.options) == null ? void 0 : i.weekStartsOn) ?? 0, n = e0(e, c == null ? void 0 : c.in), a = n.getDay(), l = (a < s ? 7 : 0) + a - s;
   return n.setDate(n.getDate() - l), n.setHours(0, 0, 0, 0), n;
 }
 function l1(e, c) {
   return V0(e, { ...c, weekStartsOn: 1 });
 }
 function O2(e, c) {
-  const t = K(e, c == null ? void 0 : c.in), s = t.getFullYear(), n = f0(t, 0);
+  const t = e0(e, c == null ? void 0 : c.in), s = t.getFullYear(), n = f0(t, 0);
   n.setFullYear(s + 1, 0, 4), n.setHours(0, 0, 0, 0);
   const a = l1(n), l = f0(t, 0);
   l.setFullYear(s, 0, 4), l.setHours(0, 0, 0, 0);
@@ -1929,7 +1939,7 @@ function O2(e, c) {
   return t.getTime() >= a.getTime() ? s + 1 : t.getTime() >= o.getTime() ? s : s - 1;
 }
 function a2(e) {
-  const c = K(e), t = new Date(
+  const c = e0(e), t = new Date(
     Date.UTC(
       c.getFullYear(),
       c.getMonth(),
@@ -1950,7 +1960,7 @@ function l7(e, ...c) {
   return c.map(t);
 }
 function C1(e, c) {
-  const t = K(e, c == null ? void 0 : c.in);
+  const t = e0(e, c == null ? void 0 : c.in);
   return t.setHours(0, 0, 0, 0), t;
 }
 function i7(e, c, t) {
@@ -1972,27 +1982,27 @@ function d7(e) {
   return e instanceof Date || typeof e == "object" && Object.prototype.toString.call(e) === "[object Date]";
 }
 function u7(e) {
-  return !(!d7(e) && typeof e != "number" || isNaN(+K(e)));
+  return !(!d7(e) && typeof e != "number" || isNaN(+e0(e)));
 }
 function h7(e, c) {
-  const t = K(e, c == null ? void 0 : c.in);
+  const t = e0(e, c == null ? void 0 : c.in);
   return t.setHours(23, 59, 59, 999), t;
 }
 function v7(e, c) {
-  const t = K(e, c == null ? void 0 : c.in), s = t.getMonth();
+  const t = e0(e, c == null ? void 0 : c.in), s = t.getMonth();
   return t.setFullYear(t.getFullYear(), s + 1, 0), t.setHours(23, 59, 59, 999), t;
 }
 function f7(e, c) {
-  const t = K(e, c == null ? void 0 : c.in);
+  const t = e0(e, c == null ? void 0 : c.in);
   return t.setDate(1), t.setHours(0, 0, 0, 0), t;
 }
 function p7(e, c) {
-  const t = K(e, c == null ? void 0 : c.in);
+  const t = e0(e, c == null ? void 0 : c.in);
   return t.setFullYear(t.getFullYear(), 0, 1), t.setHours(0, 0, 0, 0), t;
 }
 function m7(e, c) {
   var o, d, r, i;
-  const t = J0(), s = (c == null ? void 0 : c.weekStartsOn) ?? ((d = (o = c == null ? void 0 : c.locale) == null ? void 0 : o.options) == null ? void 0 : d.weekStartsOn) ?? t.weekStartsOn ?? ((i = (r = t.locale) == null ? void 0 : r.options) == null ? void 0 : i.weekStartsOn) ?? 0, n = K(e, c == null ? void 0 : c.in), a = n.getDay(), l = (a < s ? -7 : 0) + 6 - (a - s);
+  const t = J0(), s = (c == null ? void 0 : c.weekStartsOn) ?? ((d = (o = c == null ? void 0 : c.locale) == null ? void 0 : o.options) == null ? void 0 : d.weekStartsOn) ?? t.weekStartsOn ?? ((i = (r = t.locale) == null ? void 0 : r.options) == null ? void 0 : i.weekStartsOn) ?? 0, n = e0(e, c == null ? void 0 : c.in), a = n.getDay(), l = (a < s ? -7 : 0) + 6 - (a - s);
   return n.setDate(n.getDate() + l), n.setHours(23, 59, 59, 999), n;
 }
 function y7(e) {
@@ -2433,16 +2443,16 @@ const F7 = /^(\d+)(th|st|nd|rd)?/i, E7 = /\d+/i, q7 = {
   }
 };
 function G7(e, c) {
-  const t = K(e, c == null ? void 0 : c.in);
+  const t = e0(e, c == null ? void 0 : c.in);
   return i7(t, p7(t)) + 1;
 }
 function J7(e, c) {
-  const t = K(e, c == null ? void 0 : c.in), s = +l1(t) - +r7(t);
+  const t = e0(e, c == null ? void 0 : c.in), s = +l1(t) - +r7(t);
   return Math.round(s / $2) + 1;
 }
 function S2(e, c) {
   var i, u, h, f;
-  const t = K(e, c == null ? void 0 : c.in), s = t.getFullYear(), n = J0(), a = (c == null ? void 0 : c.firstWeekContainsDate) ?? ((u = (i = c == null ? void 0 : c.locale) == null ? void 0 : i.options) == null ? void 0 : u.firstWeekContainsDate) ?? n.firstWeekContainsDate ?? ((f = (h = n.locale) == null ? void 0 : h.options) == null ? void 0 : f.firstWeekContainsDate) ?? 1, l = f0((c == null ? void 0 : c.in) || e, 0);
+  const t = e0(e, c == null ? void 0 : c.in), s = t.getFullYear(), n = J0(), a = (c == null ? void 0 : c.firstWeekContainsDate) ?? ((u = (i = c == null ? void 0 : c.locale) == null ? void 0 : i.options) == null ? void 0 : u.firstWeekContainsDate) ?? n.firstWeekContainsDate ?? ((f = (h = n.locale) == null ? void 0 : h.options) == null ? void 0 : f.firstWeekContainsDate) ?? 1, l = f0((c == null ? void 0 : c.in) || e, 0);
   l.setFullYear(s + 1, 0, a), l.setHours(0, 0, 0, 0);
   const o = V0(l, c), d = f0((c == null ? void 0 : c.in) || e, 0);
   d.setFullYear(s, 0, a), d.setHours(0, 0, 0, 0);
@@ -2455,7 +2465,7 @@ function K7(e, c) {
   return a.setFullYear(n, 0, s), a.setHours(0, 0, 0, 0), V0(a, c);
 }
 function e5(e, c) {
-  const t = K(e, c == null ? void 0 : c.in), s = +V0(t, c) - +K7(t, c);
+  const t = e0(e, c == null ? void 0 : c.in), s = +V0(t, c) - +K7(t, c);
   return Math.round(s / $2) + 1;
 }
 function U(e, c) {
@@ -3090,7 +3100,7 @@ function r5(e, c, t) {
 const d5 = /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g, u5 = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g, h5 = /^'([^]*?)'?$/, v5 = /''/g, f5 = /[a-zA-Z]/;
 function d2(e, c, t) {
   var i, u, h, f, _, z, w, B;
-  const s = J0(), n = (t == null ? void 0 : t.locale) ?? s.locale ?? Q7, a = (t == null ? void 0 : t.firstWeekContainsDate) ?? ((u = (i = t == null ? void 0 : t.locale) == null ? void 0 : i.options) == null ? void 0 : u.firstWeekContainsDate) ?? s.firstWeekContainsDate ?? ((f = (h = s.locale) == null ? void 0 : h.options) == null ? void 0 : f.firstWeekContainsDate) ?? 1, l = (t == null ? void 0 : t.weekStartsOn) ?? ((z = (_ = t == null ? void 0 : t.locale) == null ? void 0 : _.options) == null ? void 0 : z.weekStartsOn) ?? s.weekStartsOn ?? ((B = (w = s.locale) == null ? void 0 : w.options) == null ? void 0 : B.weekStartsOn) ?? 0, o = K(e, t == null ? void 0 : t.in);
+  const s = J0(), n = (t == null ? void 0 : t.locale) ?? s.locale ?? Q7, a = (t == null ? void 0 : t.firstWeekContainsDate) ?? ((u = (i = t == null ? void 0 : t.locale) == null ? void 0 : i.options) == null ? void 0 : u.firstWeekContainsDate) ?? s.firstWeekContainsDate ?? ((f = (h = s.locale) == null ? void 0 : h.options) == null ? void 0 : f.firstWeekContainsDate) ?? 1, l = (t == null ? void 0 : t.weekStartsOn) ?? ((z = (_ = t == null ? void 0 : t.locale) == null ? void 0 : _.options) == null ? void 0 : z.weekStartsOn) ?? s.weekStartsOn ?? ((B = (w = s.locale) == null ? void 0 : w.options) == null ? void 0 : B.weekStartsOn) ?? 0, o = e0(e, t == null ? void 0 : t.in);
   if (!u7(o))
     throw new RangeError("Invalid time value");
   let d = c.match(u5).map((F) => {
@@ -3134,12 +3144,12 @@ function p5(e) {
   return c ? c[1].replace(v5, "'") : e;
 }
 function m5(e, c) {
-  return +K(e) < +K(c);
+  return +e0(e) < +e0(c);
 }
 function y5(e, c, t) {
-  const s = +K(e, t == null ? void 0 : t.in), [n, a] = [
-    +K(c.start, t == null ? void 0 : t.in),
-    +K(c.end, t == null ? void 0 : t.in)
+  const s = +e0(e, t == null ? void 0 : t.in), [n, a] = [
+    +e0(c.start, t == null ? void 0 : t.in),
+    +e0(c.end, t == null ? void 0 : t.in)
   ].sort((l, o) => l - o);
   return s >= n && s <= a;
 }
@@ -3495,7 +3505,7 @@ const E0 = (e) => (P0("data-v-4c905654"), e = e(), F0(), e), b5 = {
           class: "w-full",
           onChange: B
         }, {
-          trigger: e0(() => [
+          trigger: K(() => [
             m("div", P5, [
               _0(m("input", {
                 "onUpdate:modelValue": N[2] || (N[2] = (M) => a.value = M),
@@ -3517,7 +3527,7 @@ const E0 = (e) => (P0("data-v-4c905654"), e = e(), F0(), e), b5 = {
               })
             ])
           ]),
-          content: e0(() => [
+          content: K(() => [
             m("div", E5, [
               m("div", q5, [
                 D(P, {
@@ -3920,7 +3930,7 @@ const y8 = { class: "nice-dropdown-wrapper" }, g8 = { class: "input-group" }, b8
             onChange: S,
             disabled: e.disabled
           }, {
-            trigger: e0(() => [
+            trigger: K(() => [
               m("div", g8, [
                 m("div", b8, [
                   m("div", {
@@ -3972,7 +3982,7 @@ const y8 = { class: "nice-dropdown-wrapper" }, g8 = { class: "input-group" }, b8
                 ])
               ])
             ]),
-            content: e0(() => [
+            content: K(() => [
               m("div", B8, [
                 e.searchFunction && !e.noSearch ? (v(), p("div", k8, [
                   _0(m("input", {
@@ -4534,7 +4544,7 @@ const r6 = { class: "nice-notifications" }, d6 = {
         name: "notification",
         tag: "div"
       }, {
-        default: e0(() => [
+        default: K(() => [
           (v(!0), p(G, null, J(n.value, (r) => (v(), H(V2, {
             key: r.id,
             notification: r,
@@ -4607,7 +4617,7 @@ const v6 = {
       ref: d
     }, [
       D(n1, { name: "side-view" }, {
-        default: e0(() => [
+        default: K(() => [
           a.value ? (v(), p("div", {
             key: 0,
             class: q(["side-view-body", { "no-padding": e.noPadding }]),
@@ -4624,7 +4634,7 @@ const v6 = {
         _: 3
       }),
       D(n1, { name: "side-overlay" }, {
-        default: e0(() => [
+        default: K(() => [
           a.value ? (v(), p("div", {
             key: 0,
             class: "overlay",
@@ -5019,10 +5029,10 @@ const P6 = (e) => (P0("data-v-be3a1336"), e = e(), F0(), e), F6 = { class: "nice
                     placement: "bottom-end",
                     "no-padding": ""
                   }, {
-                    trigger: e0(() => [
+                    trigger: K(() => [
                       D(V, { icon: "icon-plus-circle" })
                     ]),
-                    content: e0(() => [
+                    content: K(() => [
                       m("div", H6, [
                         (v(!0), p(G, null, J(C(z), (O) => (v(), p("div", {
                           class: "element",
@@ -5079,7 +5089,7 @@ const P6 = (e) => (P0("data-v-be3a1336"), e = e(), F0(), e), F6 = { class: "nice
                       key: M,
                       to: M.to ? M.to(O) : null
                     }, {
-                      default: e0(() => [
+                      default: K(() => [
                         M.hidden && M.hidden(O) ? g("", !0) : (v(), H(B0, {
                           key: 0,
                           icon: M.icon,
@@ -5118,7 +5128,7 @@ const P6 = (e) => (P0("data-v-be3a1336"), e = e(), F0(), e), F6 = { class: "nice
               class: q(r.value === O ? "btn-primary" : "btn-default"),
               onClick: (M) => Y(O)
             }, {
-              default: e0(() => [
+              default: K(() => [
                 r0(k(O), 1)
               ]),
               _: 2
@@ -5288,7 +5298,7 @@ const f9 = { class: "nice-toasts" }, p9 = {
         name: "toast",
         key: "div"
       }, {
-        default: e0(() => [
+        default: K(() => [
           (v(!0), p(G, null, J(t.value, (d) => (v(), p("div", {
             class: q(["nice-toast", ["nice-toast-" + d.type]]),
             key: d.id
@@ -5558,7 +5568,7 @@ const T9 = {
       return v(), H(g1(e.isForm ? "form" : "div"), {
         class: q(["nice-view", { "nice-view-no-header": !C(s), "nice-view-flex-body": e.flexBody }])
       }, {
-        default: e0(() => [
+        default: K(() => [
           C(s) || c.icon ? (v(), p("div", T9, [
             e.icon && !e.loading ? (v(), H(l, {
               key: 0,
@@ -5799,7 +5809,7 @@ const se = { class: "input-group" }, ne = ["placeholder", "disabled", "required"
           class: "w-full",
           onChange: i
         }, {
-          trigger: e0(() => [
+          trigger: K(() => [
             m("div", se, [
               _0(m("input", {
                 "onUpdate:modelValue": w[0] || (w[0] = (y) => a.value = y),
@@ -5816,7 +5826,7 @@ const se = { class: "input-group" }, ne = ["placeholder", "disabled", "required"
               })
             ])
           ]),
-          content: e0(() => [
+          content: K(() => [
             m("div", ae, [
               m("div", oe, [
                 (v(), p(G, null, J(o, (y) => D(F, {
@@ -5824,7 +5834,7 @@ const se = { class: "input-group" }, ne = ["placeholder", "disabled", "required"
                   key: y.id,
                   onClick: (x) => h(y)
                 }, {
-                  default: e0(() => [
+                  default: K(() => [
                     r0(k(y.name), 1)
                   ]),
                   _: 2
