@@ -43,7 +43,7 @@
     name="delete-prompt"
     @confirm="confirmDelete"
     :title="$t('Nice', 'Delete')"
-    :subtitle="props.deleteText ? props.deleteText : $t('Nice', 'Are you sure you want to delete?')"
+    :message="props.deleteText ? props.deleteText : $t('Nice', 'Are you sure you want to delete?')"
   />
 </template>
 
