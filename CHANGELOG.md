@@ -1,5 +1,14 @@
 # Changelog
 
+## **v0.2.9** - 7.10.2025
+
+- created nice alert component
+- added negative spacings,
+- added size prop to nice icon
+- worked on nice confirm modal,
+- worked on nice dropdown refresh when values change,
+- worked on no values and key only nice dropdown issue
+
 ## **v0.2.8** - 30.9.2025
 
 - added subTitle and aboveTitle props to nice view component,
