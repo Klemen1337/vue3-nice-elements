@@ -37,14 +37,14 @@
                   :disabled="disabled"
                 />
                 <div class="option" v-if="!loading && modelValue && !props.multiple">
-                  <slot name="selected-option" :item="modelValue">
-                    <span>{{ formatFunction ? formatFunction(modelValue) : localValue[valueName] }}</span>
+                  <slot name="selected-option" :item="localValue">
+                    <span>{{ formatFunction ? formatFunction(modelValue) : (localValue ? (localValue[valueName] || localValue) : modelValue) }}</span>
                   </slot>
                 </div>
                 <div class="options" v-if="props.multiple">
                   <div class="option" v-for="value in selectedInnerValues" :key="value">
                     <slot name="selected-option" :item="value" v-bind="value">
-                      <span>{{ formatFunction ? formatFunction(value) : value[props.valueName] }}</span>
+                      <span>{{ formatFunction ? formatFunction(value) : (value[props.valueName] || value) }}</span>
                     </slot>
                     <button type="button" class="btn btn-primary btn-sm" @click="removeValue(value)"><nice-icon icon="icon-x"></nice-icon></button>
                   </div>
@@ -155,7 +155,7 @@ export default {
 </script>
 
 <script setup>
-import { onMounted, ref, computed, inject } from "vue";
+import { onMounted, ref, computed, inject, watch } from "vue";
 import NicePopup from "./NicePopup.vue";
 import NiceLoading from "./NiceLoading.vue";
 import NiceButton from "./NiceButton.vue";
@@ -251,6 +251,11 @@ const handleSelectedValue = function() {
 }
 
 onMounted(async () => {
+  await fetchSearch();
+  handleDefault();
+})
+
+watch(() => props.values, async () => {
   await fetchSearch();
   handleDefault();
 })
