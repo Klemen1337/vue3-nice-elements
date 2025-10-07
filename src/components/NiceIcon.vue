@@ -1,5 +1,5 @@
 <template>
-  <svg class="nice-icon">
+  <svg class="nice-icon" :style="{ height: size + 'px', width: size + 'px' }">
     <use :xlink:href="'#' + props.icon"></use>
   </svg>
 </template>
@@ -15,6 +15,10 @@ const props = defineProps({
   icon: {
     type: String,
     required: true,
+  },
+  size: {
+    type: Number,
+    required: false,
   }
 });
 </script>
