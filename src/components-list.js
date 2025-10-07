@@ -66,6 +66,12 @@ const components = [
     name: "nice-upload",
     title: "Nice upload",
     component: import("@/demo/DemoNiceUpload.vue")
+  },
+  {
+    path: "/nice-alert",
+    name: "nice-alert",
+    title: "Nice alert",
+    component: import("@/demo/DemoNiceAlert.vue")
   }
 ];
 

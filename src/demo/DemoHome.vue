@@ -304,6 +304,7 @@ onMounted(() => {
       <div class="demo">
       <!-- Nice test -->
       <NiceWrapper title="Form test" id="nice-test" collapsable :collapsed="false">
+        <NiceAlert title="Hey!" message="This is a test of the alert component" icon="icon-square" type="success" class="mb-4" />
         <NiceInput title="Name" placeholder="Janez Novak" v-model="testForm.name" :disabled="isDisabled" autocomplete="name" />
         <NiceInput title="Email" placeholder="info@olaii.com" type="email" v-model="testForm.email" autocomplete="email" :disabled="isDisabled" appendText="@" />
         <NiceInput title="Price" v-model="testForm.price" textRight :disabled="isDisabled" :formatter="formatCurrency" />

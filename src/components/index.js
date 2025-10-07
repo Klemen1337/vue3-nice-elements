@@ -27,6 +27,7 @@ import NiceView from "./NiceView.vue";
 import NiceWrapper from "./NiceWrapper.vue";
 import NiceNoData from "./NiceNoData.vue";
 import NiceDateRange from "./NiceDateRange.vue";
+import NiceAlert from "./NiceAlert.vue";
 
 export default {
   NiceActions,
@@ -57,5 +58,6 @@ export default {
   NiceView,
   NiceWrapper,
   NiceNoData,
-  NiceDateRange
+  NiceDateRange,
+  NiceAlert
 }
