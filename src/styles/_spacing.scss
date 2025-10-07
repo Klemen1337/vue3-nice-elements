@@ -52,8 +52,16 @@ $spacers: (
   flex-grow: 1;
 }
 
+.f-wrap {
+  flex-wrap: wrap;
+}
+
 .d-flex {
   display: flex;
+}
+
+.d-grid {
+  display: grid;
 }
 
 .align-center {
