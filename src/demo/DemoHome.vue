@@ -243,6 +243,10 @@ function openModal(e) {
   nice.modal('modal', true, e)
 }
 
+function closeModal(name) {
+  nice.modal(name, false)
+}
+
 function openModal2() {
   nice.modal('modal', true)
 }
@@ -567,8 +571,8 @@ onMounted(() => {
 
       <!-- Nice modal -->
       <NiceWrapper title="Nice modal" id="nice-modal" collapsable>
-        <NiceModal name="modal" title="Header">
-          <template #footer>Footer</template>
+        <NiceModal name="modal" title="Header" isForm @submit="openToast('submit')">
+          <NiceInput title="Name" v-model="testForm.name" required />
           <div>This is a test modal</div>
           <div>This is a test modal</div>
           <div>This is a test modal</div>
@@ -617,8 +621,11 @@ onMounted(() => {
           <div>This is a test modal</div>
           <div>This is a test modal</div>
           <div>This is a test modal</div>
-
+          <template #footer>
+            <NiceActions @cancel="closeModal('modal')"></NiceActions>
+          </template>
         </NiceModal>
+
         <pre class="mb-2">&lt;NiceModal name="modal">This is a test modal&lt;/NiceModal></pre>
 
         <NicePanel name="panel-right" noPadding>
@@ -662,6 +669,7 @@ onMounted(() => {
             </template>
           </NiceView>
         </NicePanel>
+
         <NicePanel name="panel-left" position="left" noPadding>
           <NiceView flexView title="Panel left">
             <p>This is a left panel</p>
@@ -676,6 +684,7 @@ onMounted(() => {
             </template>
           </NiceView>
         </NicePanel>
+
         <NicePanel name="panel-top" position="top" noPadding isForm @submit.prevent="openToast('submit')">
           <NiceView flexView title="Panel top">
             <p>This is a top panel</p>
@@ -690,20 +699,22 @@ onMounted(() => {
             </template>
           </NiceView>
         </NicePanel>
-        <NicePanel name="panel-bottom" position="bottom" noPadding>
+
+        <NicePanel name="panel-bottom" position="bottom" noPadding isForm @submit.prevent="openToast('submit')">
           <NiceView flexView title="Panel bottom">
             <p>This is a bottom panel</p>
-            <NiceInput title="Name" v-model="testForm.name" :disabled="isDisabled" />
+            <NiceInput title="Name" v-model="testForm.name" :disabled="isDisabled" required />
             <NiceInput title="Email" type="email" v-model="testForm.email" :disabled="isDisabled" />
             <NiceTextarea title="Comment" v-model="testForm.comment" :disabled="isDisabled" />
             <NiceDropdown v-if="show" title="List" v-model="testForm.list" :search-function="searchList" nullable :disabled="isDisabled" />
             <NiceDropdownSimple title="List simple" v-model="testForm.listSimple" keyOnly :values="list" nullable :disabled="isDisabled" />
             <NiceButton @click="randomShit" :disabled="isDisabled">Random</NiceButton>
             <template #footer>
-              <NiceActions @cancel="openToast('cancel')" @submit="openToast('submit')" @delete="openToast('delete')"></NiceActions>
+              <NiceActions @cancel="openToast('cancel')" @delete="openToast('delete')"></NiceActions>
             </template>
           </NiceView>
         </NicePanel>
+
         <pre class="mb-2">&lt;NicePanel name="panel" position="right">This is a test panel&lt;/NicePanel></pre>
 
         <NiceButton @click="openModal">Open modal</NiceButton>

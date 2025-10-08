@@ -10,6 +10,7 @@
         v-if="isOpen" class="nice-modal"
         :style="[{ width, height }, startingPosition]"
         :class="modalClass"
+        @submit.prevent="$emit('submit')"
       >
         <!-- Header -->
         <div
@@ -85,7 +86,7 @@ export default {
     },
   },
 
-  emits: ["close"],
+  emits: ["close", "submit"],
 
   data() {
     return {
