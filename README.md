@@ -1,4 +1,4 @@
-# Vue3 Nice elements v0.2.9
+# Vue3 Nice elements v0.2.10
 
 List of components:
 

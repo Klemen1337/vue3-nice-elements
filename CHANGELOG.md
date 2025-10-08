@@ -1,5 +1,9 @@
 # Changelog
 
+## **v0.2.10* - 8.10.2025
+
+- added isForm props to nice modal and nice panel
+
 ## **v0.2.9** - 7.10.2025
 
 - created nice alert component
