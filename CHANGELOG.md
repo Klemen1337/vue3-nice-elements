@@ -1,5 +1,9 @@
 # Changelog
 
+## **v0.2.11* - 8.10.2025
+
+- added submit emit to nice modal
+
 ## **v0.2.10* - 8.10.2025
 
 - added isForm props to nice modal and nice panel
