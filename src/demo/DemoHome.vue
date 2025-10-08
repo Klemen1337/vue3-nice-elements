@@ -676,17 +676,17 @@ onMounted(() => {
             </template>
           </NiceView>
         </NicePanel>
-        <NicePanel name="panel-top" position="top" noPadding>
+        <NicePanel name="panel-top" position="top" noPadding isForm @submit.prevent="openToast('submit')">
           <NiceView flexView title="Panel top">
             <p>This is a top panel</p>
-            <NiceInput title="Name" v-model="testForm.name" :disabled="isDisabled" />
+            <NiceInput title="Name" v-model="testForm.name" required :disabled="isDisabled" />
             <NiceInput title="Email" type="email" v-model="testForm.email" :disabled="isDisabled" />
             <NiceTextarea title="Comment" v-model="testForm.comment" :disabled="isDisabled" />
             <NiceDropdown v-if="show" title="List" v-model="testForm.list" :search-function="searchList" nullable :disabled="isDisabled" />
             <NiceDropdownSimple title="List simple" v-model="testForm.listSimple" keyOnly :values="list" nullable :disabled="isDisabled" />
             <NiceButton @click="randomShit" :disabled="isDisabled">Random</NiceButton>
             <template #footer>
-              <NiceActions @cancel="openToast('cancel')" @submit="openToast('submit')" @delete="openToast('delete')"></NiceActions>
+              <NiceActions @cancel="openToast('cancel')" type="submit" @delete="openToast('delete')"></NiceActions>
             </template>
           </NiceView>
         </NicePanel>

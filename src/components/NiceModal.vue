@@ -5,7 +5,12 @@
     </Transition>
 
     <Transition name="flyin">
-      <div v-if="isOpen" class="nice-modal" :style="[{ width, height }, startingPosition]" :class="modalClass">
+      <component 
+        :is="isForm ? 'form' : 'div'" 
+        v-if="isOpen" class="nice-modal"
+        :style="[{ width, height }, startingPosition]"
+        :class="modalClass"
+      >
         <!-- Header -->
         <div
           v-if="$slots.title || title || $slots.subtitle || subtitle"
@@ -41,7 +46,7 @@
         <div v-if="$slots.footer" class="nice-modal-footer">
           <slot name="footer" />
         </div>
-      </div>
+      </component>
     </Transition>
   </Teleport>
 </template>
@@ -73,6 +78,10 @@ export default {
       type: String,
       required: false,
       default: undefined,
+    },
+    isForm: {
+      type: Boolean,
+      default: false,
     },
   },
 

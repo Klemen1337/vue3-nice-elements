@@ -1,5 +1,6 @@
 <template>
-  <div
+  <component 
+    :is="isForm ? 'form' : 'div'" 
     class="nice-side-view"
     @mousemove="mouseMove"
     @mouseup="dragging = false"
@@ -26,7 +27,7 @@
     <transition name="side-overlay">
       <div class="overlay" v-if="isOpen" @click="close"></div>
     </transition>
-  </div>
+  </component>
 </template>
 
 <script>
@@ -59,6 +60,10 @@ const props = defineProps({
     validator(value) {
       return ["top", "left", "bottom", "right"].includes(value);
     },
+  },
+  isForm: {
+    type: Boolean,
+    default: false,
   },
 })
 
