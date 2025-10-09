@@ -1,5 +1,9 @@
 # Changelog
 
+## **v0.2.13* - 9.10.2025
+
+- fixed table actions not visible
+
 ## **v0.2.12* - 9.10.2025
 
 - changed nice table action props to functions,
