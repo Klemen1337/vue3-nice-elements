@@ -116,6 +116,7 @@
                       :loading="action.loading && action.loading(row)"
                       :disabled="action.disabled && action.disabled(row)"
                       :title="action.title && action.title(row)"
+                      @click="action.function && action.function(row)"
                       size="small"
                     />
                   </component>
