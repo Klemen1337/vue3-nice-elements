@@ -1,5 +1,11 @@
 # Changelog
 
+## **v0.2.12* - 9.10.2025
+
+- changed nice table action props to functions,
+- added href, loading, plain, title props for table actions,
+- created nice tooltip directive
+
 ## **v0.2.11* - 8.10.2025
 
 - added submit emit to nice modal
