@@ -166,3 +166,17 @@
     opacity: 0.5;
   }
 }
+
+.nice-tooltip {
+  display: none;
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  color: var(--nice-primary-color);
+  /* border: 1px solid var(--nice-primary-color-shadow); */
+  background: var(--nice-primary-color-lighter);
+  padding: 3px 6px;
+  transform: translate(-50%, -50%);
+  max-width: 130px;
+  border-radius: var(--nice-border-radius);
+}

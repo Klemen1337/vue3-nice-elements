@@ -1,6 +1,7 @@
 import { inject } from "vue";
 import mitt from "mitt";
 import components from './components'
+import niceTooltip from "./directives/nice-tooltip.js";
 import './styles/main.scss'
 
 const plugin = {
@@ -9,6 +10,9 @@ const plugin = {
       const component = components[prop]
       app.component(component.name, component)
     }
+
+    app.directive("niceTooltip", niceTooltip);
+
 
     const emitter = mitt();
     const service = {
