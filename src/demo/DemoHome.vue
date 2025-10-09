@@ -160,11 +160,11 @@ const filtersList = [
 ];
 const actions = [
   {
-    icon: "icon-target",
+    icon: () => "icon-target",
     function: (v) => window.open(v.url, '_blank').focus()
   },
   // {
-  //   icon: "icon-arrow-right",
+  //   icon: () => "icon-arrow-right",
   //   to: (row) => ({
   //     name: "app.projects",
   //     params: { projectId: row.id },

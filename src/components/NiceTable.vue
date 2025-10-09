@@ -95,20 +95,31 @@
             >
               <!-- Actions -->
               <div class="actions-td-inner">
-                <component 
-                  :is="action.to ? (action.disabled ? 'div' : 'router-link') : 'div'" 
-                  v-for="action in props.actions" :key="action" :to="action.to ? action.to(row) : null"
+                <template 
+                  v-for="action in props.actions" 
+                  :key="action"
                 >
-                  <NiceButton
+                  <component
+                    :is="getActionComponent(action)"
                     v-if="!(action.hidden && action.hidden(row))"
-                    :icon="action.icon"
-                    :type="action.type"
-                    :text="action.text"
+                    :to="action.to && action.to(row)"
                     :disabled="action.disabled && action.disabled(row)"
-                    size="small"
-                    @click="action.function(row)"
-                  />
-                </component>
+                    :href="action.href && action.href(row)"
+                    :target="action.href ? 'blank' : null"
+                  >
+                    <NiceButton
+                      v-if="!(action.hidden && action.hidden(row))"
+                      :icon="action.icon && action.icon(row)"
+                      :type="action.type && action.type(row)"
+                      :text="action.text && action.text(row).toString()"
+                      :plain="action.plain && action.plain(row)"
+                      :loading="action.loading && action.loading(row)"
+                      :disabled="action.disabled && action.disabled(row)"
+                      :title="action.title && action.title(row)"
+                      size="small"
+                    />
+                  </component>
+                </template>
               </div>
             </td>
           </tr>
@@ -236,9 +247,13 @@ const props = defineProps({
     type: Array,
     default: () => []
     // {
-    //   text: "Edit",
-    //   icon: "icon-edit",
-    //   type: "primary",
+    //   text: (row) => "Edit",
+    //   title: (row) => "Edit",
+    //   icon: (row) => "icon-edit",
+    //   type: (row) => "primary",
+    //   href: (row) => "http://olaii.com/",
+    //   disabled: (row) => false,
+    //   hidden: (row) => false,
     //   to: (row) => ({
     //     name: "app.sandbox",
     //     query: { test: row.id },
@@ -328,6 +343,12 @@ const innerData = computed(() => {
 });
 const selectedItems = computed(() => innerData.value.filter((row) => row._selected))
 const allSelected = computed(() => selectedItems.value.length == innerData.value.length);
+
+function getActionComponent (action) {
+  if (action.to != undefined) return 'router-link';
+  if (action.href != undefined) return 'a';
+  return null;
+}
 
 function toggleSelectAll() {
   let selected = true

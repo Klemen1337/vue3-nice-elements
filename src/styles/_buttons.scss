@@ -183,6 +183,11 @@ $types: "primary", "default", "success", "warning", "danger", "info", "dark",
   padding: 0.5rem 0.8rem;
   height: unset;
 
+  .nice-loading-wrapper {
+    height: 14px !important;
+    width: 14px !important;
+  }
+
   svg {
     height: 14px !important;
     width: 14px !important;

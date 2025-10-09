@@ -49,17 +49,23 @@ const filtersList = [
 
 const actions = ref([
   {
-    icon: "icon-arrow-right",
-    function: (v) => window.open("https://tickets.dev.olaii.com/event/" + v.id + "/", '_blank').focus(),
-    disabled: () => isDisabled.value
+    title: (v) => `Go to event ${v.name}`,
+    text: (v) => v.id,
+    icon: () => "icon-arrow-right",
+    href: (v) => `https://tickets.dev.olaii.com/event/${v.id}/`,
+    disabled: (v) => isDisabled.value || v.id == 1253,
+    hidden: (v) => v.id == 1455,
+    plain: () => true,
+    loading: () => loading.value
   },
   {
-    icon: "icon-arrow-up",
+    title: () => "Select event",
+    icon: () => "icon-arrow-up",
     to: (row) => ({
       name: "home",
       params: { projectId: row.id },
     }),
-    disabled: (row) => isDisabled.value || row.id == 1469 ,
+    disabled: (row) => isDisabled.value || row.id == 1469 || row.id == 1253,
     hidden: (row) => row.id == 1457
   },
 ])
@@ -136,7 +142,7 @@ async function getData() {
 </script>
 
 <template>
-    <NiceView title="Nice table and filters" :flexBody="true" class="f-grow">
+    <NiceView title="Nice table and filters" :flexBody="true" :loading="loading" class="f-grow">
 
       <!-- Filters -->
       <NiceFilters
