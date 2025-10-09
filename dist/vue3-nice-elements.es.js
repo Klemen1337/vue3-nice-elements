@@ -4842,7 +4842,7 @@ const B6 = (e) => (F0("data-v-9cdc82e5"), e = e(), q0(), e), k6 = { class: "nice
     };
   }
 }), V6 = /* @__PURE__ */ J(L6, [["__scopeId", "data-v-9cdc82e5"]]);
-const P6 = (e) => (F0("data-v-9a0c0c12"), e = e(), q0(), e), F6 = { class: "nice-table" }, q6 = { class: "nice-table-table-wrapper" }, E6 = { class: "nice-table-table" }, I6 = {
+const P6 = (e) => (F0("data-v-88f00429"), e = e(), q0(), e), F6 = { class: "nice-table" }, q6 = { class: "nice-table-table-wrapper" }, E6 = { class: "nice-table-table" }, I6 = {
   key: 0,
   class: "w-0"
 }, A6 = ["onClick"], W6 = { key: 1 }, j6 = { key: 0 }, Y6 = { key: 0 }, H6 = { class: "list" }, R6 = ["onClick"], U6 = { key: 0 }, Z6 = {
@@ -4963,7 +4963,7 @@ const P6 = (e) => (F0("data-v-9a0c0c12"), e = e(), q0(), e), F6 = { class: "nice
       return _;
     }), F = Q(() => k.value.filter((_) => _._selected)), V = Q(() => F.value.length == k.value.length);
     function y(_) {
-      return _.to != null ? "router-link" : _.href != null ? "a" : null;
+      return _.to != null ? "router-link" : _.href != null ? "a" : "div";
     }
     function w() {
       let _ = !0;
@@ -5195,7 +5195,7 @@ const P6 = (e) => (F0("data-v-9a0c0c12"), e = e(), q0(), e), F6 = { class: "nice
       ]);
     };
   }
-}), n9 = /* @__PURE__ */ J(s9, [["__scopeId", "data-v-9a0c0c12"]]);
+}), n9 = /* @__PURE__ */ J(s9, [["__scopeId", "data-v-88f00429"]]);
 const a9 = { class: "input-group" }, o9 = {
   key: 0,
   class: "input-group-suffix"

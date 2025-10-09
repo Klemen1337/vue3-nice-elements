@@ -347,7 +347,7 @@ const allSelected = computed(() => selectedItems.value.length == innerData.value
 function getActionComponent (action) {
   if (action.to != undefined) return 'router-link';
   if (action.href != undefined) return 'a';
-  return null;
+  return 'div';
 }
 
 function toggleSelectAll() {

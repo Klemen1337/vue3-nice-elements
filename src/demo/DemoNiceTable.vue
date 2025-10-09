@@ -68,6 +68,11 @@ const actions = ref([
     disabled: (row) => isDisabled.value || row.id == 1469 || row.id == 1253,
     hidden: (row) => row.id == 1457
   },
+  {
+    text: () => "Test",
+    icon: () => "icon-arrow-up",
+    function: () => console.log("Test")
+  },
 ])
 
 const columns = [
