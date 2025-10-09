@@ -1,5 +1,9 @@
 # Changelog
 
+## **v0.2.14* - 9.10.2025
+
+- fixed nice table actions button click
+
 ## **v0.2.13* - 9.10.2025
 
 - fixed table actions not visible
