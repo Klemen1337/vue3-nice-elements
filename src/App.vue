@@ -1,9 +1,16 @@
 <script setup>
+import { ref } from "vue";
 import routes from "./components-list"
+
+const isOpen = ref(true);
+
+function toggleSidebar() {
+  isOpen.value = !isOpen.value;
+}
 </script>
 
 <template>
-  <aside>
+  <aside :class="{ open: isOpen }">
     <div class="top-bar">
       <h1 class="m-0">Vue3 - Nice elements</h1>
       <h3 class="m-0">v0.2.14</h3>
@@ -16,7 +23,8 @@ import routes from "./components-list"
         v-for="route in routes" 
         :key="route.name"
       >
-        {{ route.title }}
+        <NiceIcon :icon="route.icon" v-if="route.icon" />
+        <span>{{ route.title }}</span>
       </RouterLink>
 
       <!--
@@ -36,6 +44,10 @@ import routes from "./components-list"
       <a href="#nice-no-data" class="link">Nice no data</a>
       -->
     </div>
+
+    <button class="btn btn-aside-toggle" @click="toggleSidebar">
+      <NiceIcon icon="icon-menu" />
+    </button>
   </aside>
 
   <main class="demo">
@@ -236,8 +248,20 @@ body {
 
   .icons {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 0.5rem;
+
+    .icon {
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      gap: 0.2rem;
+
+      .nice-icon {
+        height: 25px;
+        width: 25px;
+      }
+    }
   }
 
   .buttons {
@@ -274,6 +298,29 @@ aside {
   border-right: 1px solid var(--nice-border-color);
   display: flex;
   flex-direction: column;
+  margin-left: -300px;
+  z-index: 999999;
+  transition: margin-left 0.3s ease;
+
+  &.open {
+    margin-left: 0px;
+  }
+
+  .btn-aside-toggle {
+    display: none;
+    position: absolute;
+    right: -35px;
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    bottom: 1rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+
+    @media (max-width: 576px) {
+      display: block;
+    }
+  }
 
   .top-bar {
     background: var(--nice-primary-color);
@@ -292,13 +339,21 @@ aside {
     padding: 1rem;
 
     .link {
-      display: block;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
       padding: 0.8rem;
       margin-bottom: 0.5rem;
       text-decoration: none;
       color: var(--nice-font-color);
       border-radius: var(--nice-border-radius);
       background: var(--nice-card-bg);
+
+      .nice-icon {
+        height: 20px;
+        width: 20px;
+        flex-shrink: 0;
+      }
 
       &.router-link-exact-active, &:hover {
         color: white;

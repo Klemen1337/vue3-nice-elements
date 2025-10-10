@@ -21,12 +21,14 @@ onMounted(() => {
 
       <div class="icons">
         <NiceButton 
-          v-for="icon in icons"
-          :key="icon" 
+          v-for="icon in icons" 
+          :key="icon"
           :icon="icon" 
+          :text="icon"
           :class="{ active: selectedIcon == icon }" 
+          class="icon"
           @click="selectedIcon = icon"
-          type="dark" 
+          type="dark"
           plain 
         />
       </div>

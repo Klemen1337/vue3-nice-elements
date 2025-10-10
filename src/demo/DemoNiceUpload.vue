@@ -22,10 +22,13 @@ const testForm = ref({
     <NiceWrapper>
       <NiceUpload title="Checkbox" v-model="testForm.niceUpload1" :disabled="isDisabled" :loading="loading" />
       <NiceUpload title="Checkbox" v-model="testForm.niceUpload2" :disabled="isDisabled" :loading="loading" />
-      <pre>{{ testForm }}</pre>
 
-      <NiceButton @click="toggleDisabled">Toggle disabled</NiceButton>
-      <NiceButton @click="toggleLoading">Toggle loading</NiceButton>
+      <pre class="mb-3">{{ testForm }}</pre>
+
+      <div class="d-flex gap-3 flex-wrap">
+        <NiceSwitch title="Toggle disabled" v-model="isDisabled" />
+        <NiceSwitch title="Toggle loading"  v-model="loading" />
+      </div>
     </NiceWrapper>
   </NiceView>
 </template>
