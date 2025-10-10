@@ -47,6 +47,11 @@
   .btn + .btn {
     margin-left: 0 !important;
   }
+
+  @media (max-width: 576px) {
+    margin-bottom: 1rem;
+    gap: 0.5rem;
+  }
 }
 
 .select-wrapper {

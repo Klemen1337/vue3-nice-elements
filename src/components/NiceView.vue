@@ -115,6 +115,12 @@ const showHeader = computed(() => slots.title || props.title || slots.subTitle |
       font-weight: 600;
       line-height: 1.2;
 
+      .view-title-title {
+        @media (max-width: 576px) {
+          font-size: 0.8em;
+        }
+      }
+
       .view-title-sub-title {
         font-size: 0.5em;
         font-weight: normal;
@@ -133,6 +139,10 @@ const showHeader = computed(() => slots.title || props.title || slots.subTitle |
     padding-top: 1rem;
     flex-grow: 1;
     overflow: auto;
+
+    @media (max-width: 576px) {
+      padding-top: 0;
+    }
 
     &.nice-view-body-flex {
       display: flex;

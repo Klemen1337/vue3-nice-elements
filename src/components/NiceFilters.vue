@@ -317,6 +317,10 @@ function clearFilter(filter) {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+
+  @media (max-width: 576px) {
+    gap: 0.5rem;
+  }
 }
 
 .nice-filters-filters {

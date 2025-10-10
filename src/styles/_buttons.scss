@@ -30,6 +30,7 @@ $types: "primary", "default", "success", "warning", "danger", "info", "dark",
     height: 18px;
     width: 18px;
     fill: currentColor;
+    flex-shrink: 0;
   }
 
   // Icon padding
