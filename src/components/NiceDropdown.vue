@@ -1,5 +1,6 @@
 <template>
   <div
+    :title="nativeTitle"
     class="nice-component nice-dropdown"
     :class="{
       disabled: disabled,
@@ -208,6 +209,7 @@ const props = defineProps({
     type: String,
     default: "value",
   },
+  nativeTitle: String,
 })
 
 const $t = inject("$t")

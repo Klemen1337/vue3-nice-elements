@@ -146,46 +146,52 @@
 
       <div class="f-grow"></div>
 
-      <div class="pagination" v-if="props.paginated && pages > 1 && pages < 5">
-        <!-- <NiceButton
+      <!-- Pages buttons -->
+      <div class="pagination" v-if="props.paginated && pages > 1 && pages <= 5">
+        <NiceButton
+          :title="$t('Nice', 'First page')"
           size="small"
           @click="firstPage"
           plain
           icon="icon-chevrons-left"
         />
         <NiceButton
+          :title="$t('Nice', 'Previous page')"
           size="small"
           @click="prevPage"
           plain
           icon="icon-chevron-left"
-        /> -->
+        />
         <NiceButton
           size="small"
           :plain="currentPage !== page"
           v-for="page in pages"
           :key="page"
-          :class="currentPage === page ? 'btn-primary' : 'btn-default'"
+          :class="currentPage === page ? 'active' : ''"
           @click="setPage(page)"
         >
           {{ page }}
         </NiceButton>
-        <!-- <NiceButton
+        <NiceButton
+          :title="$t('Nice', 'Next page')"
           size="small"
           @click="nextPage"
           plain
           icon="icon-chevron-right"
         />
         <NiceButton
+          :title="$t('Nice', 'Last page')"
           size="small"
           @click="lastPage"
           plain
           icon="icon-chevrons-right"
-        /> -->
+        />
       </div>
+
+      <!-- Pages dropdown -->
       <div class="pagination-dropdown" v-if="props.paginated && pages > 1 && pages > 5">
-      <!-- <div class="pagination-dropdown" v-if="props.paginated"> -->
-        <!-- Page -->
         <NiceDropdown
+          :nativeTitle="$t('Nice', 'Page')"
           v-model="currentPageDropdown"
           :values="pagesList"
           noMargin
@@ -195,9 +201,9 @@
 
       <!-- Limit -->
       <NiceDropdown
+        :nativeTitle="$t('Nice', 'Limit')"
         v-if="props.showLimit"
         v-model="limit"
-        :class="{ 'dropdown-small': (pages > 1 && pages < 5) }"
         :values="limits"
         keyOnly
         noMargin
@@ -317,7 +323,7 @@ let currentPageDropdown = null;
 const offset = computed(() => ((currentPage.value-1)*limit.value));
 const count = computed(() => props.data?._metadata?.count || 0);
 const pages = computed(() => Math.ceil(count.value / limit.value) || 1);
-const pagesList = computed(() => Array.from({ length: pages.value }, (v, i) => ({ id: i + 1, value: i + 1 })));
+const pagesList = computed(() => Array.from({ length: pages.value }, (v, i) => ({ id: String(i + 1), value: String(i + 1) })));
 const innerColumns = computed(() => props.columns);
 const enabledColumns = computed(() => innerColumns.value.filter((c) => !c.disabled));
 const innerData = computed(() => {
@@ -401,7 +407,7 @@ function firstPage() {
 }
 
 function lastPage() {
-  setPage(pages.value[-1])
+  setPage(pages.value)
 }
 
 function nextPage() {
@@ -429,8 +435,8 @@ async function setPage(page) {
 
   setTimeout(() => {
     emit('pageChange', page)
+    filterChange()
   })
-  filterChange()
 }
 
 function setLimit(newLimit) {
@@ -460,7 +466,7 @@ onMounted(async () => {
   if (props.paginated) {
     limit.value = Number(query.limit) || 50
     currentPage.value = Number(query.page) || 1
-    currentPageDropdown = pagesList[Number(query.page) || 1]
+    currentPageDropdown = pagesList[String(query.page) || "1"] || { id: "1", value: "1" };
     setPage(currentPage.value)
   }
 });
@@ -711,6 +717,10 @@ onMounted(async () => {
 
       .btn + .btn {
         margin-left: 0;
+      }
+
+      .active {
+        transform: none !important;
       }
     }
   }

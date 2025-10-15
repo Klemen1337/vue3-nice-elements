@@ -85,12 +85,12 @@ const columns = [
   //   name: "Site",
   //   key: "news_site",
   // },
-  {
-    name: "Photo",
-    key: "thumbnail_photo",
-    class: "w-0",
-    html: (v, row) => `<img class="event-photo" src="${ v || row.cover_photo }" />`
-  },
+  // {
+  //   name: "Photo",
+  //   key: "thumbnail_photo",
+  //   class: "w-0",
+  //   html: (v, row) => `<img class="event-photo" src="${ v || row.cover_photo }" />`
+  // },
   {
     name: "Venue",
     key: "venue_name",
@@ -127,7 +127,7 @@ async function getData() {
   try {
     const q = await getQuery();
     console.log("[DEMO] Query:", q)
-    const response = await fetch("https://ticketing.dev.olaii.com/api/v2/events?" + new URLSearchParams(q));
+    const response = await fetch("https://ticketing.dev.olaii.com/api/v1/events?" + new URLSearchParams(q));
     const json = await response.json();
     const fixedJson = json.results;
     fixedJson._metadata = {
