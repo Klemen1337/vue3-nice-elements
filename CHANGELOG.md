@@ -1,5 +1,12 @@
 # Changelog
 
+## **v0.2.15* - 15.10.2025
+
+- added native title prop to button and nice dropdown,
+- worked on table pagination,
+- worked on demo page,
+- worked on mobile more compact style
+
 ## **v0.2.14* - 9.10.2025
 
 - fixed nice table actions button click

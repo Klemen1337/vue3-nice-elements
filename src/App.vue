@@ -13,7 +13,7 @@ function toggleSidebar() {
   <aside :class="{ open: isOpen }">
     <div class="top-bar">
       <h1 class="m-0">Vue3 - Nice elements</h1>
-      <h3 class="m-0">v0.2.14</h3>
+      <h3 class="m-0">v0.2.15</h3>
     </div>
 
     <div class="links">
