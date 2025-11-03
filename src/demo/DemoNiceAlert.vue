@@ -13,7 +13,8 @@ const form = ref({
   title: "Lorem ipsum",
   message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquam mollis justo. Integer vel dolor egestas velit commodo interdum et et ante. Praesent vel pellentesque neque, aliquet posuere mauris. Praesent aliquam, ipsum ut sagittis egestas, dolor libero efficitur tortor, in fermentum elit nisi quis metus. Suspendisse potenti. Integer porta augue sodales, consectetur enim in, condimentum urna. Quisque felis lorem, tincidunt vel libero id, consequat sollicitudin lacus. Proin ut nunc sit amet lectus finibus eleifend in nec lectus. Suspendisse potenti. Proin vel odio efficitur, ullamcorper neque et, hendrerit turpis. Nulla quis magna turpis. Sed eget velit et lacus condimentum convallis.",
   icon: "icon-feather",
-  inline: true
+  inline: true,
+  alignCenter: false
 })
 
 const icons = ref([]);
@@ -36,14 +37,14 @@ onMounted(() => {
         <NiceDropdown title="Icon" v-model="form.icon" :values="icons" keyOnly>
           <template #selected-option="{ item }">
             <div class="d-flex gap-2">
-              <NiceIcon :icon="item.id" :size="20"></NiceIcon>
+              <NiceIcon :icon="item.id" v-if="item.id" :size="20"></NiceIcon>
               <span>{{ item.value }}</span>
             </div>
           </template>
           
           <template #option="{ item }">
             <div class="d-flex gap-2">
-              <NiceIcon :icon="item.id" :size="20"></NiceIcon>
+              <NiceIcon :icon="item.id" v-if="item.id"  :size="20"></NiceIcon>
               <span>{{ item.value }}</span>
             </div>
           </template>

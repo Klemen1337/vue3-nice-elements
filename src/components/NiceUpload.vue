@@ -8,7 +8,6 @@
       :required="required"
       :caption="caption"
     />
-
     <div 
       class="input-group" 
       :class="{ 'dragging': isDragging, 'on-target': isOnTarget }"       
@@ -19,6 +18,7 @@
       @drop="dragChanged"
     >
       <input
+        ref="inputFile"
         :modelValue="file"
         :placeholder="placeholder"
         :required="required"
@@ -183,6 +183,7 @@ export default {
     clear () {
       this.localValue = null
       this.file = null
+      if (this.$refs.inputFile) this.$refs.inputFile.value = null;
     }
 
     // documentDragChanged(event) {
@@ -262,6 +263,7 @@ export default {
       z-index: 2;
       padding: 5px;
       height: auto;
+      background: transparent;
     }
 
     .nice-upload-overlay {
