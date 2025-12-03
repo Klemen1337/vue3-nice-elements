@@ -377,7 +377,6 @@ onMounted(() => {
           :data="data"
           :loading="loading"
           paginated
-          showOrder
           showFooter
           showLimit
           @filterChange="filterChanged"
@@ -399,7 +398,6 @@ onMounted(() => {
     :columns="columns"
     :data="data"
     :loading="loading"
-    :showOrder="true"
     :paginated="true"
     :showFooter="true"
     @pageChange="getData"

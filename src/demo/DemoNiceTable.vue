@@ -98,6 +98,8 @@ const columns = [
   {
     name: "Name",
     key: "name",
+    hasSearch: true,
+    hasOrder: true
   },
   {
     name: "Type",
@@ -108,13 +110,15 @@ const columns = [
     name: "Start time",
     class: "text-right",
     key: "start_time",
-    formatter: (v) => _formatDateWithTime(v)
+    formatter: (v) => _formatDateWithTime(v),
+    hasOrder: true
   },
   {
     name: "End time",
     class: "text-right",
     key: "end_time",
-    formatter: (v) => _formatDateWithTime(v)
+    formatter: (v) => _formatDateWithTime(v),
+    hasOrder: true
   },
 ]
 
@@ -170,7 +174,6 @@ async function getData() {
         :data="data"
         :loading="loading"
         paginated
-        showOrder
         orderLocally
         showFooter
         showLimit
@@ -194,7 +197,6 @@ async function getData() {
   :columns="columns"
   :data="data"
   :loading="loading"
-  :showOrder="true"
   :orderLocally="false"
   :paginated="true"
   :showFooter="true"

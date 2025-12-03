@@ -9,21 +9,62 @@
               <!-- De/Select all -->
               <NiceCheckbox :modelValue="allSelected" no-margin @click="toggleSelectAll" />
             </th>
-            <th v-for="column in enabledColumns" :key="column.key" :class="column.class">
+            <th v-for="column in enabledColumns" :key="column.key" :class="column.class" class="nice-table-th-wrapper">
               <!-- Order -->
-              <div
-                v-if="props.showOrder"
-                class="table-th"
-                @click="setOrder(column)"
-                :class="{
-                  'active asc': order == column.key,
-                  'active desc': order == '-' + column.key
-                }"
-              >
-                <span>{{ column.name }}</span>
-                <NiceIcon icon="icon-bar-chart" class="table-order" v-if="props.showOrder" />
+              <div v-if="column.hasOrder">
+                <div
+                  class="nice-table-th"
+                  @click="setOrder(column)"
+                  :class="{
+                    'active asc': order == column.key,
+                    'active desc': order == '-' + column.key
+                  }"
+                >
+                  <span>{{ column.name }}</span>
+                  <NiceIcon icon="icon-bar-chart" class="table-order" />
+                </div>
               </div>
               <span v-else>{{ column.name }}</span>
+              <!-- Column search -->
+              <div 
+                class="nice-table-th-search" 
+                :class="{ 'visible': columnSearch[column.key] }"
+                v-if="column.hasSearch"
+              >
+                <!-- Column search -->
+                <input
+                  :placeholder="column.name" 
+                  v-model="columnSearch[column.key]"
+                  @input="columnSearchChange"
+                />
+
+                <!-- Clear column search -->
+                <button 
+                  title="Clear"
+                  type="button" 
+                  class="btn btn-default btn-naked" 
+                  v-if="columnSearch[column.key]" 
+                  @click="columnSearchClear(column)"
+                >
+                  <nice-icon icon="icon-x"></nice-icon>
+                </button>
+
+                <!-- Order -->
+                <button 
+                  title="Order"
+                  type="button" 
+                  class="btn btn-default btn-naked"
+                  @click="setOrder(column)"
+                  v-if="column.hasOrder"
+                >
+                  <nice-icon v-if="order != column.key && order != '-' + column.key" icon="icon-filter"></nice-icon>
+                  <nice-icon class="asc" v-if="order == column.key" icon="icon-bar-chart"></nice-icon>
+                  <nice-icon class="desc" v-if="order == '-' + column.key" icon="icon-bar-chart"></nice-icon>
+                </button>
+
+                <!-- Icon -->
+                <nice-icon class="nice-table-th-input-icon" v-if="!columnSearch[column.key]" icon="icon-search"></nice-icon>
+              </div>
             </th>
             <th
               class="actions-td w-0"
@@ -245,6 +286,7 @@ const props = defineProps({
     //   name: "Created",
     //   key: "created_at",
     //   class: "text-right",
+    //   hasSearch: false,
     //   formatter: (value, row) => formatDateWithTime(value),
     //   fieldClass: (value, row) => "badge " + CommonService.types[value],
     //   html: (value, row) => `<div>${value}</div>`,
@@ -275,10 +317,6 @@ const props = defineProps({
     default: false
   },
   showFooter: {
-    type: Boolean,
-    default: false
-  },
-  showOrder: {
     type: Boolean,
     default: false
   },
@@ -322,6 +360,7 @@ const limits = [
   { id: 100, value: 100 },
 ];
 const currentPage = ref(1);
+const columnSearch = ref({});
 let currentPageDropdown = null;
 
 const offset = computed(() => ((currentPage.value-1)*limit.value));
@@ -352,7 +391,7 @@ const innerData = computed(() => {
   }
   return newData
 });
-const selectedItems = computed(() => innerData.value.filter((row) => row._selected))
+const selectedItems = computed(() => innerData.value.filter((row) => row._selected));
 const allSelected = computed(() => selectedItems.value.length == innerData.value.length);
 
 function getActionComponent (action) {
@@ -375,6 +414,22 @@ function toggleSelect(row) {
 
 function emitSelected() {
   emit('selected', selectedItems.value)
+}
+
+let columnSearchDebounce = null;
+function columnSearchChange() {
+  clearTimeout(columnSearchDebounce);
+  columnSearchDebounce = setTimeout(() => {
+    router.push({
+      query: { ...route.query, ...columnSearch.value }
+    });
+    filterChange();
+  }, 500);
+}
+
+function columnSearchClear(column) {
+  columnSearch.value[column.key] = undefined;
+  columnSearchChange();
 }
 
 function toggleColumn(column) {
@@ -460,13 +515,21 @@ function setLimit(newLimit) {
 
 function filterChange() {
   setTimeout(() => {
-    emit('filterChange', { ordering: order.value, page: currentPage.value, offset: offset.value, limit: limit.value })
+    emit('filterChange', { ordering: order.value, page: currentPage.value, offset: offset.value, limit: limit.value, ...columnSearch.value })
   })
 }
 
 onMounted(async () => {
   const query = await $query()
-  order.value = query.ordering
+  order.value = query.ordering // Extract ordering from query
+  
+  // Extract column search from query
+  for (const column of enabledColumns.value) {
+    const q = query[column.key];
+    if (q) columnSearch.value[column.key] = q;
+  }
+
+  // Set or get paginated configuration from query
   if (props.paginated) {
     limit.value = Number(query.limit) || 50
     currentPage.value = Number(query.page) || 1
@@ -554,9 +617,72 @@ onMounted(async () => {
           padding: 12px 10px;
           background: var(--nice-card-bg);
 
-          .table-th {
+            position: relative;
+
+            &:hover {
+              .nice-table-th-search {
+                opacity: 1;
+              }
+            }
+
+            .nice-table-th-search {
+              background: var(--nice-card-bg);
+              border: 1px solid var(--nice-border-color);
+              border-radius: var(--nice-border-radius);
+              position: absolute;
+              top: 50%;
+              left: 0;
+              width: 100%;
+              height: 27px;
+              opacity: 0;
+              transform: translate(0, -50%);
+              display: flex;
+              align-items: center;
+              
+              input {
+                height: 100%;
+                border: 0 none;
+                padding: 0 7px;
+                flex-grow: 1;
+              }
+
+              button {
+                height: 25px;
+                width: 25px;
+                padding: 0;
+                box-shadow: 0 0 0;
+                color: var(--nice-font-color);
+
+                svg {
+                  height: 15px;
+                  width: 15px;
+                }
+
+                .asc {
+                  transform: rotate(-90deg);
+                }
+
+                .desc {
+                  transform: rotate(90deg);
+                }
+              }
+
+              .nice-table-th-input-icon {
+                height: 15px;
+                width: 15px;
+                margin: 0 5px;
+              }
+
+              &.visible {
+                opacity: 1 !important;
+              }
+            }
+          
+
+          .nice-table-th {
             position: relative;
             cursor: pointer;
+            flex-grow: 1;
 
             &:hover {
               color: var(--nice-primary-color);
