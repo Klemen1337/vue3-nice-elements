@@ -294,7 +294,7 @@ onMounted(() => {
 <template>
     <NiceView 
       icon="icon-home" 
-      aboveTitle="v0.2.16" 
+      aboveTitle="v0.2.17" 
       title="Home" 
       subTitle="Sandbox for components" 
       :flexBody="true" 

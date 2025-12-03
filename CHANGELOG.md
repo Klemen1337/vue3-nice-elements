@@ -1,5 +1,9 @@
 # Changelog
 
+## **v0.2.17* - 3.12.2025
+
+- added hadSearch and hasOrder to nice table column
+
 ## **v0.2.16* - 3.12.2025
 
 - fixed on nice upload clear,
