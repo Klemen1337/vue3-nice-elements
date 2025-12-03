@@ -282,6 +282,10 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  orderLocally: {
+    type: Boolean,
+    default: false
+  },
   showLimit: {
     type: Boolean,
     default: false
@@ -335,7 +339,7 @@ const innerData = computed(() => {
   })
 
   // Order by
-  if (order.value !== undefined) {
+  if (props.orderLocally && order.value !== undefined) {
     const cleanOrder = order.value.replace('-', '')
     newData.sort((a, b) => {
       if (order.value[0] != '-') {

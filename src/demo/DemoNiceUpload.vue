@@ -3,14 +3,6 @@ import { ref } from 'vue'
 const isDisabled = ref(false);
 const loading = ref(false);
 
-function toggleDisabled() {
-  isDisabled.value = !isDisabled.value
-}
-
-function toggleLoading() {
-  loading.value = !loading.value
-}
-
 const testForm = ref({
   niceUpload1: null,
   niceUpload2: "https://olaii-guestlist.s3.amazonaws.com/public/100x200-scaled-1_whesRoi.jpg",

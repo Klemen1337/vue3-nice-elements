@@ -171,6 +171,7 @@ async function getData() {
         :loading="loading"
         paginated
         showOrder
+        orderLocally
         showFooter
         showLimit
         @filterChange="filterChanged"
@@ -194,6 +195,7 @@ async function getData() {
   :data="data"
   :loading="loading"
   :showOrder="true"
+  :orderLocally="false"
   :paginated="true"
   :showFooter="true"
   @pageChange="getData"
