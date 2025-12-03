@@ -4844,7 +4844,7 @@ const k6 = (e) => (E0("data-v-9cdc82e5"), e = e(), I0(), e), N6 = { class: "nice
     };
   }
 }), P6 = /* @__PURE__ */ K(V6, [["__scopeId", "data-v-9cdc82e5"]]);
-const F6 = (e) => (E0("data-v-86b7dec7"), e = e(), I0(), e), q6 = { class: "nice-table" }, E6 = { class: "nice-table-table-wrapper" }, I6 = { class: "nice-table-table" }, A6 = {
+const F6 = (e) => (E0("data-v-0ebc5dc6"), e = e(), I0(), e), q6 = { class: "nice-table" }, E6 = { class: "nice-table-table-wrapper" }, I6 = { class: "nice-table-table" }, A6 = {
   key: 0,
   class: "w-0"
 }, W6 = ["onClick"], j6 = { key: 1 }, Y6 = { key: 0 }, H6 = { key: 0 }, R6 = { class: "list" }, U6 = ["onClick"], Z6 = { key: 0 }, X6 = {
@@ -4911,6 +4911,10 @@ const F6 = (e) => (E0("data-v-86b7dec7"), e = e(), I0(), e), q6 = { class: "nice
       type: Boolean,
       default: !1
     },
+    orderLocally: {
+      type: Boolean,
+      default: !1
+    },
     showLimit: {
       type: Boolean,
       default: !1
@@ -4952,7 +4956,7 @@ const F6 = (e) => (E0("data-v-86b7dec7"), e = e(), I0(), e), q6 = { class: "nice
       let C = t.data;
       if (C.forEach((z) => {
         z._selected === void 0 && (z._selected = !1);
-      }), l.value !== void 0) {
+      }), t.orderLocally && l.value !== void 0) {
         const z = l.value.replace("-", "");
         C.sort((s0, M0) => {
           if (l.value[0] != "-") {
@@ -5241,7 +5245,7 @@ const F6 = (e) => (E0("data-v-86b7dec7"), e = e(), I0(), e), q6 = { class: "nice
       ]);
     };
   }
-}), a9 = /* @__PURE__ */ K(s9, [["__scopeId", "data-v-86b7dec7"]]);
+}), a9 = /* @__PURE__ */ K(s9, [["__scopeId", "data-v-0ebc5dc6"]]);
 const o9 = { class: "input-group" }, l9 = {
   key: 0,
   class: "input-group-suffix"
@@ -5488,7 +5492,7 @@ const b9 = {
       this.isOnTarget = e.type == "dragover";
     },
     clear() {
-      this.localValue = null, this.file = null;
+      this.localValue = null, this.file = null, this.$refs.inputFile && (this.$refs.inputFile.value = null);
     }
     // documentDragChanged(event) {
     //   console.log("documentDragChanged", event, event.type)
@@ -5541,6 +5545,7 @@ function D9(e, c, t, n, s, a) {
       onDrop: c[6] || (c[6] = (...r) => a.dragChanged && a.dragChanged(...r))
     }, [
       p("input", {
+        ref: "inputFile",
         modelValue: s.file,
         placeholder: t.placeholder,
         required: t.required,
@@ -5593,7 +5598,7 @@ function D9(e, c, t, n, s, a) {
     ], 34)
   ], 2);
 }
-const T9 = /* @__PURE__ */ K(b9, [["render", D9], ["__scopeId", "data-v-383ee8eb"]]);
+const T9 = /* @__PURE__ */ K(b9, [["render", D9], ["__scopeId", "data-v-17f8d133"]]);
 const L9 = {
   key: 0,
   class: "nice-view-header"
@@ -5966,7 +5971,7 @@ const de = { class: "nice-alert-data" }, he = {
     alignCenter: Boolean,
     icon: {
       type: String,
-      required: !0,
+      required: !1,
       default: null
     },
     type: {

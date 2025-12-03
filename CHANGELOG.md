@@ -1,5 +1,13 @@
 # Changelog
 
+## **v0.2.16* - 3.12.2025
+
+- fixed on nice upload clear,
+- fixed nice alert demo,
+- added order locally prop to nice table,
+- added license,
+- changed nice alert icon prop not required
+
 ## **v0.2.15* - 15.10.2025
 
 - added native title prop to button and nice dropdown,
