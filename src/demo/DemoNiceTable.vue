@@ -60,10 +60,10 @@ const actions = ref([
   },
   {
     title: () => "Select event",
-    icon: () => "icon-arrow-up",
+    icon: () => "icon-link",
     to: (row) => ({
-      name: "home",
-      params: { projectId: row.id },
+      name: "nice-table",
+      query: { projectId: row.id }
     }),
     disabled: (row) => isDisabled.value || row.id == 1469 || row.id == 1253,
     hidden: (row) => row.id == 1457
@@ -71,7 +71,7 @@ const actions = ref([
   {
     text: () => "Test",
     icon: () => "icon-arrow-up",
-    function: () => console.log("Test")
+    function: (row) => alert(row.name)
   },
 ])
 

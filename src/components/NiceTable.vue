@@ -140,10 +140,27 @@
                   v-for="action in props.actions" 
                   :key="action"
                 >
-                  <component
-                    :is="getActionComponent(action)"
-                    v-if="!(action.hidden && action.hidden(row))"
+                  <router-link
+                    v-if="getActionComponent(action) == 'router-link' && !(action.hidden && action.hidden(row))"
+                    :disabled="action.disabled && action.disabled(row)"
                     :to="action.to && action.to(row)"
+                  >
+                    <NiceButton
+                      v-if="!(action.hidden && action.hidden(row))"
+                      :icon="action.icon && action.icon(row)"
+                      :type="action.type && action.type(row)"
+                      :text="action.text && action.text(row).toString()"
+                      :plain="action.plain && action.plain(row)"
+                      :loading="action.loading && action.loading(row)"
+                      :disabled="action.disabled && action.disabled(row)"
+                      :title="action.title && action.title(row)"
+                      @click="action.function && action.function(row)"
+                      size="small"
+                    />
+                  </router-link>
+                  <component
+                    :is="getActionComponent(action) != 'router-link' && getActionComponent(action)"
+                    v-if="!(action.hidden && action.hidden(row))"
                     :disabled="action.disabled && action.disabled(row)"
                     :href="action.href && action.href(row)"
                     :target="action.href ? 'blank' : null"
