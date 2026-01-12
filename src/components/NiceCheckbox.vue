@@ -1,7 +1,12 @@
 <template>
   <div
     class="nice-component nice-checkbox"
-    :class="{ 'no-margin': props.noMargin, active: localValue, disabled: props.disabled }"
+    :class="{ 
+      'no-margin': props.noMargin, 
+      'active': localValue, 
+      'disabled': props.disabled, 
+      'indeterminate': props.indeterminate
+    }"
     @click="toggleValue"
   >
     <div class="nice-checkbox-box">
@@ -9,9 +14,13 @@
       <svg viewBox="0 0 20 20" v-if="localValue">
         <path d="M0 11l2-2 5 5 11-11 2 2-13 13z"></path>
       </svg>
+      <svg viewBox="0 0 24 24" v-if="indeterminate && !localValue">
+        <path d="M5 13h14c0.552 0 1-0.448 1-1s-0.448-1-1-1h-14c-0.552 0-1 0.448-1 1s0.448 1 1 1z"></path>
+      </svg>
     </div>
     <div class="nice-checkbox-title" :for="'nice-checkbox' + key" v-if="props.title">
-      {{ props.title }}
+      <div>{{ props.title }}</div>
+      <small v-if="props.description">{{ props.description }}</small>
     </div>
     <input type="checkbox" :id="'nice-checkbox' + key" :disabled="props.disabled" />
   </div>
@@ -36,6 +45,14 @@ const props = defineProps({
   title: {
     type: String,
     default: null,
+  }, 
+  description: {
+    type: String,
+    default: null,
+  },
+  indeterminate: {
+    type: Boolean,
+    default: false,
   },
   disabled: {
     type: Boolean,
@@ -88,6 +105,7 @@ function toggleValue() {
     cursor: pointer;
   }
 
+  &.indeterminate,
   &.active,
   &:active {
     .nice-checkbox-box {

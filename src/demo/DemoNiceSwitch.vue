@@ -14,12 +14,13 @@ const form = ref({
 <template>
   <NiceView title="Nice switch">
     <NiceWrapper>
-      <NiceSwitch title="I like pizza" v-model="form.niceSwitch" :disabled="isDisabled" isInline />
-      <NiceSwitch title="I like pizza" v-model="form.niceSwitch" :disabled="isDisabled" />
-      <NiceSwitch title="I like pizza" v-model="form.niceSwitch" :disabled="isDisabled" titleLeft />
+      <NiceSwitch title="I like pizza" description="This is a short description" v-model="form.niceSwitch" :disabled="isDisabled" isInline />
+      <NiceSwitch title="I like pizza" description="This is a short description" v-model="form.niceSwitch" :disabled="isDisabled" />
+      <NiceSwitch title="I like pizza" description="This is a short description" v-model="form.niceSwitch" :disabled="isDisabled" titleLeft />
       
       <pre class="mt-4">&lt;NiceSwitch 
   title="I like pizza" 
+  description="This is a short description"
   v-model="form.niceSwitch" 
   :disabled="isDisabled" 
   titleLeft 

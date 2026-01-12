@@ -19,7 +19,8 @@
     </div>
 
     <div class="nice-switch-title" :for="'nice-switch' + key" v-if="props.title">
-      {{ props.title }}
+      <div>{{ props.title }}</div>
+      <small v-if="props.description">{{ props.description }}</small>
     </div>
 
     <input type="checkbox" tabindex="-1" :id="'nice-switch' + key" :disabled="props.disabled" />
@@ -41,6 +42,10 @@ const props = defineProps({
     required: true,
   },
   title: {
+    type: String,
+    default: null,
+  },  
+  description: {
     type: String,
     default: null,
   },
