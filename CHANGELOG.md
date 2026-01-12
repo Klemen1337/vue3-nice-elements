@@ -1,5 +1,10 @@
 # Changelog
 
+## **v0.2.18* - 12.1.2026
+
+- added description to nice-checkbox and nice-toggle,
+- added indeterminate to nice-checkbox
+
 ## **v0.2.17* - 3.12.2025
 
 - added hadSearch and hasOrder to nice table column
