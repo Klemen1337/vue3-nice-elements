@@ -1,5 +1,10 @@
 # Changelog
 
+## **v0.2.19* - 3.2.2026
+
+- fixed nice date build month,
+- worked on sentry error fixes
+
 ## **v0.2.18* - 12.1.2026
 
 - added description to nice-checkbox and nice-toggle,
@@ -185,7 +190,7 @@
 
 - added collapsed prop for nice wrapper and fixed no padding,
 - added nice-view-padding and nice-wrapper-padding to variables,
-- worked on nice view hader and footer blured,
+- worked on nice view header and footer blurred,
 - worked on demo page,
 - removed console log from nice filters and fixed code style,
 - removed badge style
@@ -215,7 +220,7 @@
 ## **v0.0.3** - 31.3.2023
 
 - added button size mini,
-- fixed emmiter,
+- fixed emitter,
 - fixed css variables,
 - worked on loading,
 - worked on demo page,
