@@ -89,7 +89,8 @@ function changeSideViewWidth(value) {
 
 function focusOnInput() {
   setTimeout(() => {
-    const inputs = panelElement.value?.querySelectorAll("input");
+    if (!panelElement.value) return;
+    const inputs = panelElement.value.querySelectorAll("input");
     if (inputs && inputs[0] && inputs[0].focus) {
       inputs[0].focus();
     }

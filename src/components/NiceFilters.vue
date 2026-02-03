@@ -207,8 +207,8 @@ function getFormattedValue(filter) {
     return filter.value ? $t('Nice', "Yes") : $t('Nice', "No");
   }
   if (filter.valueName) return filter.value[filter.valueName];
-  if (filter.value?.name) return filter.value.name;
-  if (filter.value?.value) return filter.value.value;
+  if (filter.value && filter.value.name) return filter.value.name;
+  if (filter.value && filter.value.value) return filter.value.value;
   return filter.value;
 }
 

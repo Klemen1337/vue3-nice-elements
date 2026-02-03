@@ -265,12 +265,12 @@ watch(() => props.values, async () => {
 function onKeypress(e) {
   if (e.code == "Enter" || e.code == "Space") {
     e.preventDefault();
-    popup.value?.toggle();
+    if (popup.value) popup.value.toggle();
   }
 }
 
 function close() {
-  popup.value?.close();
+  if (popup.value) popup.value.close();
 }
 
 function clear() {
@@ -305,7 +305,7 @@ async function popupChanged(isOpen) {
     }
     // Focus on search input
     setTimeout(() => {
-      searchElement.value?.focus();
+      if (searchElement.value) searchElement.value.focus();
     }, 100);
     // Emit keyboard listener
     document.addEventListener("keydown", handleKeyboard);

@@ -1,7 +1,5 @@
 <script setup>
-import { onMounted, ref, inject } from 'vue'
-import { useNice } from "./../lib"
-const nice = useNice()
+import { ref, inject } from 'vue'
 const getQuery = inject('getQuery')
 const isDisabled = ref(false)
 const loading = ref(true)
