@@ -310,7 +310,7 @@ function isDateValid(dateStr) {
 }
 
 function close() {
-  popup?.value.close();
+  if (popup.value) popup.value.close();
 }
 
 function clear() {
@@ -417,19 +417,23 @@ function changeMonth(add) {
 
 function _buildMonth() {
   days.value = [];
-  let offset =
-    new Date(
-      selected.value.getFullYear(),
-      selected.value.getMonth(),
-      1
-    ).getDay() - 1;
-  let daysInMonth = new Date(
+  
+  // 1. Get the first day of the currently viewed month
+  const firstDayOfMonth = new Date(
     selected.value.getFullYear(),
     selected.value.getMonth(),
-    0
-  ).getDate();
-  let append = 42 - daysInMonth - offset;
-  for (var d = 1 - offset; d <= daysInMonth + append; d++) {
+    1
+  );
+
+  // 2. Calculate the offset (0 = Sunday, 1 = Monday, etc.)
+  // If your calendar starts on Monday, we adjust the JS Sunday (0) to 7
+  let startOffset = firstDayOfMonth.getDay(); 
+  if (startOffset === 0) startOffset = 7; // Treat Sunday as 7
+  startOffset -= 1; // Adjust so Monday = 0
+
+  // 3. We always want to show a standard 6-week grid (42 days)
+  // We start the loop from 1 minus the offset
+  for (let d = 1 - startOffset; d <= 42 - startOffset; d++) {
     days.value.push(
       _buildDay(
         selected.value.getFullYear(),
