@@ -1,5 +1,9 @@
 # Changelog
 
+## **v0.2.20* - 4.2.2026
+
+- fixed nice upload input required state
+
 ## **v0.2.19* - 3.2.2026
 
 - fixed nice date build month,
