@@ -21,7 +21,7 @@
         ref="inputFile"
         :modelValue="file"
         :placeholder="placeholder"
-        :required="required"
+        :required="required && !localValue"
         :accept="accept"
         type="file"
         @change="fileChanged"
