@@ -12,14 +12,14 @@ const components = [
     path: "/nice-input",
     name: "nice-input",
     title: "Nice Input",
-    icon: "icon-square",
+    icon: "icon-input-text",
     component: import("@/demo/DemoNiceInput.vue")
   },
   {
     path: "/nice-dropdown",
     name: "nice-dropdown",
     title: "Nice Dropdown",
-    icon: "icon-square",
+    icon: "icon-dropdown",
     component: import("@/demo/DemoNiceDropdown.vue")
   },
   {
