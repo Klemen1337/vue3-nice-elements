@@ -1,5 +1,10 @@
 # Changelog
 
+## **v0.2.21* - 6.2.2026
+
+- added more icons,
+- added support for html in formatFunction nice dropdown component
+
 ## **v0.2.20* - 4.2.2026
 
 - fixed nice upload input required state
