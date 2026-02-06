@@ -39,13 +39,13 @@
                 />
                 <div class="option" v-if="!loading && modelValue && !props.multiple">
                   <slot name="selected-option" :item="localValue">
-                    <span>{{ formatFunction ? formatFunction(modelValue) : (localValue ? (localValue[valueName] || localValue) : modelValue) }}</span>
+                    <span v-html="formatFunction ? formatFunction(modelValue) : (localValue ? (localValue[props.valueName] || localValue) : modelValue)"></span>
                   </slot>
                 </div>
                 <div class="options" v-if="props.multiple">
                   <div class="option" v-for="value in selectedInnerValues" :key="value">
                     <slot name="selected-option" :item="value" v-bind="value">
-                      <span>{{ formatFunction ? formatFunction(value) : (value[props.valueName] || value) }}</span>
+                      <span v-html="formatFunction ? formatFunction(value) : (value ? value[props.valueName] : value)"></span>
                     </slot>
                     <button type="button" class="btn btn-primary btn-sm" @click="removeValue(value)"><nice-icon icon="icon-x"></nice-icon></button>
                   </div>
@@ -127,7 +127,7 @@
               >
                 <NiceCheckbox v-if="multiple" :modelValue="item._selected" :noMargin="true" class="nice-dropdown-item-checkbox"></NiceCheckbox>
                 <slot name="option" :item="item">
-                  {{ formatFunction ? formatFunction(item) : item[valueName] }}
+                  <span v-html="formatFunction ? formatFunction(item) : (item[valueName] || item)"></span>
                 </slot>
               </div>
               <div class="element no-options" v-if="!innerLoading && (!innerValues || innerValues.length == 0)">

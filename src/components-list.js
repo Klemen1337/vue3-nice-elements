@@ -16,6 +16,13 @@ const components = [
     component: import("@/demo/DemoNiceInput.vue")
   },
   {
+    path: "/nice-dropdown",
+    name: "nice-dropdown",
+    title: "Nice Dropdown",
+    icon: "icon-square",
+    component: import("@/demo/DemoNiceDropdown.vue")
+  },
+  {
     path: "/nice-table",
     name: "nice-table",
     title: "Nice Table",
